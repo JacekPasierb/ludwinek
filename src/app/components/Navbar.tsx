@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../styles/navbar.module.css";
 
 const Navbar = () => {
@@ -7,16 +8,16 @@ const Navbar = () => {
         <div className={styles.logo}>Moje łowisko</div>
         <ul className={styles.links}>
           <li>
-            <a href="#">Strona główna</a>
+            <Link href="/">Ludwinek</Link>
           </li>
           <li>
-            <a href="#">Regulamin</a>
+            <Link href="/relations">Relacje</Link>
           </li>
           <li>
-            <a href="#">Cennik</a>
+            <Link href="/turnee">Zawody</Link>
           </li>
           <li>
-            <a href="#">Kontakt</a>
+            <Link href="#">Kontakt</Link>
           </li>
         </ul>
       </nav>

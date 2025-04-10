@@ -1,0 +1,21 @@
+.recordBox {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #ffffff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #003366;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .recordBox {
+      display: none; /* lub np. jako ikonka rozwijalna */
+    }
+  }
+  
