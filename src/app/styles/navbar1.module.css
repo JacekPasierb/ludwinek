@@ -1,0 +1,47 @@
+/* styles/navbar.module.css */
+
+.nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+
+  background-color: rgba(0, 0, 0, 0.4); /* półprzezroczyste */
+  backdrop-filter: blur(8px); /* blur jak szkło */
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  height: 40px;
+  width: auto;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  text-transform: uppercase;
+}
+
+.links li a:hover {
+  color: #ffcc00;
+}

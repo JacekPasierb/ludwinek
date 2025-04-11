@@ -1,7 +1,9 @@
 .hero {
   position: relative;
-  height: 450px;
-  background-image: url("/hero.png"); /* zamień na prawdziwe zdjęcie */
+  height: 400px;
+  max-width: 1600px;
+  margin: 0 auto;
+  background-image: url("/hero.png");
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -16,21 +18,18 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .boxWrapper {
   position: absolute;
   bottom: 0;
-  right: 2rem;
-  width: 120px;
-  height: auto;
+  right: 1rem;
+  width: 80px;
   z-index: 10;
-
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden;
   cursor: pointer;
 }
 
@@ -40,23 +39,24 @@
 }
 
 .postBox:hover {
-  transform: scale(1.05) translateY(-5px);
+  transform: scale(1.05) translateY(-4px);
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .button {
   background-color: #0066cc;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -70,14 +70,14 @@
   background-color: #cc0000;
   color: #fff;
   font-weight: bold;
-  font-size: 1.2rem;
-  padding: 1rem 2rem;
+  font-size: 1rem;
+  padding: 0.75rem 1.2rem;
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background 0.3s ease;
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   text-align: center;
 }
 
@@ -87,8 +87,35 @@
 
 .heroIcon {
   margin-top: 1rem;
-  height: 128px;
-  
+  height: 96px;
   border-radius: 50%;
-  
+}
+
+/* === Tablet i Desktop (media query) === */
+@media (min-width: 768px) {
+  .hero {
+    height: 500px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .boxWrapper {
+    width: 100px;
+    right: 2rem;
+  }
+
+  .heroIcon {
+    height: 128px;
+  }
+
+  .paymentBox {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
 }

@@ -1,10 +1,17 @@
-import Link from "next/link";
+"use client";
+
+import React from "react";
 import styles from "../styles/navbar.module.css";
+import Link from "next/link";
+import {useViewport} from "../hooks/useViewport";
 
 const Navbar = () => {
+  const {isTablet, isMobile} = useViewport();
+  const isCompact = isMobile || isTablet;
+
   return (
-    <>
-      <nav className={styles.nav}>
+    <div className={styles.navBar}>
+      <div className={`${styles.navBar__wrapper} container`}>
         <div className={styles.logo}>
           <img
             src="/logoW.png"
@@ -12,23 +19,32 @@ const Navbar = () => {
             className={styles.logoImg}
           />
         </div>
-
-        <ul className={styles.links}>
-          <li>
-            <Link href="/">Ludwinek</Link>
-          </li>
-          <li>
-            <Link href="/relations">Relacje</Link>
-          </li>
-          <li>
-            <Link href="/turnee">Zawody</Link>
-          </li>
-          <li>
-            <Link href="#">Kontakt</Link>
-          </li>
-        </ul>
-      </nav>
-    </>
+        {isCompact ? (
+          <button className={styles.burger}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        ) : (
+          <nav>
+            <ul className={styles.links}>
+              <li>
+                <Link href="/">Ludwinek</Link>
+              </li>
+              <li>
+                <Link href="/relations">Relacje</Link>
+              </li>
+              <li>
+                <Link href="/turnee">Zawody</Link>
+              </li>
+              <li>
+                <Link href="#">Kontakt</Link>
+              </li>
+            </ul>
+          </nav>
+        )}
+      </div>
+    </div>
   );
 };
 

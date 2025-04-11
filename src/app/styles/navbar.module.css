@@ -1,20 +1,21 @@
-/* styles/navbar.module.css */
-
-.nav {
+.navBar {
   position: absolute;
   top: 0;
   width: 100%;
   padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   z-index: 10;
-
-  background-color: rgba(0, 0, 0, 0.4); /* półprzezroczyste */
+  background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px); /* blur jak szkło */
   color: white;
+  max-width: 1600px;
+  margin: 0 auto;
 }
-
+.navBar__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .logo {
   display: flex;
   align-items: center;
@@ -28,12 +29,10 @@
 .links {
   list-style: none;
   display: flex;
+  flex-direction: row;
   gap: 2rem;
-  margin: 0;
-  padding: 0;
 }
-
-.links li a {
+.links a {
   text-decoration: none;
   color: white;
   font-weight: 500;
@@ -42,6 +41,24 @@
   text-transform: uppercase;
 }
 
-.links li a:hover {
+.links a:hover {
   color: #ffcc00;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }

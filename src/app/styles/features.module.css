@@ -1,0 +1,42 @@
+.sectionFeatures {
+  padding-block: 2rem;
+}
+
+.listFeatures {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 481px) {
+  .listFeatures {
+    flex-direction: row;
+    gap: unset;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.itemFeature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.itemFeature p {
+    font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.iconImage {
+  width: 144px;
+  height: 144px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
