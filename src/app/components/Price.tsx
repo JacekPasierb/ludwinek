@@ -1,21 +1,45 @@
-import React from 'react'
-import styles from "../styles/price.module.css"
+"use client";
+
+import React from "react";
+import styles from "../styles/price.module.css";
 
 const Price = () => {
   return (
-    <section className={styles.pricing}>
-    <h2>Cennik wędkowania (sezon 2023)</h2>
-    <ul>
-      <li><strong>30 zł – z brzegu</strong> <br />
-        <small>(wędkowanie od 6:00 do zmierzchu, możliwość dokupienia trzeciej wędki za 10 zł)</small>
-      </li>
-      <li><strong>50 zł – doba karpiowa</strong> <br />
-        <small>(po wcześniejszym uzgodnieniu z właścicielem)</small>
-      </li>
-    </ul>
-  </section>
-  
-  )
-}
+    <section className={styles.pricingSection}>
+      <div className="container">
+        <h2 className={styles.heading}>
+          Cennik wędkowania <span>(sezon 2025)</span>
+        </h2>
 
-export default Price
+        <div className={styles.prices}>
+          <div className={styles.priceBox}>
+            <h3>30 zł – z brzegu</h3>
+            <p>
+              Wędkowanie od 6:00 do zmierzchu<br />
+              Możliwość dokupienia trzeciej wędki za 10 zł
+            </p>
+          </div>
+          <div className={styles.priceBox}>
+            <h3>50 zł – doba karpiowa</h3>
+            <p>
+              Po wcześniejszym uzgodnieniu<br />
+              z właścicielem
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.paymentInfo}>
+          <span className={styles.icon}>💳</span>
+          <p>
+            Możliwość opłaty online przez ikonę skrzynki „<strong>OPŁATA</strong>” w górnym rogu strony.
+          </p>
+          <a href="#oplata" className={styles.paymentLink}>
+            Przejdź do płatności
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Price;

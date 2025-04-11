@@ -1,25 +1,79 @@
-.pricing {
-    background-color: #fff;
-    padding: 3rem 1rem;
-    text-align: center;
-    border-radius: 12px;
-    margin-bottom: 3rem;
+.pricingSection {
+  padding-block: 3rem;
+  background-color: #f4faff;
+  text-align: center;
+}
+
+.heading {
+  font-size: clamp(1.8rem, 2vw + 1rem, 2.5rem);
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 2rem;
+}
+
+.heading span {
+  display: block;
+  font-size: 1rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.prices {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.priceBox {
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.priceBox h3 {
+  font-size: 1.4rem;
+  color: #111;
+  margin-bottom: 0.75rem;
+}
+
+.priceBox p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.paymentInfo {
+  margin-top: 3rem;
+  font-size: 1.05rem;
+  color: #222;
+}
+
+.icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.paymentLink {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #cc0000;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.paymentLink:hover {
+  background-color: #aa0000;
+}
+
+@media (min-width: 768px) {
+  .prices {
+    flex-direction: row;
   }
-  
-  .pricing h2 {
-    font-size: 1.8rem;
-    color: #003366;
-    margin-bottom: 1.5rem;
-  }
-  
-  .pricing ul {
-    list-style: none;
-    padding: 0;
-    font-size: 1.1rem;
-    color: #222;
-  }
-  
-  .pricing li {
-    margin-bottom: 1.5rem;
-  }
-  
+}

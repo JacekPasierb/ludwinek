@@ -6,7 +6,7 @@ export default function Hero() {
     <section className={styles.hero}>
       <div className={styles.overlay}>
         <Navbar />
-        <div className={styles.boxWrapper}>
+        <div className={styles.boxWrapper} id="oplata">
           <img src="/postBoxB.png" alt="Opłata" className={styles.postBox} />
         </div>
         <div className="container">

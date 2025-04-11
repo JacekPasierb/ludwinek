@@ -5,6 +5,7 @@
 .listFeatures {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   gap: 2rem;
 }
@@ -12,7 +13,7 @@
 @media (min-width: 481px) {
   .listFeatures {
     flex-direction: row;
-    gap: unset;
+   
     justify-content: space-around;
     margin-bottom: 1.5rem;
   }
