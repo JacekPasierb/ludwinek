@@ -1,34 +1,47 @@
+/* styles/navbar.module.css */
+
 .nav {
-    background-color: #003366;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    border-bottom-left-radius:20px ;
-    border-bottom-right-radius:20px ;
-    box-shadow: ;
-  }
-  
-  .logo {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .links {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .links li a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .links li a:hover {
-    text-decoration: underline;
-  }
-  
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+
+  background-color: rgba(0, 0, 0, 0.4); /* półprzezroczyste */
+  backdrop-filter: blur(8px); /* blur jak szkło */
+  color: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoImg {
+  height: 40px;
+  width: auto;
+}
+
+.links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+  text-transform: uppercase;
+}
+
+.links li a:hover {
+  color: #ffcc00;
+}

@@ -5,7 +5,14 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.nav}>
-        <div className={styles.logo}>Moje łowisko</div>
+        <div className={styles.logo}>
+          <img
+            src="/logoW.png"
+            alt="Ludwinek logo"
+            className={styles.logoImg}
+          />
+        </div>
+
         <ul className={styles.links}>
           <li>
             <Link href="/">Ludwinek</Link>
