@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/about.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 const About = () => {
   return (
@@ -52,6 +53,16 @@ const About = () => {
                 width={800}
                 height={500}
               />
+            </div>
+            <div className={styles.paymentInfo}>
+              <span className={styles.icon}>💳</span>
+              <p>
+                Możliwość opłaty online przez ikonę skrzynki „
+                <strong>OPŁATA</strong>” w górnym rogu strony.
+              </p>
+              <Link href="#oplata" className={styles.paymentLink}>
+                Przejdź do skrzynki
+              </Link>
             </div>
           </div>
         </div>

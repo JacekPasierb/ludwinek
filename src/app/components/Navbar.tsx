@@ -38,7 +38,7 @@ const Navbar = () => {
                 <Link href="/turnee">Zawody</Link>
               </li>
               <li>
-                <Link href="#">Kontakt</Link>
+                <Link href="/rules">Regulamin</Link>
               </li>
             </ul>
           </nav>

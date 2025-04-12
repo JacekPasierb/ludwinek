@@ -1,0 +1,51 @@
+{
+  "title": "Regulamin korzystania ze zbiorników wodnych należących do firmy EKO-TORF w Ludwinku",
+  "intro": "Przebywając na zbiornikach wodnych należących do firmy EKO-TORF potwierdzasz iż zapoznałeś się oraz akceptujesz warunki poniższego regulaminu korzystania z łowiska.",
+  "rules": [
+    "Zbiorniki wodne, a także tereny przynależne do zbiorników to teren prywatny. Każde przebywanie na tym terenie musi być wcześniej zapowiedziane właścicielowi lub osobom do tego upoważnionym.",
+    "Przed rozpoczęciem wędkowania należy wykupić zezwolenie umożliwiające wędkowanie. Zezwolenie należy wykupić w firmie EKO-TORF pod adresem: LUDWIN 1C.",
+    "Zezwolenie obowiązuje w dniu, w którym zostało wykupione. Zezwolenie przypisane jest na 1 osobę i ma charakter jednorazowy. Osoba towarzysząca niewędkująca nie ponosi opłaty za korzystanie ze zbiorników.",
+    "Brak zezwolenia równoznaczny jest z wtargnięciem na teren prywatny co skutkuje nałożeniem kary finansowej, natychmiastowym opuszczeniem łowiska oraz jeśli sytuacja tego wymaga, wezwaniem odpowiednich służb.",
+    "Zastrzegamy sobie prawo do przeprowadzenia kontroli posiadania zezwolenia na korzystanie ze zbiorników.",
+    "Na zbiornikach obowiązuje bezwzględny zakaz zabijania i zabierania karpi, amurów oraz tołpygi. Wymagane jest stosowanie zasady „Złów i Wypuść” dla tych gatunków ryb.",
+    "Wszystkie karpie, amury oraz tołpygi po złowieniu - muszą zostać z powrotem wypuszczone do wody! Przetrzymywanie ich w siatkach, skutkuje natychmiastową utratą zezwolenia bez zwrotu kosztów.",
+    "Zezwolenie dzienne obowiązuje od świtu do zmierzchu na dwie wędki z brzegu (możliwość dokupienia trzeciej wędki).",
+    "Zakaz wędkowania z łódki lub pontonu.",
+    "Korzystanie z środków pływających dozwolone tylko na zasadach karpiowych w celu wywózki zestawu lub holowania ryby.",
+    "Dozwolone są następujące metody wędkowania: spławikowa, gruntowa, spinningowa.",
+    "Nie ponosimy odpowiedzialności za korzystanie z pomostu drewnianego i za rzeczy pozostawione na nim pozostawione.",
+    "Korzystający ze zbiornika należy zachować ciszę i porządek.",
+    "Właściciel łowiska i inne osoby obsługujące mają prawo do: kontroli samochodów i bagaży, w przypadku podejrzenia o kradzieży ryb oraz wypraszania z terenu łowiska, w przypadku: głośnego zachowania, zaśmiecania i dewastacji.",
+    "Osoba biorąca udział w kradzieży naliczona zostanie kara w wysokości 200zł za każdy kilogram ryby. Osoba dopuszczająca się kradzieży zobowiązana jest to natychmiastowego opuszczenia łowiska. Równocześnie osoba taka będzie w przyszłości całkowicie zakaz wstępu na łowisko.",
+    "Dzieci poniżej 16 roku życia mogą przebywać na terenie łowiska tylko pod opieką osoby dorosłej, która ponosi za nie wszelką odpowiedzialność.",
+    "Na terenie łowiska zabronione jest: kąpiel, wjeżdżania samochodami na wszystkie groble, niszczenia przyrody (łamania gałęzi na podpórki pod wędki) oraz wędkowania z łódek lub pontonów.",
+    "Zakaz palenia surowym ogniem i zakaz stosowania orzecha tygrysiego.",
+    "Nagrania z monitoringu wykorzystywane będą jedynie przeciwko osobom naruszającym postanowienia regulaminu.",
+    "Wymagamy porządku i oraz mat lub kołysek."
+  ],
+  "fishAllowedInfo": {
+    "title": "Dopuszcza się w cenie zezwolenia zabranie ze sobą ryb następujących gatunków:",
+    "list": [
+      "Wzdręga (płoć) – max. 10 szt. (dot. wszystkich zbiorników)",
+      "Bekart (karaś) – max. 10 szt. (dot. wszystkich zbiorników)",
+      "Sumik karłowaty (koluch) – bez ograniczeń",
+      "Lin – max. 3 szt. (dot. wszystkich zbiorników)",
+      "Szczupak wymiarowy 50-75cm – 1 szt. (dot. zbiornika nr 1); NO KILL (0 szt. z nr 2 i 3)",
+      "Sum, Tołpyga – NO KILL (0 szt.) ze wszystkich zbiorników",
+      "Okoń – 4 szt. (zbiornik nr 1), NO KILL z nr 2 i 3"
+    ]
+  },
+  "fishBanNotice": "Przypominamy, że na łowisku obowiązuje całkowity zakaz zabierania ze sobą KARPIA, AMURA i TOŁPYGI.",
+  "contact": {
+    "info": "Więcej informacji pod numerami:",
+    "phones": [
+      "691 911 777",
+      "609 193 579"
+    ],
+    "facebook": "https://www.facebook.com/lowiskoludwinek",
+    "website": "https://www.lowiskoludwinek.pl"
+  },
+  "entryNotice": "WSTĘP NA ŁOWISKA TYLKO PO WCZEŚNIEJSZYM WYKUPIENIU ZEZWOLENIA W SIEDZIBIE FIRMY EKO-TORF",
+  "paymentAddress": "ADRES DOKONYWANIA OPŁAT ZA ZEZWOLENIE: LUDWIN 1C FIRMA EKO TORF",
+  "closingNote": "Prosimy o stosowanie się do zasad regulaminu. Z góry dziękujemy."
+}

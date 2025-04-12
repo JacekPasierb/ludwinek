@@ -13,7 +13,7 @@ export default function LudwinekPage() {
       <Features />
       <About />
 
-      <Price />
+      {/* <Price /> */}
       {/* <Regulations />
       <Contact />
       <Reservation /> */}

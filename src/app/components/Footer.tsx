@@ -1,15 +1,18 @@
-import styles from '../styles/footer.module.css';
+import React from "react";
+import styles from "../styles/footer.module.css";
 
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <div className="container">
-        <p>&copy; {new Date().getFullYear()} Łowisko Eko-Torf Ludwinek. Wszelkie prawa zastrzeżone.</p>
-        <div className={styles.links}>
-          <a href="#">Polityka prywatności</a>
+      <div className={styles.footerInner}>
+        <div>© 2025 Łowisko Eko-Torf Ludwinek</div>
+        <div className={styles.footerLinks}>
+          <a href="/polityka-prywatnosci">Polityka prywatności</a>
           <a href="mailto:kontakt@ekotorf.pl">kontakt@ekotorf.pl</a>
         </div>
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

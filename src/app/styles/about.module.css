@@ -20,22 +20,20 @@
   flex-direction: column;
   justify-content: space-around;
   text-align: center;
-
- 
 }
 
 .listCheck {
   list-style: none;
-display: flex;
-flex-direction: column;
-margin: 0 auto;
-margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 2rem;
 }
 .listCheck__item {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+
   text-align: center;
   margin-bottom: 1.5rem;
   gap: 0.5rem;
@@ -48,14 +46,40 @@ margin-top: 2rem;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  
 }
 
-@media (min-width: 768px){
-    .leftSide {
-        padding-inline: 8rem;
-    }
+.paymentInfo {
+  margin-top: 3rem;
+  color: #000000;
+  font-size: 1.05rem;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.paymentLink {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #cc0000;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(255, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.paymentLink:hover {
+  background-color: #aa0000;
+}
+
+@media (min-width: 768px) {
+  .leftSide {
+    padding-inline: 8rem;
+  }
 }
 
 @media (min-width: 1200px) {
