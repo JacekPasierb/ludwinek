@@ -1,8 +1,7 @@
 "use client";
 
-import styles from "../styles/competitionSection.module.css";
 import Image from "next/image";
-import { FaPhoneAlt } from "react-icons/fa";
+import styles from "../styles/competitionSection.module.css";
 
 const competitions = [
   {
@@ -26,37 +25,40 @@ const competitions = [
 export default function CompetitionsSection() {
   return (
     <section className={styles.section}>
-      <h2 className={styles.heading}>Najbliższe Zawody</h2>
+      <h2 className={styles.heading}>Zawody wędkarskie</h2>
       <div className={styles.grid}>
         {competitions.map((comp, idx) => (
           <div key={idx} className={styles.card}>
-            <Image
-              src={comp.image}
-              alt={comp.title}
-              width={500}
-              height={300}
-              className={styles.image}
-            />
-            <div className={styles.content}>
-              <h3>{comp.title}</h3>
-              <p className={styles.meta}><strong>📅 {comp.date}</strong></p>
-              <p className={styles.meta}><strong>📍 {comp.location}</strong></p>
-              <p><strong>🎯 Typ:</strong> {comp.type} | <strong>🎣 Metoda:</strong> {comp.method}</p>
-              <p>{comp.description}</p>
-
-              <div className={styles.scheduleBox}>
-                <p><strong>📋 Harmonogram:</strong></p>
-                <ul>
-                  {comp.schedule.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
+            <div className={styles.top}>
+              <Image
+                src={comp.image}
+                alt={comp.title}
+                width={240}
+                height={160}
+                className={styles.image}
+              />
+              <div className={styles.metaContent}>
+                <h3 className={styles.title}>{comp.title}</h3>
+                <p className={styles.meta}> {comp.date}</p>
+                <p className={styles.meta}> {comp.location}</p>
+                <p className={styles.meta}> Typ: {comp.type} |  Metoda: {comp.method}</p>
               </div>
+            </div>
 
-              <div className={styles.contactBox}>
-                <p><strong>📞 Zgłoszenia:</strong> {comp.contact}</p>
-                <button className={styles.signupBtn}>Weź udział</button>
-              </div>
+            <p className={styles.description}>{comp.description}</p>
+
+            <div className={styles.scheduleBox}>
+              <p className={styles.scheduleTitle}>Harmonogram:</p>
+              <ul>
+                {comp.schedule.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.bottomBox}>
+              <p className={styles.contact}> Zgłoszenia: <strong>{comp.contact}</strong></p>
+              <button className={styles.signupBtn}>Weź udział</button>
             </div>
           </div>
         ))}

@@ -10,7 +10,7 @@ export default function Hero() {
           <img src="/postBoxB.png" alt="Opłata" className={styles.postBox} />
         </div>
         <div className="container">
-          <h1 className={styles.title}>LOWISKO EKO-TORF LUDWINEK</h1>
+          <h1 className={styles.title}>ŁOWISKO EKO-TORF LUDWINEK</h1>
           <p className={styles.subtitle}>
             Profesjonalne łowisko w sercu Lubelszczyzny
           </p>
