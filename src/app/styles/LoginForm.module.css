@@ -3,7 +3,7 @@
   padding: 2rem;
   max-width: 420px;
   width: 95%;
-  
+
   background-color: #f3f5ef; /* jaśniejsze, pasuje do natury */
   border: 1px solid #d2d7cb;
   border-radius: 12px;
@@ -13,6 +13,9 @@
   gap: 1rem;
 }
 
+.imgWrapper {
+  align-self: center;
+}
 .title {
   text-align: center;
   font-size: 1.4rem;

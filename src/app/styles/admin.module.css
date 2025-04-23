@@ -1,45 +1,51 @@
 .container {
-    min-height: 100vh;
-    background-color: #111;
-    color: #fff;
-    padding: 4rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #f5f8ee;
+
+  border-right: 1px solid #ccc;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding-block: 1rem;
+  background-color: #f5f8ee;
+}
+
+.sidebar li:hover {
+    padding-block: 1rem;
+    background-color: #c5c8be;
+    cursor: pointer;
   }
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  padding-inline: 1rem;
   
-  .title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .nav {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 500px;
-    gap: 1rem;
-  }
-  
-  .nav a {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    background-color: #222;
-    color: #eee;
-    transition: background 0.2s ease, transform 0.1s ease;
-  }
-  
-  .nav a:hover {
-    background-color: #333;
-    transform: translateX(5px);
-  }
-  
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #fff;
+  overflow-y: auto;
+}

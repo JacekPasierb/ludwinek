@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import {useState} from "react";
+import {signIn} from "next-auth/react";
 import styles from "../styles/LoginForm.module.css";
+import Image from "next/image";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -26,7 +27,10 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <h2 className={styles.title}>🔐 Logowanie administratora</h2>
+      <div className={styles.imgWrapper}>
+        <Image src={"/logo.png"} alt={"Logo"} width={80} height={80} />
+      </div>
+      <h2 className={styles.title}>🔐 Panel Administracyjny</h2>
       <input
         type="text"
         placeholder="Login"
@@ -41,7 +45,9 @@ export default function LoginForm() {
         onChange={(e) => setPassword(e.target.value)}
         className={styles.input}
       />
-      <button type="submit" className={styles.button}>Zaloguj się</button>
+      <button type="submit" className={styles.button}>
+        Zaloguj się
+      </button>
       {error && <p className={styles.error}>{error}</p>}
     </form>
   );
