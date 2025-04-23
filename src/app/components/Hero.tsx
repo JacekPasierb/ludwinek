@@ -1,7 +1,16 @@
+"use client"
+
+import { usePathname } from "next/navigation";
 import styles from "../styles/hero.module.css";
 import Navbar from "./Navbar";
 
 export default function Hero() {
+
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
+
+  if(isAdmin) return null
+
   return (
     <section className={styles.hero}>
       <div className={styles.overlay}>
