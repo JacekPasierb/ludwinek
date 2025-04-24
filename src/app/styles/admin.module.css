@@ -24,19 +24,22 @@
 .sidebar li {
   padding-block: 1rem;
   background-color: #f5f8ee;
+  transition: all 0.2s;
 }
 
 .sidebar li:hover {
-    padding-block: 1rem;
-    background-color: #c5c8be;
-    cursor: pointer;
-  }
+  padding-block: 1rem;
+  background-color: #c5c8be;
+  cursor: pointer;
+}
 
 .sidebar a {
-  text-decoration: none;
+  text-decoration: none !important;
   color: #333;
   padding-inline: 1rem;
-  
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .sidebar a:hover {
@@ -48,4 +51,16 @@
   padding: 2rem;
   background-color: #fff;
   overflow-y: auto;
+}
+
+.btnLogout {
+  background-color: #333;
+  border: 1px solid #333;
+
+  color: #fff;
+  padding: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+
+  text-transform: uppercase;
 }

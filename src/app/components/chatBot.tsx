@@ -5,6 +5,7 @@ import styles from "../styles/chatbot.module.css";
 
 import {FaComments, FaTimes} from "react-icons/fa";
 import {getChatbotResponse} from "../../lib/chatBotLogic";
+import { usePathname } from "next/navigation";
 
 interface ChatMessage {
   sender: string;
@@ -18,7 +19,11 @@ export default function Chatbot() {
   const [idleTime, setIdleTime] = useState(0);
   const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
 
+  if(isAdmin) return null
+  
   useEffect(() => {
     if (!open) return;
 
