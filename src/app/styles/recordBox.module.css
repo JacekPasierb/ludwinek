@@ -1,7 +1,7 @@
 .recordBox {
     position: fixed;
     bottom: 2rem;
-    right: 2rem;
+    left: 2rem;
     background-color: #ffffff;
     padding: 1rem 1.5rem;
     border-radius: 12px;
