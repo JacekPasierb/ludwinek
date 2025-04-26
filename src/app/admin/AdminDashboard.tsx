@@ -17,7 +17,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({children}) => {
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <button
-          onClick={() => signOut({callbackUrl: "/"})}
+          onClick={() => signOut({callbackUrl: `${window.location.origin}`})}
         
           className={styles.btnLogout}
         >
