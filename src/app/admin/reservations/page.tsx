@@ -20,57 +20,58 @@ export default function Page() {
 
   return (
     <section className={styles.section}>
-    <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
-
-    <div className={styles.filter}>
-      <label htmlFor="date">Wybierz datę:</label>
-      <input
-        id="date"
-        type="date"
-        value={selectedDate}
-        onChange={(e) => setSelectedDate(e.target.value)}
-      />
-    </div>
-    <div className={styles.filterGroup}>
-      <div className={styles.filter}>
-        <label htmlFor="search">🔍 Szukaj po imieniu/nazwisku:</label>
-        <input
-          id="search"
-          type="text"
-          placeholder="np. Jan..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
+      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
+        <div className={styles.filter}>
+          <label htmlFor="date">Wybierz datę:</label>
+          <input
+            id="date"
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </div>
+        <div className={styles.filterGroup}>
+          <div className={styles.filter}>
+            <label htmlFor="search">🔍 Szukaj po imieniu/nazwisku:</label>
+            <input
+              id="search"
+              type="text"
+              placeholder="np. Jan..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div className={styles.list}>
-      {filtered.length > 0 ? (
+      <div className={styles.list}>
+        {filtered.length > 0 ? (
           <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Imię i nazwisko</th>
-              <th>Telefon</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((r, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{r.name}</td>
-                <td>{r.phone}</td>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Imię i nazwisko</th>
+                <th>Telefon</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p className={styles.empty}>
-          Brak rezerwacji spełniających kryteria.
-        </p>
-      )}
-    </div>
-  </section>
+            </thead>
+            <tbody>
+              {filtered.map((r, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{r.name}</td>
+                  <td>{r.phone}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className={styles.empty}>
+            Brak rezerwacji spełniających kryteria.
+          </p>
+        )}
+      </div>
+    </section>
     // <section className={styles.section}>
     //   <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
 

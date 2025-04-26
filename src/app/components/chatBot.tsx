@@ -22,7 +22,6 @@ export default function Chatbot() {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
-  if(isAdmin) return null
   
   useEffect(() => {
     if (!open) return;
@@ -79,6 +78,7 @@ export default function Chatbot() {
     }
   }, [open]);
 
+  if(isAdmin) return null
   return (
     <>
       <div
