@@ -16,7 +16,7 @@ export default function LoginForm() {
       username,
       password,
       redirect: false,
-      callbackUrl: `${window.location.origin}/admin`,
+      callbackUrl: "/admin",
     });
     if (result?.ok) {
       window.location.href = result.url || "/admin";
