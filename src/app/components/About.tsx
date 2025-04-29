@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const About = () => {
   return (
-    <section className={styles.sectionAbout}>
+    <section className={styles.sectionAbout} id="about">
       <div className="container">
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
@@ -16,19 +16,19 @@ const About = () => {
             </p>
             <ul className={styles.listCheck}>
               <li className={styles.listCheck__item}>
-                <img src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
                 <p className={styles.description}>
                   Do dyspozycji wędkarzy są trzy starannie zarybione zbiorniki.
                 </p>
               </li>
               <li className={styles.listCheck__item}>
-                <img src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
                 <p className={styles.description}>
                   Dbamy o środowisko, dlatego obowiązuje zasada "no kill".
                 </p>
               </li>
               <li className={styles.listCheck__item}>
-                <img src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
                 <p className={styles.description}>
                   Regularne zarybianie, cisza i bliskość natury to nasze
                   największe atuty.

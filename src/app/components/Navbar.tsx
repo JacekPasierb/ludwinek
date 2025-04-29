@@ -4,6 +4,7 @@ import React from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
 import {useViewport} from "../hooks/useViewport";
+import Image from "next/image";
 
 const Navbar = () => {
   const {isTablet, isMobile} = useViewport();
@@ -13,9 +14,11 @@ const Navbar = () => {
     <div className={styles.navBar}>
       <div className={`${styles.navBar__wrapper} container`}>
         <div className={styles.logo}>
-          <img
+          <Image
             src="/logoW.png"
             alt="Ludwinek logo"
+            width={40}
+            height={40}
             className={styles.logoImg}
           />
         </div>
@@ -32,7 +35,7 @@ const Navbar = () => {
                 <Link href="/">Ludwinek</Link>
               </li>
               <li>
-                <Link href="/relacje">Relacje</Link>
+                <Link href="/relations">Relacje</Link>
               </li>
               <li>
                 <Link href="/turnee">Zawody</Link>

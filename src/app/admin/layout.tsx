@@ -1,12 +1,10 @@
 import {getServerSession} from "next-auth";
 
 import {redirect} from "next/navigation";
-import LoginForm from "../components/LoginForm";
-import Link from "next/link";
+import {LoginForm} from "../components/LoginForm";
 
-import styles from "../styles/admin.module.css";
 import AdminDashboard from "./AdminDashboard";
-import { authOptions } from "../../lib/auth";
+import {authOptions} from "../../lib/auth";
 
 interface AdminDashboardProps {
   children: React.ReactNode;

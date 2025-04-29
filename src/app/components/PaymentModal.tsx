@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import styles from "../styles/paymentModal.module.css"; // zaraz przygotuję też styl
+import styles from "../styles/paymentModal.module.css"; 
 
 export default function PaymentModal({
   isOpen,
@@ -24,8 +24,8 @@ export default function PaymentModal({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Dane do opłaty:", form);
-    // Tutaj potem będzie integracja z płatnością np. PayU
-    onClose(); // zamykamy modal po wysłaniu
+  
+    onClose(); 
   };
 
     if (!isOpen) return null;

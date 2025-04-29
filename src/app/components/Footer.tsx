@@ -4,8 +4,9 @@ import React from "react";
 import styles from "../styles/footer.module.css";
 import {FaPhone, FaMapMarkerAlt, FaFacebookF} from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -20,23 +21,23 @@ export default function Footer() {
             />
           </div>
           <div className={styles.icons}>
-            <a href="tel:600123456">
+            <Link href="tel:600123456">
               <FaPhone />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://maps.google.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaMapMarkerAlt />
-            </a>
-            <a
+            </Link>
+            <Link
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaFacebookF />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -49,16 +50,9 @@ export default function Footer() {
 
         <div className={styles.column}>
           <h4>Łowisko:</h4>
-          <a href="/regulamin">Regulamin</a>
-          <a href="/mapa-lowiska">Mapa Łowiska</a>
-          <a href="/rezerwacje">Rezerwacje</a>
-        </div>
-
-        <div className={styles.column}>
-          <h4>Menu:</h4>
-          <a href="/o-lowisku">O łowisku</a>
-          <a href="/galeria">Galeria</a>
-          <a href="/kontakt">Kontakt</a>
+          <Link href="/#about">O łowisku</Link>
+          <Link href="/rules">Regulamin</Link>
+          <Link href="#oplata">Rezerwacje</Link>
         </div>
       </div>
 
@@ -68,4 +62,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};

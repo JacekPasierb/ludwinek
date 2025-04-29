@@ -8,7 +8,7 @@ if (!MONGODB_URI) {
   throw new Error("⚠️ Brakuje zmiennej środowiskowej MONGODB_URI");
 }
 
-// 👇 Rozszerzamy typ globalThis o mongoose
+
 declare global {
   const mongoose: {
     conn: typeof mongoose | null;

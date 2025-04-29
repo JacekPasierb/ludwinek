@@ -5,7 +5,7 @@ import {signIn} from "next-auth/react";
 import styles from "../styles/LoginForm.module.css";
 import Image from "next/image";
 
-export default function LoginForm() {
+export const LoginForm = ()=> {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

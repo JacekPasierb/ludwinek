@@ -5,14 +5,15 @@ import styles from "../styles/chatbot.module.css";
 
 import {FaComments, FaTimes} from "react-icons/fa";
 import {getChatbotResponse} from "../../lib/chatBotLogic";
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
+import Image from "next/image";
 
 interface ChatMessage {
   sender: string;
   text: string;
 }
 
-export default function Chatbot() {
+export const Chatbot = () => {
   const [input, setInput] = useState("");
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [open, setOpen] = useState(false);
@@ -22,7 +23,6 @@ export default function Chatbot() {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
-  
   useEffect(() => {
     if (!open) return;
 
@@ -30,11 +30,11 @@ export default function Chatbot() {
 
     idleTimeoutRef.current = setTimeout(() => {
       setIdleTime((prev) => prev + 1);
-    }, 30000); // 30 sekund
+    }, 30000);
   }, [chat, open]);
   useEffect(() => {
     if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+      chatEndRef.current.scrollIntoView({behavior: "smooth"});
     }
   }, [chat]);
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function Chatbot() {
     }
   }, [open]);
 
-  if(isAdmin) return null
+  if (isAdmin) return null;
   return (
     <>
       <div
@@ -91,10 +91,12 @@ export default function Chatbot() {
 
       <div className={`${styles.chatbot} ${open ? styles.active : ""}`}>
         <div className={styles.chatHeader}>
-          <img
+          <Image
             src="/botAvatar.png"
             alt="Bot Avatar"
             className={styles.botAvatar}
+            width={32}
+            height={32}
           />
           <span className={styles.botTitle}>Czat z Ludwinkiem</span>
         </div>
@@ -104,31 +106,33 @@ export default function Chatbot() {
               {msg.text}
             </div>
           ))}
-           {idleTime >= 2 && (
-    <div className={styles.chatEndInfo}>
-      <hr />
-      <span>Koniec rozmowy</span>
-      <hr />
-    </div>
-  )} <div ref={chatEndRef} />
+          {idleTime >= 2 && (
+            <div className={styles.chatEndInfo}>
+              <hr />
+              <span>Koniec rozmowy</span>
+              <hr />
+            </div>
+          )}{" "}
+          <div ref={chatEndRef} />
         </div>
-        {idleTime <2 && <form onSubmit={handleSubmit} className={styles.form}>
-          <input
-            type="text"
-            placeholder="Wpisz pytanie..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className={styles.input}
-          />
-          <button type="submit" className={styles.button}>
-            Wyślij
-          </button>
-        </form>}
+        {idleTime < 2 && (
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <input
+              type="text"
+              placeholder="Wpisz pytanie..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className={styles.input}
+            />
+            <button type="submit" className={styles.button}>
+              Wyślij
+            </button>
+          </form>
+        )}
         {idleTime >= 2 && (
           <button
             className={styles.restartBtn}
             onClick={() => {
-              
               setIdleTime(0);
               setChat([
                 {
@@ -144,4 +148,4 @@ export default function Chatbot() {
       </div>
     </>
   );
-}
+};

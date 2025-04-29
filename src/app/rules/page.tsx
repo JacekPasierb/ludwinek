@@ -3,6 +3,7 @@
 import React from "react";
 import rules from "../../data/rules.json";
 import styles from "../styles/rules.module.css";
+import Link from "next/link";
 
 const Page = () => {
   return (
@@ -33,29 +34,28 @@ const Page = () => {
             <strong>{rules.contact.info}</strong>
           </p>
           <p>{rules.contact.phones.join(" / ")}</p>
-          <a href={rules.contact.facebook} className={styles.link}>
+          <Link href={rules.contact.facebook} className={styles.link}>
             Facebook
-          </a>
-          <a href={rules.contact.website} className={styles.link}>
+          </Link>
+          <Link href={rules.contact.website} className={styles.link}>
             Strona WWW
-          </a>
+          </Link>
         </div>
 
         <p className={styles.notice}>{rules.entryNotice}</p>
         <p className={styles.contactBox}>{rules.paymentAddress}</p>
         <p className={styles.intro}>{rules.closingNote}</p>
         <div className={styles.downloadBox}>
-        <p>Pełna wersja regulaminu dostępna w formacie PDF:</p>
-        <a
-          href="/regulamin_eko_torf.pdf"
-          className={styles.downloadBtn}
-          download
-        >
-          Pobierz regulamin (PDF)
-        </a>
+          <p>Pełna wersja regulaminu dostępna w formacie PDF:</p>
+          <Link
+            href="/regulamin_eko_torf.pdf"
+            className={styles.downloadBtn}
+            download
+          >
+            Pobierz regulamin (PDF)
+          </Link>
+        </div>
       </div>
-      </div>
-    
     </section>
   );
 };

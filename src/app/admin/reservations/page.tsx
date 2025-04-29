@@ -21,7 +21,13 @@ export default function Page() {
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
-      <div style={{display: "flex", flexDirection: "row", justifyContent:"space-around"}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
+      >
         <div className={styles.filter}>
           <label htmlFor="date">Wybierz datę:</label>
           <input
@@ -72,45 +78,5 @@ export default function Page() {
         )}
       </div>
     </section>
-    // <section className={styles.section}>
-    //   <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
-
-    //   <div className={styles.filter}>
-    //     <label htmlFor="date">Wybierz datę:</label>
-    //     <input
-    //       id="date"
-    //       type="date"
-    //       value={selectedDate}
-    //       onChange={(e) => setSelectedDate(e.target.value)}
-    //     />
-    //   </div>
-    //   <div className={styles.filterGroup}>
-    //     <div className={styles.filter}>
-    //       <label htmlFor="search">🔍 Szukaj po imieniu/nazwisku:</label>
-    //       <input
-    //         id="search"
-    //         type="text"
-    //         placeholder="np. Jan..."
-    //         value={search}
-    //         onChange={(e) => setSearch(e.target.value)}
-    //       />
-    //     </div>
-    //   </div>
-
-    //   <div className={styles.list}>
-    //     {filtered.length > 0 ? (
-    //       filtered.map((r, i) => (
-    //         <div key={i} className={styles.card}>
-    //           <p className={styles.name}>{r.name}</p>
-    //           <p className={styles.phone}>📞 {r.phone}</p>
-    //         </div>
-    //       ))
-    //     ) : (
-    //       <p className={styles.empty}>
-    //         Brak rezerwacji spełniających kryteria.
-    //       </p>
-    //     )}
-    //   </div>
-    // </section>
   );
 }

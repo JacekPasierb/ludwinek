@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 import styles from "../styles/hero.module.css";
 import Navbar from "./Navbar";
 import Image from "next/image";
-import { useState } from "react";
+import {useState} from "react";
 import PaymentModal from "./PaymentModal";
 
-export default function Hero() {
-
+export const Hero = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  if(isAdmin) return null
+  if (isAdmin) return null;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -19,17 +18,33 @@ export default function Hero() {
       <div className={styles.overlay}>
         <Navbar />
         <div className={styles.boxWrapper} id="oplata">
-          <img src="/postBoxB.png" alt="Opłata" className={styles.postBox} onClick={()=>setIsModalOpen(true)} />
+          <Image
+            src="/postBoxB.png"
+            alt="Opłata"
+            width={100}
+            height={150}
+            className={styles.postBox}
+            onClick={() => setIsModalOpen(true)}
+          />
         </div>
         <div className="container">
           <h1 className={styles.title}>ŁOWISKO EKO-TORF LUDWINEK</h1>
           <p className={styles.subtitle}>
             Profesjonalne łowisko w sercu Lubelszczyzny
           </p>
-          <img src="/logoB.png" alt="Opłata" className={styles.heroIcon}  />
+          <Image
+            src="/logoB.png"
+            alt="Opłata"
+            width={230}
+            height={128}
+            className={styles.heroIcon}
+          />
         </div>
       </div>
-      <PaymentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
-}
+};
