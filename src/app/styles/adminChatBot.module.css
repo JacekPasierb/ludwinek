@@ -1,0 +1,174 @@
+.section {
+  padding: 2rem;
+}
+
+.heading {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.addBtn {
+  padding: 0.6rem 1.2rem;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th {
+  background-color: #e9ecef;
+  text-align: left;
+  padding: 0.8rem;
+}
+
+.table td {
+  padding: 0.8rem;
+  border-top: 1px solid #ccc;
+}
+
+.table tr:hover {
+  background-color: #f1f3f5;
+}
+
+.questionList {
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.questionList li {
+  list-style: decimal;
+}
+
+.table td:nth-child(1) {
+  background-color: #0066cc;
+}
+.table td:nth-child(1):hover {
+  background-color: #0066cc;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background: #eee;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination .activePage {
+  background: #0066cc;
+  color: white;
+  font-weight: bold;
+}
+
+.editInput {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+}
+
+.editInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.editActions {
+  display: flex;
+  gap: 8px;
+}
+
+.saveBtn,
+.cancelBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cancelBtn {
+  background-color: #aaa;
+}
+
+.cancelBtn:hover {
+  background-color: #888;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  padding: 4px 10px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border: 1px solid #ccc;
+
+  cursor: pointer;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.actionBtn:hover {
+  box-shadow: 0 0 8px #ccc;
+}
+
+.editBtn {
+  color: #ccc;
+}
+
+.deleteBtn {
+  color: #dc3545;
+}
+
+
