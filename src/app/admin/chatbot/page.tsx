@@ -33,9 +33,9 @@ export default function Page() {
   const handleEdit = (item: any) => {
     console.log("git");
     
-    // setEditingId(item._id);
-    // setEditQuestionsText(item.questions.join(", "));
-    // setEditAnswer(item.answer);
+    setEditingId(item._id);
+    setEditQuestionsText(item.questions.join(", "));
+    setEditAnswer(item.answer);
   };
 
   const handleSave = async () => {
