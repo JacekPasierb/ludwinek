@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongo";
 import ChatBot from "@/models/ChatBot";
 
+// ✅ PUT – edycja
 export async function PUT(req: Request, context: { params: { id: string } }) {
   try {
     await connectToDatabase();
@@ -13,6 +14,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   }
 }
 
+// ✅ DELETE – usuwanie
 export async function DELETE(req: Request, context: { params: { id: string } }) {
   try {
     await connectToDatabase();
