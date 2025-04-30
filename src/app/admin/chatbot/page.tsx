@@ -31,9 +31,11 @@ export default function Page() {
 
   const paginatedData = filtered.slice(startIndex, startIndex + pageSize);
   const handleEdit = (item: any) => {
-    setEditingId(item._id);
-    setEditQuestionsText(item.questions.join(", "));
-    setEditAnswer(item.answer);
+    console.log("git");
+    
+    // setEditingId(item._id);
+    // setEditQuestionsText(item.questions.join(", "));
+    // setEditAnswer(item.answer);
   };
 
   const handleSave = async () => {
@@ -52,9 +54,11 @@ export default function Page() {
     mutate(); // odśwież dane
   };
   const handleDelete = async (id: string) => {
-    if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
-    await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
-    mutate();
+    console.log("git");
+
+    // if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
+    // await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
+    // mutate();
   };
 
   const handleAdd = async () => {
