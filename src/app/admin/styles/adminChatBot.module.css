@@ -2,32 +2,31 @@
   padding: 2rem;
 }
 
-.heading {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #003366;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .filters {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
+
 }
 
 .filter {
   display: flex;
   flex-direction: column;
+  max-width: 400px;
 }
 
 .filter input {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  background-color: transparent;
+  color: black;
+}
+
+.filter label {
+  margin-bottom: 1rem;
 }
 
 .addBtn {
@@ -37,6 +36,9 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  align-self: flex-start;
+  text-transform: uppercase;
+ 
 }
 
 .table {
@@ -169,5 +171,3 @@
 .deleteBtn {
   color: #dc3545;
 }
-
-

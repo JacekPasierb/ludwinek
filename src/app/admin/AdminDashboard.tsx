@@ -1,56 +1,42 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import styles from "../styles/admin.module.css";
 import {signOut} from "next-auth/react";
-import {LuNewspaper, LuPencilLine, LuScrollText} from "react-icons/lu";
-import {BsNewspaper} from "react-icons/bs";
-import { BiBot, BiTrophy } from "react-icons/bi";
+import {usePathname} from "next/navigation";
+import NavLinks from "./ui/nav-links";
 
 interface AdminDashboardProps {
   children: React.ReactNode;
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({children}) => {
+  const pathname = usePathname();
+
+  const pageTitles: Record<string, string> = {
+    "/admin/chatbot": "🤖 Zarządzanie chatbotem",
+    "/admin/reservations": "📅 Lista rezerwacji",
+    "/admin/relations": "Zarządzanie relacjami",
+  };
+
+  const title =
+    pageTitles[pathname] || "Witaj w centrum zarządzania łowiskiem.";
+
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <button
           onClick={() => signOut({callbackUrl: `${window.location.origin}`})}
-        
           className={styles.btnLogout}
         >
           Wyloguj się
         </button>
-        <ul>
-          <li className={styles.listItem}>
-            <Link href="/admin/reservations">
-              <LuScrollText size={28} /> Rezerwacje
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/admin/relations">
-              <LuPencilLine size={28} />
-              Relacje
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/admin/turne"><BiTrophy size={28}/>Zawody</Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/admin/chatbot"><BiBot size={28}/>Chatbot</Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/">← Wróć na stronę</Link>
-          </li>
-        </ul>
+        <NavLinks />
       </aside>
 
       <main className={styles.main}>
-        
-        <h1>Panel administratora</h1>
-        <p>Witaj w centrum zarządzania łowiskiem.</p>
+        <h2 className={styles.heading}>{title}</h2>
+        <div className={styles.line}></div>
         {children}
       </main>
     </div>

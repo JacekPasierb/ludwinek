@@ -41,7 +41,6 @@ export default function Page() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.heading}>📅 Lista rezerwacji</h2>
 
       <div
         style={{

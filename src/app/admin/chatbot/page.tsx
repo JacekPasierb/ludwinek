@@ -2,7 +2,8 @@
 
 import React, {useState} from "react";
 import useSWR from "swr";
-import styles from "../../styles/adminChatBot.module.css";
+import styles from "../styles/adminChatBot.module.css";
+import Subtitle from "../ui/subtitle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -36,7 +37,7 @@ export default function Page() {
     setEditAnswer(item.answer);
   };
 
-  const handleSave = async () => {
+  const handleUpdateEntry = async () => {
     const questionsArray = editQuestionsText
       .split(",")
       .map((q) => q.trim())
@@ -57,7 +58,7 @@ export default function Page() {
     mutate();
   };
 
-  const handleAdd = async () => {
+  const handleCreateEntry = async () => {
     if (!questionsText || !answer) return;
 
     const questionsArray = questionsText
@@ -78,7 +79,7 @@ export default function Page() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.heading}>🤖 Zarządzanie chatbotem</h2>
+      <Subtitle title={"I Tworzenie Zapytan"} />
 
       <div className={styles.filters}>
         <div className={styles.filter}>
@@ -102,11 +103,15 @@ export default function Page() {
           />
         </div>
         <div className={styles.filter}>
-          <label style={{visibility: "hidden"}}>Dodaj</label>
-          <button onClick={handleAdd} className={styles.addBtn}>
-            ➕ Dodaj wpis
+          <label style={{display: "none"}}>Dodaj</label>
+          <button onClick={handleCreateEntry} className={styles.addBtn}>
+            ➕ Dodaj interakcje
           </button>
         </div>
+      </div>
+
+      <div className={styles.list}>
+        <Subtitle title={"II Edycja Zapytań"} />
         <div className={styles.filter}>
           <label htmlFor="search">🔍 Szukaj pytania:</label>
           <input
@@ -120,9 +125,6 @@ export default function Page() {
             placeholder="np. cennik, jak zapłacić..."
           />
         </div>
-      </div>
-
-      <div className={styles.list}>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -135,13 +137,10 @@ export default function Page() {
           <tbody>
             {paginatedData.map((item: any, i: number) =>
               editingId === item._id ? (
-            
                 <tr key={item._id} style={{backgroundColor: "lightyellow"}}>
-                  
                   <td>{startIndex + i + 1}</td>
-                  
+
                   <td>
-             
                     <input
                       className={styles.editInput}
                       value={editQuestionsText}
@@ -157,7 +156,7 @@ export default function Page() {
                   </td>
                   <td className={styles.actions}>
                     <button
-                      onClick={handleSave}
+                      onClick={handleUpdateEntry}
                       className={`${styles.editBtn} ${styles.actionBtn}`}
                     >
                       💾 Zapisz

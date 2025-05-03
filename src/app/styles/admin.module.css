@@ -15,23 +15,12 @@
   margin-bottom: 1rem;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 
-.sidebar li {
-  padding-block: 1rem;
-  background-color: #f5f8ee;
-  transition: all 0.2s;
-}
 
-.sidebar li:hover {
-  padding-block: 1rem;
-  background-color: #c5c8be;
-  cursor: pointer;
-}
+
+
+
+
 
 .sidebar a {
   text-decoration: none !important;
@@ -48,11 +37,35 @@
 
 .main {
   flex: 1;
-  padding: 2rem;
   background-color: #fff;
   overflow-y: auto;
+padding-block: 2rem;
 }
 
+.main h1 {
+  text-transform: uppercase;
+  margin-left: 2rem;
+}
+
+.main p {
+  margin-left: 2rem;
+
+}
+
+.heading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  text-transform: uppercase;
+
+
+}
 .btnLogout {
   background-color: #333;
   border: 1px solid #333;
@@ -63,4 +76,10 @@
   width: 100%;
 
   text-transform: uppercase;
+}
+
+.line {
+  background-color: #c5c8be;
+  min-height: 1px;
+  margin-top: 1rem;
 }

@@ -1,0 +1,16 @@
+.listItem {
+  padding-block: 1rem;
+  background-color: #f5f8ee;
+  transition: all 0.2s;
+}
+
+.listItem:hover {
+  padding-block: 1rem;
+  background-color: #c5c8be;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #c5c8be;
+  cursor: default !important;
+}

@@ -1,14 +1,10 @@
 .section {
     max-width: 1200px;
     margin: 0 auto;
+    padding-block: 2rem;
   }
   
-  .heading {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #003366;
-  }
+
   
   .filter {
     display: flex;

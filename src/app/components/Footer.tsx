@@ -5,8 +5,12 @@ import styles from "../styles/footer.module.css";
 import {FaPhone, FaMapMarkerAlt, FaFacebookF} from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Footer = () => {
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith("/admin");
+  if (isAdmin) return null;
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
