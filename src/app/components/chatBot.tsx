@@ -25,18 +25,19 @@ export const Chatbot = () => {
 
   useEffect(() => {
     if (!open) return;
-
     if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
 
     idleTimeoutRef.current = setTimeout(() => {
       setIdleTime((prev) => prev + 1);
     }, 30000);
   }, [chat, open]);
+
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({behavior: "smooth"});
     }
   }, [chat]);
+
   useEffect(() => {
     if (idleTime === 1) {
       setChat((prev) => [
@@ -56,17 +57,6 @@ export const Chatbot = () => {
     }
   }, [idleTime]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const userMessage = {sender: "user", text: input};
-    const botMessage = {sender: "bot", text: getChatbotResponse(input)};
-
-    setChat([...chat, userMessage, botMessage]);
-    setInput("");
-  };
-
   useEffect(() => {
     if (open && chat.length === 0) {
       setChat([
@@ -77,6 +67,18 @@ export const Chatbot = () => {
       ]);
     }
   }, [open]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage = {sender: "user", text: input};
+    const botReply = await getChatbotResponse(input);
+    const botMessage = {sender: "bot", text: botReply};
+
+    setChat([...chat, userMessage, botMessage]);
+    setInput("");
+  };
 
   if (isAdmin) return null;
   return (

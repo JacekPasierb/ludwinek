@@ -31,8 +31,6 @@ export default function Page() {
 
   const paginatedData = filtered.slice(startIndex, startIndex + pageSize);
   const handleEdit = (item: any) => {
-    console.log("git");
-    
     setEditingId(item._id);
     setEditQuestionsText(item.questions.join(", "));
     setEditAnswer(item.answer);
@@ -54,8 +52,6 @@ export default function Page() {
     mutate(); // odśwież dane
   };
   const handleDelete = async (id: string) => {
-    console.log("git");
-
     if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
     await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
     mutate();
@@ -139,25 +135,37 @@ export default function Page() {
           <tbody>
             {paginatedData.map((item: any, i: number) =>
               editingId === item._id ? (
-                <tr key={item._id}>
+            
+                <tr key={item._id} style={{backgroundColor: "lightyellow"}}>
+                  
                   <td>{startIndex + i + 1}</td>
+                  
                   <td>
+             
                     <input
-                    className={styles.editInput}
+                      className={styles.editInput}
                       value={editQuestionsText}
                       onChange={(e) => setEditQuestionsText(e.target.value)}
                     />
                   </td>
                   <td>
                     <input
-                     className={styles.editInput}
+                      className={styles.editInput}
                       value={editAnswer}
                       onChange={(e) => setEditAnswer(e.target.value)}
                     />
                   </td>
-                  <td>
-                    <button onClick={handleSave}>💾 Zapisz</button>
-                    <button onClick={() => setEditingId(null)}>
+                  <td className={styles.actions}>
+                    <button
+                      onClick={handleSave}
+                      className={`${styles.editBtn} ${styles.actionBtn}`}
+                    >
+                      💾 Zapisz
+                    </button>
+                    <button
+                      onClick={() => setEditingId(null)}
+                      className={`${styles.editBtn} ${styles.actionBtn}`}
+                    >
                       ❌ Anuluj
                     </button>
                   </td>

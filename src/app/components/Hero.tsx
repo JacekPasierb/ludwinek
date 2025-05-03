@@ -10,8 +10,8 @@ import PaymentModal from "./PaymentModal";
 export const Hero = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  if (isAdmin) return null;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  if (isAdmin) return null;
 
   return (
     <section className={styles.hero}>
