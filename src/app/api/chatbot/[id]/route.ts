@@ -15,3 +15,17 @@ export async function PUT(req: NextRequest,  context: { params: Promise<{ id: st
     return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    await connectToDatabase();
+    const { id } = await context.params;
+    await ChatBot.findByIdAndDelete(id);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ success: false, error }, { status: 500 });
+  }
+}

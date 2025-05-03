@@ -56,9 +56,9 @@ export default function Page() {
   const handleDelete = async (id: string) => {
     console.log("git");
 
-    // if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
-    // await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
-    // mutate();
+    if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
+    await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
+    mutate();
   };
 
   const handleAdd = async () => {
