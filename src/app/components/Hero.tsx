@@ -6,12 +6,19 @@ import Navbar from "./Navbar";
 import Image from "next/image";
 import {useState} from "react";
 import PaymentModal from "./PaymentModal";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
 export const Hero = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
   const [isModalOpen, setIsModalOpen] = useState(false);
   if (isAdmin) return null;
+
+  const { data, mutate } = useSWR("/api/siteinfo", fetcher);
+  const title = data?.heroTitle ?? "";
+  const subtitle = data?.heroSubtitle ?? "";
 
   return (
     <section className={styles.hero}>
@@ -28,9 +35,9 @@ export const Hero = () => {
           />
         </div>
         <div className="container">
-          <h1 className={styles.title}>ŁOWISKO EKO-TORF LUDWINEK</h1>
+          <h1 className={styles.title}>{title}</h1>
           <p className={styles.subtitle}>
-            Profesjonalne łowisko w sercu Lubelszczyzny
+          {subtitle}
           </p>
           <Image
             src="/logoB.png"

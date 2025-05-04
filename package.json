@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-hook/media-query": "^1.1.1",
     "bcryptjs": "^3.0.2",
+    "formik": "^2.4.6",
     "mongoose": "^8.13.2",
     "next": "15.2.5",
     "next-auth": "^4.24.11",
