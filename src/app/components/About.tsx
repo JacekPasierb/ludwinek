@@ -10,7 +10,7 @@ const About = () => {
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
             <p className={styles.description}>
-              Łowisko Eko-Torf Lorem to wyjątkowe miejsce, położone na
+              Łowisko Ipsum Lorem to wyjątkowe miejsce, położone na
               terenie dawnej kopalni torfu, otoczone naturą i ciszą.
             </p>
             <ul className={styles.listCheck}>

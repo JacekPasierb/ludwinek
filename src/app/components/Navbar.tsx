@@ -32,16 +32,16 @@ const Navbar = () => {
           <nav>
             <ul className={styles.links}>
               <li>
-                <Link href="/">Ludwinek</Link>
+                <Link href="/">Lorem</Link>
               </li>
               <li>
                 <Link href="/relations">Relacje</Link>
               </li>
               <li>
-                <Link href="/turnee">Zawody</Link>
+                <Link href="/">Zawody</Link>
               </li>
               <li>
-                <Link href="/rules">Regulamin</Link>
+                <Link href="/">Regulamin</Link>
               </li>
             </ul>
           </nav>

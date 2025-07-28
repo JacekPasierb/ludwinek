@@ -47,21 +47,21 @@ export const Footer = () => {
 
         <div className={styles.column}>
           <h4>Dane kontaktowe:</h4>
-          <p>📍 Ludwin, Lubelskie</p>
+          <p>📍 Lorem, Lubelskie</p>
           <p>📞 600 123 456</p>
-          <p>✉ kontakt@ekotorf.pl</p>
+          <p>✉ kontakt@lorem.pl</p>
         </div>
 
         <div className={styles.column}>
           <h4>Łowisko:</h4>
           <Link href="/#about">O łowisku</Link>
-          <Link href="/rules">Regulamin</Link>
+          <Link href="/">Regulamin</Link>
           <Link href="#oplata">Rezerwacje</Link>
         </div>
       </div>
 
       <div className={styles.bottomBar}>
-        © {new Date().getFullYear()} Łowisko Eko-Torf Ludwinek. Wszelkie prawa
+        © {new Date().getFullYear()} Łowisko Lorem ipsum. Wszelkie prawa
         zastrzeżone.
       </div>
     </footer>
