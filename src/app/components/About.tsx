@@ -10,8 +10,7 @@ const About = () => {
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
             <p className={styles.description}>
-              {" "}
-              Łowisko Eko-Torf Ludwinek to wyjątkowe miejsce, położone na
+              Łowisko Eko-Torf Lorem to wyjątkowe miejsce, położone na
               terenie dawnej kopalni torfu, otoczone naturą i ciszą.
             </p>
             <ul className={styles.listCheck}>
@@ -44,7 +43,7 @@ const About = () => {
             <h2>
               Serdecznie zapraszamy do skorzystania z uroków naszego łowiska.
               Życzymy owocnych połowów i wielu niezapomnianych chwil na łowisku
-              Ludwinek.
+              Lorem.
             </h2>
             <div className={styles.imageWrapper}>
               <Image
