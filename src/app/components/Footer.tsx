@@ -17,7 +17,7 @@ export const Footer = () => {
         <div className={styles.column}>
           <div className={styles.logo}>
             <Image
-              src="/logoW.png"
+              src="/logoFooterP.png"
               alt="Ludwinek logo"
               className={styles.logoImg}
               width={230}
