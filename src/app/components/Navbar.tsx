@@ -1,15 +1,23 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import Link from "next/link";
 import {useViewport} from "../hooks/useViewport";
 import Image from "next/image";
 
 const Navbar = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const {isTablet, isMobile} = useViewport();
   const isCompact = isMobile || isTablet;
-
+  // ✅ zapobiega hydration mismatch
+  if (!mounted) return null;
+  
   return (
     <div className={styles.navBar}>
       <div className={`${styles.navBar__wrapper} container`}>
@@ -32,16 +40,16 @@ const Navbar = () => {
           <nav>
             <ul className={styles.links}>
               <li>
-                <Link href="/">Lorem</Link>
+                <Link href="/">Strona Główna</Link>
               </li>
               <li>
                 <Link href="/relations">Relacje</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/">Zawody</Link>
-              </li>
+              </li> */}
               <li>
-                <Link href="/">Regulamin</Link>
+                <Link href="/rules">Regulamin</Link>
               </li>
             </ul>
           </nav>

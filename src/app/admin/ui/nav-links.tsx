@@ -14,7 +14,7 @@ const links = [
   },
   {name: "Chatbot", href: "/admin/chatbot", icon: BiBot},
   {name: "Relacje", href: "/admin/relations", icon: LuPencilLine},
-  {name: "Zawody", href: "/admin/turnee", icon: BiTrophy},
+  // {name: "Zawody", href: "/admin/turnee", icon: BiTrophy},
   {name: "podgląd strony", href: "/", icon: BiArrowFromLeft},
 ];
 

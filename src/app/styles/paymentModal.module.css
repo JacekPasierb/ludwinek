@@ -1,4 +1,4 @@
-.overlay {
+/* .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -87,7 +87,7 @@
   }
   
   .radio input[type="radio"] {
-    accent-color: #16a34a; /* ładny zielony kolor */
+    accent-color: #16a34a; 
     width: 18px;
     height: 18px;
-  }
+  } */
