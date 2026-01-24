@@ -5,6 +5,7 @@
   font-size: 0.9rem;
 }
 
+/* ---------- LAYOUT ---------- */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -19,12 +20,26 @@
   min-width: 200px;
 }
 
+/* ---------- HEADINGS ---------- */
 .column h4 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: #ffffff;
 }
 
+/* ---------- TEXT ---------- */
+.column p {
+  margin-bottom: 0.6rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.column p strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---------- LINKS ---------- */
 .column a {
   display: block;
   margin-bottom: 0.5rem;
@@ -37,26 +52,44 @@
   color: #4fa3d1;
 }
 
+.linksColumn a {
+  display: block !important;
+  margin-bottom: 0.6rem;
+}
+
+/* ---------- LOGO ---------- */
 .logo {
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
-.icons {
-  display: flex;
-  gap: 1rem;
-  font-size: 1.5rem;
+.logoImg {
+  /* background: #ffffff; */
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+  padding: 0.75rem;
+  /* border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35); */
+  max-width: 100%;
+  height: auto;
 }
 
-.icons a {
-  color: #ccc;
-  transition: color 0.2s;
-}
-
-.icons a:hover {
+/* ---------- MAP LINK ---------- */
+.mapLink {
+  margin-left: 6px;
+  font-size: 0.85rem;
   color: #4fa3d1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
+.mapLink:hover {
+  text-decoration: underline;
+}
+
+/* ---------- BOTTOM BAR ---------- */
 .bottomBar {
   margin-top: 2rem;
   text-align: center;
@@ -64,7 +97,74 @@
   color: #aaa;
 }
 
-.logoImg {
-  height: 128px;
-  width: auto;
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+/* ---------- TABLET & MOBILE ---------- */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .column {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+  }
+
+  .logo {
+    margin-bottom: 0;
+  }
+
+   .logoImg {
+    max-width: 180px;
+    padding: 0.6rem;
+  }
+
+  /* linki na środku */
+  .column a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .mapLink {
+    margin-left: 8px;
+  }
+
+  .column p {
+    margin-bottom: 0.9rem;
+  }
+
+  .bottomBar {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ---------- VERY SMALL PHONES ---------- */
+@media (max-width: 420px) {
+  .footer {
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .column h4 {
+    font-size: 1.1rem;
+  }
+
+  .logoImg {
+    padding: 0.6rem;
+    border-radius: 10px;
+    max-width: 150px;
+  }
+
+  .mapLink {
+    font-size: 0.82rem;
+  }
 }

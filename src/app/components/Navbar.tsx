@@ -22,14 +22,18 @@ const Navbar = () => {
     <div className={styles.navBar}>
       <div className={`${styles.navBar__wrapper} container`}>
         <div className={styles.logo}>
-          <Image
-            src="/logoFooterP.png"
-            alt="Ludwinek logo"
-            width={40}
-            height={40}
-            className={styles.logoImg}
-          />
+          <Link href="/" aria-label="Strona główna Łowiska Ludwinek">
+            <Image
+              src="/images/logo-ludwinek.svg"
+              alt="Łowisko EKO-TORF Ludwinek"
+              width={36}
+              height={36}
+              className={styles.logoImg}
+              priority
+            />
+          </Link>
         </div>
+
         {isCompact ? (
           <button className={styles.burger}>
             <span></span>
@@ -40,10 +44,10 @@ const Navbar = () => {
           <nav>
             <ul className={styles.links}>
               <li>
-                <Link href="/">Strona Główna</Link>
+                <Link href="/">Ludwinek</Link>
               </li>
               <li>
-                <Link href="/relations">Relacje</Link>
+                <Link href="/relations">Fotorelacje</Link>
               </li>
               {/* <li>
                 <Link href="/">Zawody</Link>
