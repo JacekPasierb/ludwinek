@@ -10,6 +10,17 @@
   gap: 2rem;
 }
 
+.iconSvg {
+  color: #1a1a1a;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+  transition: transform 0.25s ease;
+}
+
+.itemFeature:hover .iconSvg {
+  transform: scale(1.04);
+}
+
+
 @media (min-width: 481px) {
   .listFeatures {
     flex-direction: row;
@@ -24,6 +35,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  min-width: 220px;
 }
 .itemFeature p {
     font-size: 1.1rem;
@@ -36,8 +48,13 @@
 }
 
 .iconImage {
-  width: 144px;
-  height: 144px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
   margin-bottom: 0.5rem;
+}
+
+.iconZbiorniki {
+  transform: scale(1.35);     /* zwiększa sam rysunek */
+  transform-origin: center;
 }

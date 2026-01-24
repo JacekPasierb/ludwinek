@@ -10,58 +10,83 @@ const About = () => {
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
             <p className={styles.description}>
-              Łowisko Ipsum Lorem to wyjątkowe miejsce, położone na
-              terenie dawnej kopalni torfu, otoczone naturą i ciszą.
+              Łowisko Ludwinek EKO-TORF to wyjątkowe miejsce na terenie dawnej
+              kopalni torfu, otoczone naturą i ciszą. Idealne zarówno na
+              spokojne wędkowanie, jak i wypoczynek z rodziną.
             </p>
+
             <ul className={styles.listCheck}>
               <li className={styles.listCheck__item}>
-                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image
+                  src="/fish_iconA.png"
+                  alt="fish"
+                  height={48}
+                  width={48}
+                />
                 <p className={styles.description}>
-                  Do dyspozycji wędkarzy są trzy starannie zarybione zbiorniki.
+                  Do dyspozycji wędkarzy są{" "}
+                  <strong>trzy starannie zarybione zbiorniki</strong>.
                 </p>
               </li>
+
               <li className={styles.listCheck__item}>
-                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image
+                  src="/fish_iconA.png"
+                  alt="fish"
+                  height={48}
+                  width={48}
+                />
                 <p className={styles.description}>
-                  Dbamy o środowisko, dlatego obowiązuje zasada "no kill".
+                  Dbamy o środowisko — obowiązuje zasada{" "}
+                  <strong>NO KILL</strong>.
                 </p>
               </li>
+
               <li className={styles.listCheck__item}>
-                <Image src="/fish_iconA.png" alt="fish" height={48} width={48} />
+                <Image
+                  src="/fish_iconA.png"
+                  alt="fish"
+                  height={48}
+                  width={48}
+                />
                 <p className={styles.description}>
-                  Regularne zarybianie, cisza i bliskość natury to nasze
-                  największe atuty.
+                  Na miejscu znajdziesz <strong>strefy do piknikowania</strong>,
+                  a przy stanowiskach wyznaczone są miejsca do odpoczynku.
                 </p>
               </li>
             </ul>
+
             <p className={styles.description}>
-              <strong>Dostępne gatunki ryb: </strong> karp, amur, szczupak,
-              okoń, sandacz, karaś, płoć, lin, sumik karłowaty.
+              <strong>Dostępne gatunki ryb:</strong> karp, amur, szczupak, okoń,
+              sandacz, karaś srebrzysty, karaś złocisty, jesiotr, tołpyga, płoć,
+              lin, sumik karłowaty, sum hodowlany, wzdręga.
             </p>
           </div>
           <div className={styles.rightSide}>
-            <h2>
-              Serdecznie zapraszamy do skorzystania z uroków naszego łowiska.
-              Życzymy owocnych połowów i wielu niezapomnianych chwil na łowisku
-              Lorem.
+            <h2 className={styles.heading}>
+              Wędkowanie i relaks w jednym miejscu
             </h2>
+
+            <p className={styles.description}>
+              Zapraszamy na spokojne połowy, odpoczynek na świeżym powietrzu i
+              wspólne chwile w strefach piknikowych. To idealne miejsce na
+              weekendowy wypad.
+            </p>
+
             <div className={styles.imageWrapper}>
               <Image
-                src="/lowisko.jpg"
+                src="/images/image-about.webp"
                 alt="Zbiornik w Ludwinku"
                 width={800}
                 height={500}
               />
             </div>
             <div className={styles.paymentInfo}>
-              <span className={styles.icon}>💳</span>
-              <p>
-                Możliwość opłaty online przez ikonę skrzynki „
-                <strong>OPŁATA</strong>” w górnym rogu strony.
+              <p className={styles.description}>
+                Można przyjeżdżać <strong>rodzinami</strong> — dostępne są m.in.{" "}
+                <strong>huśtawki</strong>, a w wyznaczonych miejscach można
+                zrobić <strong>ognisko</strong> lub <strong>grilla</strong>.
               </p>
-              <Link href="#oplata" className={styles.paymentLink}>
-                Przejdź do skrzynki
-              </Link>
             </div>
           </div>
         </div>
