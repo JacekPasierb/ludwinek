@@ -3,6 +3,7 @@ import styles from "../styles/pageAdmin.module.css";
 import EditTitle from "./ui/editTitle";
 import EditSubtitle from "./ui/editSubtitle";
 import EditRecord from "./ui/editRecord";
+import EditInfo from "./ui/editInfo";
 
 const Page = () => {
   return (
@@ -16,8 +17,13 @@ const Page = () => {
         <EditSubtitle />
       </div>
       <div className={styles.line}></div>
+
       <div className={styles.block}>
-        <EditRecord/>
+        <EditInfo />
+      </div>
+      <div className={styles.line}></div>
+      <div className={styles.block}>
+        <EditRecord />
       </div>
     </div>
   );

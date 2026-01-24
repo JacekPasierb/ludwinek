@@ -10,7 +10,8 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  const {title, subtitle, recordFish} = body;
+  const {title, subtitle, recordFish, infoMessage} = body;
+console.log("ff",infoMessage);
 
   await connectToDatabase();
 
@@ -20,6 +21,7 @@ export async function PUT(req: NextRequest) {
 
   if (title) updateData.heroTitle = title;
   if (subtitle) updateData.heroSubtitle = subtitle;
+  if (infoMessage) updateData.infoMessage = infoMessage;
   if (recordFish) {
     updateData.recordFish = {
       species: recordFish.species || "",

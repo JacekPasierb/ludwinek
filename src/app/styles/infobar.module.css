@@ -1,0 +1,113 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0.45rem 1rem 0.55rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 0.35rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+}
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: 0.1rem;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.track {
+  position: relative;
+  display: inline-block;
+  width: max-content;
+  will-change: transform;
+
+  /* start poza prawą krawędzią viewportu */
+  transform: translateX(100vw);
+
+  animation: ticker 16s linear infinite;
+}
+
+.text {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: #1f2937;
+}
+
+.bar:hover .track {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Typy jako delikatny akcent z lewej */
+.info {
+  box-shadow: inset 4px 0 0 #3b82f6;
+}
+.success {
+  box-shadow: inset 4px 0 0 #16a34a;
+}
+.warning {
+  box-shadow: inset 4px 0 0 #f59e0b;
+}
+.danger {
+  box-shadow: inset 4px 0 0 #dc2626;
+}
+
+@media (max-width: 600px) {
+  .text {
+    font-size: 0.9rem;
+  }
+  .track {
+    animation-duration: 24s;
+  }
+  .label {
+    font-size: 0.65rem;
+  }
+}
+
+/* Szacunek dla preferencji użytkownika */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
