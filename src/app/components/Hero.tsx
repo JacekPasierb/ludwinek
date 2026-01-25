@@ -3,10 +3,9 @@
 import {usePathname} from "next/navigation";
 import styles from "../styles/hero.module.css";
 import Navbar from "./Navbar";
-import Image from "next/image";
-import {useState} from "react";
-// import PaymentModal from "./PaymentModal";
+
 import useSWR from "swr";
+import {FaHome, FaPhoneAlt} from "react-icons/fa";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -32,14 +31,37 @@ export const Hero = () => {
         <div className={styles.contactBox}>
           <div className={styles.label}>
             <span>Biuro</span>
-            <span>609 193 571</span>
+            <span className={styles.labelRow}>
+              {" "}
+              <FaPhoneAlt className={styles.icon} />
+              <a
+                href="tel:+48609193571"
+                style={{color: "inherit", textDecoration: "none"}}
+                aria-label="Zadzwoń do biura: 609 193 571"
+              >
+                609 193 571
+              </a>
+            </span>
           </div>
           <div className={styles.label}>
             <span> Jarosław Jakubowski </span>
-            <span> 691 911 777</span>
+            <span className={styles.labelRow}>
+              {" "}
+              <FaPhoneAlt className={styles.icon} />{" "}
+              <a
+                href="tel:+48691911777"
+                style={{color: "inherit", textDecoration: "none"}}
+                aria-label="Zadzwoń do Jarosława Jakubowskiego: 691 911 777"
+              >
+                691 911 777
+              </a>
+            </span>
           </div>
 
-          <span className={`${styles.label} ${styles.address}`}>
+          <span
+            className={`${styles.label} ${styles.labelRow} ${styles.address}`}
+          >
+            <FaHome className={styles.icon} />
             Ludwin 1 C
           </span>
         </div>

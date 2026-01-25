@@ -5,11 +5,9 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const InfoBar = () => {
-  // if (!data?.enabled) return null;
 
-  // const type = data.type ?? "info";
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);
-  const message = data?.infoMessage ?? "";
+  const message = data?.infoMessage ?? "Zapraszamy na Łowisko Ludwinek";
   return (
     <div className={`${styles.bar} `} role="status" aria-live="polite">
       <div className={styles.inner}>

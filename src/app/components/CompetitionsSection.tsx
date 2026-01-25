@@ -16,32 +16,44 @@ const competitions = [
     schedule: [
       "29 maja: rejestracja, losowanie stanowisk, start łowienia o 13:00",
       "30–31 maja: ważenie ryb, video relacje, wspólne posiłki",
-      "1 czerwca: zakończenie zawodów i wręczenie nagród o 11:00"
+      "1 czerwca: zakończenie zawodów i wręczenie nagród o 11:00",
     ],
-    contact: "786 819 629"
-  }
+    contact: "786 819 629",
+  },
 ];
 
 export default function CompetitionsSection() {
   return (
-    <section className={styles.section}>
-      <h2 className={styles.heading}>Zawody wędkarskie</h2>
+    <section className={styles.section} aria-labelledby="competitions-heading">
+      <h2 id="competitions-heading" className={styles.heading}>
+        Zawody wędkarskie
+      </h2>
       <div className={styles.grid}>
         {competitions.map((comp, idx) => (
-          <div key={idx} className={styles.card}>
+          <article
+            key={idx}
+            className={styles.card}
+            aria-labelledby={`competition-${idx}`}
+          >
             <div className={styles.top}>
               <Image
                 src={comp.image}
-                alt={comp.title}
+                alt={`Zdjęcie z zawodów wędkarskich: ${comp.title} w łowisku Ludwinek`}
                 width={240}
                 height={160}
                 className={styles.image}
+                loading="lazy"
               />
               <div className={styles.metaContent}>
-                <h3 className={styles.title}>{comp.title}</h3>
+                <h3 className={styles.title} id={`competition-${idx}`}>
+                  {comp.title}
+                </h3>
                 <p className={styles.meta}> {comp.date}</p>
                 <p className={styles.meta}> {comp.location}</p>
-                <p className={styles.meta}> Typ: {comp.type} |  Metoda: {comp.method}</p>
+                <p className={styles.meta}>
+                  {" "}
+                  Typ: {comp.type} | Metoda: {comp.method}
+                </p>
               </div>
             </div>
 
@@ -57,10 +69,13 @@ export default function CompetitionsSection() {
             </div>
 
             <div className={styles.bottomBox}>
-              <p className={styles.contact}> Zgłoszenia: <strong>{comp.contact}</strong></p>
+              <p className={styles.contact}>
+                {" "}
+                Zgłoszenia: <strong>{comp.contact}</strong>
+              </p>
               <button className={styles.signupBtn}>Weź udział</button>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>

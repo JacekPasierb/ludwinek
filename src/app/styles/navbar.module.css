@@ -30,7 +30,7 @@
 .logo {
   padding: 8px 12px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.932);
   backdrop-filter: blur(6px);
 }
 .logoImg {
@@ -39,7 +39,6 @@
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
 }
 
-
 .links {
   list-style: none;
   display: flex;
@@ -47,16 +46,62 @@
   gap: 2rem;
 }
 .links a {
+  position: relative;
   text-decoration: none;
-  color: white;
   font-weight: 500;
-  font-size: 1rem;
-  transition: color 0.2s ease;
+  font-size: 0.95rem;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  padding: 0.4rem 0.1rem;
+  transition: color 0.25s ease;
 }
 
+/* underline (ukryty domyślnie) */
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, #f5c96a, transparent);
+
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+  opacity: 0.9;
+}
+
+/* hover */
 .links a:hover {
-  color: #ffcc00;
+  color: #f5c96a;
+}
+
+.links a:hover::after {
+  transform: scaleX(1);
+}
+.links a:focus-visible {
+  outline: none;
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+
+  box-shadow: 0 0 0 2px rgba(245, 201, 106, 0.55),
+    0 0 0 6px rgba(245, 201, 106, 0.18);
+}
+
+.links a:focus-visible::after {
+  transform: scaleX(1);
+}
+.active {
+  color: #f5c96a;
+}
+
+.active::after {
+  transform: scaleX(1);
 }
 
 .burger {
@@ -67,6 +112,10 @@
   height: 21px;
   cursor: pointer;
   z-index: 1100;
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
 }
 
 .burger span {
@@ -75,4 +124,26 @@
   background-color: white;
   border-radius: 2px;
   transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.burger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(245, 201, 106, 0.55),
+    0 0 0 4px rgba(245, 201, 106, 0.18);
+  border-radius: 4px;
+}
+
+/* Animacja burgera gdy menu jest otwarte */
+.burgerOpen span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.burgerOpen span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.burgerOpen span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
 }

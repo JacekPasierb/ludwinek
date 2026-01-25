@@ -49,13 +49,23 @@ export const Footer = () => {
           <p>
             <strong>Opiekun łowiska:</strong>
             <br />
-            <a href="tel:691911777">691&nbsp;911&nbsp;777</a>
+            <a
+              href="tel:+48691911777"
+              aria-label="Zadzwoń do opiekuna łowiska: 691 911 777"
+            >
+              691&nbsp;911&nbsp;777
+            </a>
           </p>
 
           <p>
             <strong>Biuro:</strong>
             <br />
-            <a href="tel:609193579">609&nbsp;193&nbsp;579</a>
+            <a
+              href="tel:+48609193579"
+              aria-label="Zadzwoń do biura: 609 193 579"
+            >
+              609&nbsp;193&nbsp;579
+            </a>
           </p>
         </div>
 
@@ -65,6 +75,7 @@ export const Footer = () => {
           <p>Sobota: 8:00 – 14:00</p>
           <p>Niedziela: Biuro nieczynne</p>
         </div>
+
         <div className={`${styles.column} ${styles.linksColumn}`}>
           <h4>Łowisko:</h4>
           <Link href="/#about">O łowisku</Link>

@@ -127,3 +127,87 @@
     padding-left: 2rem;
   }
 }
+
+/* rekord */
+.recordCard {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 16px;
+
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.recordTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.recordBadge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+.recordHint {
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.recordValue {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  padding: 0.65rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.recordSpecies {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #111;
+  text-transform: capitalize;
+}
+
+.recordWeight {
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.recordYear {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #334155;
+  opacity: 0.9;
+}
+
+.recordEmpty {
+  text-align: center;
+  padding: 0.7rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px dashed rgba(0, 0, 0, 0.18);
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 767px) {
+  .recordTop {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,11 +1,26 @@
+"use client";
+
 import React from "react";
 import styles from "../styles/about.module.css";
 import Image from "next/image";
 import Link from "next/link";
-
+import useSWR from "swr";
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const About = () => {
+  const {data} = useSWR("/api/siteinfo", fetcher);
+
+  const record = data?.recordFish ?? null;
+  const hasRecord =
+    record?.species?.trim() &&
+    Number(record?.weight) > 0 &&
+    record?.year?.trim();
+
   return (
-    <section className={styles.sectionAbout} id="about">
+    <section
+      className={styles.sectionAbout}
+      id="about"
+      aria-labelledby="about-heading"
+    >
       <div className="container">
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
@@ -19,7 +34,7 @@ const About = () => {
               <li className={styles.listCheck__item}>
                 <Image
                   src="/fish_iconA.png"
-                  alt="fish"
+                  alt="Ikona ryby - trzy zarybione zbiorniki w łowisku Ludwinek"
                   height={48}
                   width={48}
                 />
@@ -32,7 +47,7 @@ const About = () => {
               <li className={styles.listCheck__item}>
                 <Image
                   src="/fish_iconA.png"
-                  alt="fish"
+                  alt="Ikona ryby - zasada NO KILL w łowisku Ludwinek"
                   height={48}
                   width={48}
                 />
@@ -45,7 +60,7 @@ const About = () => {
               <li className={styles.listCheck__item}>
                 <Image
                   src="/fish_iconA.png"
-                  alt="fish"
+                  alt="Ikona ryby - strefy piknikowe w łowisku Ludwinek"
                   height={48}
                   width={48}
                 />
@@ -61,9 +76,31 @@ const About = () => {
               sandacz, karaś srebrzysty, karaś złocisty, jesiotr, tołpyga, płoć,
               lin, sumik karłowaty, sum hodowlany, wzdręga.
             </p>
+            <div className={styles.recordCard} aria-label="Rekord łowiska">
+              <div className={styles.recordTop}>
+                <span className={styles.recordBadge}>Rekord łowiska</span>
+                <span className={styles.recordHint}>
+                  złowione i wypuszczone
+                </span>
+              </div>
+
+              {hasRecord ? (
+                <div className={styles.recordValue}>
+                  <span className={styles.recordSpecies}>{record.species}</span>
+                  <span className={styles.recordWeight}>
+                    {Number(record.weight).toFixed(1)} kg
+                  </span>
+                  <span className={styles.recordYear}>{record.year}</span>
+                </div>
+              ) : (
+                <div className={styles.recordEmpty}>
+                  Brak danych o rekordzie (uzupełnij w panelu admina).
+                </div>
+              )}
+            </div>
           </div>
           <div className={styles.rightSide}>
-            <h2 className={styles.heading}>
+            <h2 id="about-heading" className={styles.heading}>
               Wędkowanie i relaks w jednym miejscu
             </h2>
 
@@ -76,9 +113,10 @@ const About = () => {
             <div className={styles.imageWrapper}>
               <Image
                 src="/images/image-about.webp"
-                alt="Zbiornik w Ludwinku"
+                alt="Zbiornik wodny w łowisku EKO-TORF Ludwinek z widokiem na naturę i spokojne miejsce do wędkowania"
                 width={800}
                 height={500}
+                loading="lazy"
               />
             </div>
             <div className={styles.paymentInfo}>

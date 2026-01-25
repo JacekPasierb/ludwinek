@@ -6,7 +6,10 @@ import NoLitteringIcon from "./NoLitteringIcon";
 
 const Features = () => {
   return (
-    <section className={`${styles.sectionFeatures} container`}>
+    <section
+      className={`${styles.sectionFeatures} container`}
+      aria-label="Cechy łowiska"
+    >
       <ul className={styles.listFeatures}>
         <li className={styles.itemFeature}>
           <Image
