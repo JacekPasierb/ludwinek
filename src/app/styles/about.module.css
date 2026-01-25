@@ -1,6 +1,6 @@
 .sectionAbout {
   padding-block: clamp(2.5rem, 4vw, 4rem);
- background-color: #f9fafb;
+  background-color: #f9fafb;
 }
 
 .descriptionWrapper {
@@ -60,9 +60,7 @@
 
   padding: 0.9rem 1rem;
   border-radius: 14px;
-  /* background: rgba(255, 255, 255, 0.75); */
   border: 1px solid rgba(0, 0, 0, 0.06);
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); */
 }
 
 .listCheck__item p {
@@ -93,21 +91,18 @@
   width: 100%;
   height: auto;
   display: block;
-  transform: scale(1.02); /* lekkie “premium zoom” */
+  transform: scale(1.02);
 }
-
-
 
 /* TABLET */
 @media (min-width: 768px) {
   .leftSide {
     text-align: left;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .rightSide {
     text-align: left;
-    align-items: flex-start;
   }
 
   .listCheck {

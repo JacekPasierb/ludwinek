@@ -1,8 +1,7 @@
-"use client"
+"use client";
 import React from "react";
 import styles from "../styles/infobar.module.css";
 import useSWR from "swr";
-
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const InfoBar = () => {
