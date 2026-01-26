@@ -1,0 +1,141 @@
+"use client";
+
+import React, {useEffect, useMemo, useState} from "react";
+import Image from "next/image";
+import styles from "../styles/album.module.css";
+
+export type LightboxPhoto = {
+  url: string;
+  alt?: string;
+  title?: string;
+};
+
+export default function LightboxGallery({
+  photos,
+  albumName,
+}: {
+  photos: LightboxPhoto[];
+  albumName: string;
+}) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const active = useMemo(() => {
+    if (activeIndex === null) return null;
+    return photos[activeIndex] || null;
+  }, [activeIndex, photos]);
+
+  const close = () => setActiveIndex(null);
+  const prev = () =>
+    setActiveIndex((i) =>
+      i === null ? null : (i - 1 + photos.length) % photos.length
+    );
+  const next = () =>
+    setActiveIndex((i) => (i === null ? null : (i + 1) % photos.length));
+
+  useEffect(() => {
+    if (activeIndex === null) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, photos.length]);
+
+  return (
+    <>
+      <div className={styles.photoGrid}>
+        {photos.map((photo, idx) => (
+          <a
+            key={`${photo.url}-${idx}`}
+            className={styles.photoItem}
+            href={photo.url}
+            onClick={(e) => {
+              e.preventDefault();
+              setActiveIndex(idx);
+            }}
+            aria-label={`Otwórz zdjęcie: ${photo.title || albumName}`}
+          >
+            <Image
+              src={photo.url}
+              alt={photo.alt || photo.title || albumName}
+              width={600}
+              height={450}
+              className={styles.photo}
+              loading="lazy"
+            />
+            {photo.title && (
+              <div className={styles.photoTitle}>{photo.title}</div>
+            )}
+          </a>
+        ))}
+      </div>
+
+      {active && (
+        <div
+          className={styles.modal}
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Podgląd zdjęcia"
+        >
+          <button
+            className={styles.closeButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              close();
+            }}
+            aria-label="Zamknij"
+            type="button"
+          >
+            ×
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.closeButton}`}
+            style={{right: "auto", left: "2rem"}}
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Poprzednie zdjęcie"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.closeButton}`}
+            style={{right: "5.5rem"}}
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Następne zdjęcie"
+          >
+            ›
+          </button>
+
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={active.url}
+              alt={active.alt || active.title || albumName}
+              width={1400}
+              height={900}
+              className={styles.modalImage}
+              priority
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

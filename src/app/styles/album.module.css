@@ -112,6 +112,76 @@
   opacity: 1;
 }
 
+/* Paginacja */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.25rem;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  padding: 0.7rem 1.1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  color: #f5c96a;
+  border-color: rgba(245, 201, 106, 0.6);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.pageBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pageBtnDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pageNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.pageNumber:hover {
+  border-color: rgba(245, 201, 106, 0.6);
+  color: #f5c96a;
+}
+
+.pageActive {
+  border-color: rgba(245, 201, 106, 0.9);
+  background: rgba(245, 201, 106, 0.14);
+  color: #f5c96a;
+}
+
+.dots {
+  padding: 0 0.25rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
 /* Modal */
 .modal {
   position: fixed;

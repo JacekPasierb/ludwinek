@@ -28,14 +28,12 @@ export default function Page() {
     url: "",
     alt: "",
     title: "",
-    order: 0,
   });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPhoto, setEditPhoto] = useState({
     url: "",
     alt: "",
     title: "",
-    order: 0,
   });
 
   const {data: photos, mutate} = useSWR(
@@ -104,14 +102,13 @@ export default function Page() {
           url: uploadData.url,
           alt: newPhoto.alt,
           title: newPhoto.title,
-          order: newPhoto.order,
         }),
       });
 
       // Reset formularza
       setSelectedFile(null);
       setPreviewUrl(null);
-      setNewPhoto({url: "", alt: "", title: "", order: 0});
+      setNewPhoto({url: "", alt: "", title: ""});
       setShowAddForm(false);
       mutate();
     } catch (error: any) {
@@ -129,13 +126,21 @@ export default function Page() {
     mutate();
   };
 
+  const handleSetCover = async (photoId: string) => {
+    await fetch("/api/photos/cover", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({photoId}),
+    });
+    mutate();
+  };
+
   const handleEdit = (photo: any) => {
     setEditingId(photo._id);
     setEditPhoto({
       url: photo.url,
       alt: photo.alt || "",
       title: photo.title || "",
-      order: photo.order || 0,
     });
   };
 
@@ -235,21 +240,6 @@ export default function Page() {
               />
             </div>
 
-            <div className={styles.formGroup}>
-              <label>Kolejność (opcjonalnie)</label>
-              <input
-                type="number"
-                value={newPhoto.order}
-                onChange={(e) =>
-                  setNewPhoto({
-                    ...newPhoto,
-                    order: parseInt(e.target.value) || 0,
-                  })
-                }
-                className={styles.input}
-              />
-            </div>
-
             {uploading && (
               <div className={styles.uploadProgress}>
                 <div className={styles.progressBar}>
@@ -318,20 +308,6 @@ export default function Page() {
                         className={styles.input}
                       />
                     </div>
-                    <div className={styles.formGroup}>
-                      <label>Kolejność</label>
-                      <input
-                        type="number"
-                        value={editPhoto.order}
-                        onChange={(e) =>
-                          setEditPhoto({
-                            ...editPhoto,
-                            order: parseInt(e.target.value) || 0,
-                          })
-                        }
-                        className={styles.input}
-                      />
-                    </div>
                     <div className={styles.editActions}>
                       <button
                         onClick={handleUpdate}
@@ -358,6 +334,9 @@ export default function Page() {
                           "/images/logo-ludwinek.png";
                       }}
                     />
+                    {selectedAlbum !== "wydarzenia" && photo.isCover && (
+                      <div className={styles.coverBadge}>OKŁADKA</div>
+                    )}
                     <div className={styles.photoInfo}>
                       {photo.title && (
                         <p className={styles.photoTitle}>{photo.title}</p>
@@ -365,11 +344,23 @@ export default function Page() {
                       {photo.alt && (
                         <p className={styles.photoAlt}>{photo.alt}</p>
                       )}
-                      <p className={styles.photoOrder}>
-                        Kolejność: {photo.order}
-                      </p>
                     </div>
                     <div className={styles.photoActions}>
+                      {selectedAlbum !== "wydarzenia" && (
+                        <button
+                          onClick={() => handleSetCover(photo._id)}
+                          className={styles.coverButton}
+                          aria-label="Ustaw jako okładkę"
+                          disabled={!!photo.isCover}
+                          title={
+                            photo.isCover
+                              ? "To zdjęcie jest już okładką"
+                              : "Ustaw jako okładkę albumu"
+                          }
+                        >
+                          Okładka
+                        </button>
+                      )}
                       <button
                         onClick={() => handleEdit(photo)}
                         className={styles.editButton}

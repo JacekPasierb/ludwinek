@@ -10,11 +10,61 @@ export async function GET(req: NextRequest) {
 
   const {searchParams} = new URL(req.url);
   const album = searchParams.get("album");
+  const limitParam = searchParams.get("limit");
+  const limit = limitParam ? Number(limitParam) : undefined;
+  const pageParam = searchParams.get("page");
+  const pageSizeParam = searchParams.get("pageSize");
+  const page = pageParam ? Math.max(1, Number(pageParam)) : 1;
+  const pageSize = pageSizeParam ? Math.max(1, Number(pageSizeParam)) : null;
 
   const query = album ? {album} : {};
 
-  const photos = await Photo.find(query).sort({order: 1, createdAt: -1});
+  // Domyślnie: od najnowszych do najstarszych
+  let q = Photo.find(query).sort({createdAt: -1, _id: -1});
+  if (Number.isFinite(limit) && (limit as number) > 0) {
+    // Specjalna logika okładek dla kafelków albumów:
+    // - zbiornik1/2/3: jeśli jest ustawiona okładka → zwróć ją, inaczej najnowsze
+    // - wydarzenia: zawsze najnowsze
+    if (album && (limit as number) === 1) {
+      const coverAlbums = ["zbiornik1", "zbiornik2", "zbiornik3"];
+      if (coverAlbums.includes(album)) {
+        const cover = await Photo.findOne({album, isCover: true}).sort({
+          createdAt: -1,
+          _id: -1,
+        });
+        if (cover) return NextResponse.json([cover]);
+      }
+      const newest = await Photo.findOne({album}).sort({
+        createdAt: -1,
+        _id: -1,
+      });
+      return NextResponse.json(newest ? [newest] : []);
+    }
 
+    q = q.limit(limit as number);
+    const photos = await q;
+    return NextResponse.json(photos);
+  }
+
+  // Paginacja (gdy podano pageSize)
+  if (pageSize && Number.isFinite(pageSize)) {
+    const total = await Photo.countDocuments(query);
+    const skip = (page - 1) * pageSize;
+
+    const items = await q.skip(skip).limit(pageSize);
+    const pageCount = Math.max(1, Math.ceil(total / pageSize));
+
+    return NextResponse.json({
+      items,
+      total,
+      page,
+      pageSize,
+      pageCount,
+    });
+  }
+
+  // Bez paginacji: zwracamy wszystko
+  const photos = await q;
   return NextResponse.json(photos);
 }
 

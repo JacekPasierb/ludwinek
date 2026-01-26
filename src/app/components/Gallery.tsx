@@ -3,15 +3,49 @@
 import React, {useState} from "react";
 import styles from "../styles/gallery.module.css";
 import Album from "./Album";
+import useSWR from "swr";
 
 export type AlbumType = "zbiornik1" | "zbiornik2" | "zbiornik3" | "wydarzenia";
 
 const albums = [
-  {id: "zbiornik1" as AlbumType, name: "Zbiornik 1", icon: "🐟"},
-  {id: "zbiornik2" as AlbumType, name: "Zbiornik 2", icon: "🐠"},
-  {id: "zbiornik3" as AlbumType, name: "Zbiornik 3", icon: "🎣"},
-  {id: "wydarzenia" as AlbumType, name: "Wydarzenia", icon: "📸"},
+  {id: "zbiornik1" as AlbumType, name: "Zbiornik 1"},
+  {id: "zbiornik2" as AlbumType, name: "Zbiornik 2"},
+  {id: "zbiornik3" as AlbumType, name: "Zbiornik 3"},
+  {id: "wydarzenia" as AlbumType, name: "Wydarzenia"},
 ];
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const AlbumCard = ({
+  albumId,
+  albumName,
+  onOpen,
+}: {
+  albumId: AlbumType;
+  albumName: string;
+  onOpen: (albumId: AlbumType) => void;
+}) => {
+  const {data} = useSWR(`/api/photos?album=${albumId}&limit=1`, fetcher);
+
+  const coverUrl =
+    Array.isArray(data) && data.length > 0 && data[0]?.url
+      ? data[0].url
+      : "/images/logo-ludwinek.png";
+
+  return (
+    <button
+      className={styles.albumCard}
+      style={{backgroundImage: `url(${coverUrl})`}}
+      onClick={() => onOpen(albumId)}
+      aria-label={`Otwórz album ${albumName}`}
+    >
+      <div className={styles.albumOverlay} aria-hidden="true" />
+      <div className={styles.albumContent}>
+        <h2 className={styles.albumName}>{albumName}</h2>
+      </div>
+    </button>
+  );
+};
 
 const Gallery = () => {
   const [selectedAlbum, setSelectedAlbum] = useState<AlbumType | null>(null);
@@ -46,15 +80,12 @@ const Gallery = () => {
 
         <div className={styles.albumsGrid}>
           {albums.map((album) => (
-            <button
+            <AlbumCard
               key={album.id}
-              className={styles.albumCard}
-              onClick={() => handleAlbumClick(album.id)}
-              aria-label={`Otwórz album ${album.name}`}
-            >
-              <div className={styles.albumIcon}>{album.icon}</div>
-              <h2 className={styles.albumName}>{album.name}</h2>
-            </button>
+              albumId={album.id}
+              albumName={album.name}
+              onOpen={handleAlbumClick}
+            />
           ))}
         </div>
       </div>

@@ -10,6 +10,7 @@ const photoSchema = new mongoose.Schema({
   alt: {type: String, default: ""},
   title: {type: String, default: ""},
   order: {type: Number, default: 0},
+  isCover: {type: Boolean, default: false},
   createdAt: {type: Date, default: Date.now},
 });
 
