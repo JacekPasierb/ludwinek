@@ -8,102 +8,116 @@ import Tittle from "../components/Tittle";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-interface InfoFormValues {
+interface Values {
   infoMessage: string;
 }
 
-const EditInfo = () => {
-  const [editInfo, setEditInfo] = useState(false);
+const MAX = 240;
 
+const EditInfo = () => {
+  const [isEdit, setIsEdit] = useState(false);
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);
   const infoMessage = data?.infoMessage ?? "";
 
-  const initialValues: InfoFormValues = {
-    infoMessage,
-  };
+  const initialValues: Values = {infoMessage};
 
   return (
-    <>
-      <div>
-        <Tittle title={"Komunikat"} />
+    <div className={styles.card}>
+      <Tittle title="Komunikat (pasek)" />
 
-        {!editInfo && (
-          <p onClick={() => setEditInfo(true)}>
-            {infoMessage?.trim()
-              ? infoMessage
-              : "Brak komunikatu (pasek niewidoczny)."}
-          </p>
-        )}
+      {!isEdit ? (
+        <>
+          <div className={styles.preview} onClick={() => setIsEdit(true)}>
+            <div className={styles.previewTitle}>Aktualna wartość</div>
+            <div className={styles.previewValue}>
+              {infoMessage?.trim() ? (
+                infoMessage
+              ) : (
+                <span className={styles.muted}>
+                  Brak komunikatu (pasek niewidoczny)
+                </span>
+              )}
+            </div>
+          </div>
 
-        {editInfo && (
-          <Formik
-            enableReinitialize
-            initialValues={initialValues}
-            validate={(values) => {
-              const errors: Partial<InfoFormValues> = {};
-
-              // pozwalamy na pusty -> ukrywa pasek
-              if (values.infoMessage.length > 240) {
-                errors.infoMessage = "Maksymalnie 240 znaków.";
-              }
-
-              return errors;
-            }}
-            onSubmit={async (values, {setSubmitting}) => {
-              const parsedValues = {
-                infoMessage: values.infoMessage,
-              };
-              await fetch("/api/siteinfo", {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({infoMessage: values.infoMessage}),
-              });
-
-              await mutate();
-              setEditInfo(false);
-              setSubmitting(false);
-            }}
+          <button
+            type="button"
+            onClick={() => setIsEdit(true)}
+            className={`${styles.btn} ${styles.btnSecondary} ${styles.editBtn}`}
           >
-            {({isSubmitting, values}) => (
-              <Form className={styles.form}>
-                <div className={styles.formGroup}>
-                  <Field type="text" name="infoMessage" />
+            Edytuj
+          </button>
+        </>
+      ) : (
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validate={(values) => {
+            const errors: Partial<Values> = {};
+            if (values.infoMessage.length > MAX) {
+              errors.infoMessage = `Maksymalnie ${MAX} znaków.`;
+            }
+            return errors;
+          }}
+          onSubmit={async (values, {setSubmitting}) => {
+            await fetch("/api/siteinfo", {
+              method: "PUT",
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify({infoMessage: values.infoMessage}),
+            });
+            await mutate();
+            setIsEdit(false);
+            setSubmitting(false);
+          }}
+        >
+          {({isSubmitting, values}) => (
+            <Form className={styles.form}>
+              <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="infoMessage">
+                  Komunikat
+                </label>
 
-                  <ErrorMessage
-                    name="infoMessage"
-                    component="div"
-                    className={styles.error}
-                  />
+                <Field
+                  as="textarea"
+                  id="infoMessage"
+                  name="infoMessage"
+                  className={styles.textarea}
+                  placeholder='Np. "Zbiornik nr 2 nieczynny w dniu 10.02 (zawody)."'
+                />
+
+                <div className={styles.counter}>
+                  {values.infoMessage.length}/{MAX}
                 </div>
 
+                <ErrorMessage
+                  name="infoMessage"
+                  component="div"
+                  className={styles.error}
+                />
+              </div>
+
+              <div className={styles.actions}>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={styles.changeBtn}
+                  className={`${styles.btn} ${styles.btnPrimary}`}
                 >
-                  Aktualizuj komunikat
+                  Zapisz
                 </button>
-
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  className={styles.changeBtn}
-                  onClick={() => setEditInfo(false)}
+                  onClick={() => setIsEdit(false)}
+                  className={`${styles.btn} ${styles.btnSecondary}`}
                 >
                   Anuluj
                 </button>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </div>
-
-      {!editInfo && (
-        <button onClick={() => setEditInfo(true)} className={styles.changeBtn}>
-          Edytuj
-        </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       )}
-    </>
+    </div>
   );
 };
 

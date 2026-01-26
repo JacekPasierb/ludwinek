@@ -11,17 +11,15 @@ const Page = () => {
       <div className={styles.block}>
         <EditTitle />
       </div>
-      <div className={styles.line}></div>
 
       <div className={styles.block}>
         <EditSubtitle />
       </div>
-      <div className={styles.line}></div>
 
       <div className={styles.block}>
         <EditInfo />
       </div>
-      <div className={styles.line}></div>
+
       <div className={styles.block}>
         <EditRecord />
       </div>

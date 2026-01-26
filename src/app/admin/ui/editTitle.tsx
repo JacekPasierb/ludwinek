@@ -1,94 +1,101 @@
-"use client"
+"use client";
 
+import React, {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import useSWR from "swr";
-import React, {useState} from "react";
 import styles from "../styles/editTitle.module.css";
 import Tittle from "../components/Tittle";
 
-const fetcher = (url: string) => fetch(url).then(res => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-
-interface RecordFormValues {
+interface Values {
   title: string;
 }
 
 const EditTitle = () => {
-  const [editTitle, setEditTitle] = useState(false);
-  const { data, mutate } = useSWR("/api/siteinfo", fetcher);
+  const [isEdit, setIsEdit] = useState(false);
+  const {data, mutate} = useSWR("/api/siteinfo", fetcher);
   const title = data?.heroTitle ?? "";
 
-  const initialValues: RecordFormValues = {
-    title: title,
-  };
+  const initialValues: Values = {title};
 
   return (
-    <>
-      <div>
-        <Tittle title={"Tytuł Strony"} />
-        {!editTitle && <p onClick={() => setEditTitle(true)}>{title}</p>}
-        {editTitle && (
-          <Formik
-            initialValues={initialValues}
-            validate={(values) => {
-              const errors: Partial<RecordFormValues> = {};
-              if (!values.title) {
-                errors.title = "Wpisz tytuł strony";
-              }
+    <div className={styles.card}>
+      <Tittle title="Tytuł strony" />
 
-              return errors;
-            }}
-            onSubmit={async(values, {setSubmitting}) => {
-              const parsedValues = {
-                title: values.title,
-              };
-              await fetch("/api/siteinfo", {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title: values.title }),
-              });
-              mutate(); // odśwież dane
-              setEditTitle(false);
-              console.log("Wysłano dane:", parsedValues);
-              setSubmitting(false);
-            }}
+      {!isEdit ? (
+        <>
+          <div className={styles.preview} onClick={() => setIsEdit(true)}>
+            <div className={styles.previewTitle}>Aktualna wartość</div>
+            <div className={styles.previewValue}>
+              {title || <span className={styles.muted}>Brak</span>}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsEdit(true)}
+            className={`${styles.btn} ${styles.btnSecondary} ${styles.editBtn}`}
           >
-            {({isSubmitting}) => (
-              <Form className={styles.form}>
-                <div className={styles.formGroup}>
-                  <Field type="text" name="title" />
-                  <ErrorMessage
-                    name="title"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
+            Edytuj
+          </button>
+        </>
+      ) : (
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validate={(values) => {
+            const errors: Partial<Values> = {};
+            if (!values.title.trim()) errors.title = "Wpisz tytuł strony.";
+            return errors;
+          }}
+          onSubmit={async (values, {setSubmitting}) => {
+            await fetch("/api/siteinfo", {
+              method: "PUT",
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify({title: values.title}),
+            });
+            await mutate();
+            setIsEdit(false);
+            setSubmitting(false);
+          }}
+        >
+          {({isSubmitting}) => (
+            <Form className={styles.form}>
+              <div className={styles.formGroup}>
+                <label className={styles.label} htmlFor="title">
+                  Tytuł
+                </label>
+                <Field id="title" name="title" className={styles.input} />
+                <ErrorMessage
+                  name="title"
+                  component="div"
+                  className={styles.error}
+                />
+              </div>
 
+              <div className={styles.actions}>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={styles.changeBtn}
+                  className={`${styles.btn} ${styles.btnPrimary}`}
                 >
-                  Aktualizuj Tytuł
+                  Zapisz
                 </button>
                 <button
+                  type="button"
                   disabled={isSubmitting}
-                  className={styles.changeBtn}
-                  onClick={() => setEditTitle(false)}
+                  onClick={() => setIsEdit(false)}
+                  className={`${styles.btn} ${styles.btnSecondary}`}
                 >
                   Anuluj
                 </button>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </div>
-      {!editTitle && (
-        <button onClick={() => setEditTitle(true)} className={styles.changeBtn}>
-          Edytuj
-        </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       )}
-    </>
+    </div>
   );
 };
 

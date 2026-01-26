@@ -8,82 +8,112 @@ import styles from "../styles/editTitle.module.css";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-interface RecordFormValues {
+interface Values {
   species: string;
   weight: string;
-
   year: string;
 }
 
 const EditRecord = () => {
-  const [edit, setEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);
   const record = data?.recordFish;
 
-  const initialValues: RecordFormValues = {
+  const initialValues: Values = {
     species: record?.species || "",
-    weight: record?.weight || 0,
-
+    weight: record?.weight ? String(record.weight) : "",
     year: record?.year || "",
   };
 
   return (
-    <>
-      <div>
-        <Tittle title={"Rekord Łowiska"} />
+    <div className={styles.card}>
+      <Tittle title="Rekord łowiska" />
 
-        {!edit && record && (
-          <div onClick={() => setEdit(true)} className={styles.recordDisplay}>
-            <p>
-              <strong>Gatunek:</strong> {record.species}
-            </p>
-            <p>
-              <strong>Waga:</strong> {record.weight} kg
-            </p>
+      {!isEdit ? (
+        <>
+          <div className={styles.preview} onClick={() => setIsEdit(true)}>
+            <div className={styles.previewTitle}>Aktualny rekord</div>
 
-            <p>
-              <strong>Rok:</strong> {record.year}
-            </p>
+            {record ? (
+              <div className={styles.recordGrid}>
+                <div className={styles.recordRow}>
+                  <span className={styles.muted}>Gatunek</span>
+                  <span className={styles.previewValue}>{record.species}</span>
+                </div>
+                <div className={styles.recordRow}>
+                  <span className={styles.muted}>Waga</span>
+                  <span className={styles.previewValue}>
+                    {record.weight} kg
+                  </span>
+                </div>
+                <div className={styles.recordRow}>
+                  <span className={styles.muted}>Rok</span>
+                  <span className={styles.previewValue}>{record.year}</span>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.previewValue}>
+                <span className={styles.muted}>Brak rekordu</span>
+              </div>
+            )}
           </div>
-        )}
 
-        {edit && (
-          <Formik
-            initialValues={initialValues}
-            validate={(values) => {
-              const errors: Partial<RecordFormValues> = {};
-              if (!values.species) errors.species = "Podaj gatunek ryby";
-              if (!values.weight || Number(values.weight) <= 0)
-                errors.weight = "Podaj wagę (w kg)";
-
-              if (!values.year) errors.year = "Podaj rok złowienia";
-              return errors;
-            }}
-            onSubmit={async (values, {setSubmitting}) => {
-              await fetch("/api/siteinfo", {
-                method: "PUT",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({recordFish: values}),
-              });
-              mutate();
-              setEdit(false);
-              setSubmitting(false);
-            }}
+          <button
+            type="button"
+            onClick={() => setIsEdit(true)}
+            className={`${styles.btn} ${styles.btnSecondary} ${styles.editBtn}`}
           >
-            {({isSubmitting}) => (
-              <Form className={styles.form}>
+            Edytuj
+          </button>
+        </>
+      ) : (
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validate={(values) => {
+            const errors: Partial<Values> = {};
+            if (!values.species.trim()) errors.species = "Podaj gatunek ryby.";
+            if (!values.weight || Number(values.weight) <= 0)
+              errors.weight = "Podaj wagę (kg).";
+            if (!values.year.trim()) errors.year = "Podaj rok.";
+            return errors;
+          }}
+          onSubmit={async (values, {setSubmitting}) => {
+            await fetch("/api/siteinfo", {
+              method: "PUT",
+              headers: {"Content-Type": "application/json"},
+              body: JSON.stringify({recordFish: values}),
+            });
+            await mutate();
+            setIsEdit(false);
+            setSubmitting(false);
+          }}
+        >
+          {({isSubmitting}) => (
+            <Form className={styles.form}>
+              <div className={styles.fieldsRow}>
                 <div className={styles.formGroup}>
-                  <label>Gatunek ryby</label>
-                  <Field type="text" name="species" />
+                  <label className={styles.label} htmlFor="species">
+                    Gatunek
+                  </label>
+                  <Field id="species" name="species" className={styles.input} />
                   <ErrorMessage
                     name="species"
                     component="div"
                     className={styles.error}
                   />
                 </div>
+
                 <div className={styles.formGroup}>
-                  <label>Waga (kg)</label>
-                  <Field type="number" name="weight" />
+                  <label className={styles.label} htmlFor="weight">
+                    Waga (kg)
+                  </label>
+                  <Field
+                    id="weight"
+                    name="weight"
+                    type="number"
+                    className={styles.input}
+                  />
                   <ErrorMessage
                     name="weight"
                     component="div"
@@ -92,40 +122,40 @@ const EditRecord = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>Rok</label>
-                  <Field type="text" name="year" />
+                  <label className={styles.label} htmlFor="year">
+                    Rok
+                  </label>
+                  <Field id="year" name="year" className={styles.input} />
                   <ErrorMessage
                     name="year"
                     component="div"
                     className={styles.error}
                   />
                 </div>
+              </div>
 
+              <div className={styles.actions}>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={styles.changeBtn}
+                  className={`${styles.btn} ${styles.btnPrimary}`}
                 >
-                  Zapisz rekord
+                  Zapisz
                 </button>
                 <button
                   type="button"
-                  onClick={() => setEdit(false)}
-                  className={styles.changeBtn}
+                  disabled={isSubmitting}
+                  onClick={() => setIsEdit(false)}
+                  className={`${styles.btn} ${styles.btnSecondary}`}
                 >
                   Anuluj
                 </button>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </div>
-      {!edit && (
-        <button onClick={() => setEdit(true)} className={styles.changeBtn}>
-          Edytuj
-        </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       )}
-    </>
+    </div>
   );
 };
 

@@ -71,8 +71,7 @@ export default async function RelacjePage() {
             Fotorelacje
           </h1>
           <p className={styles.subtitle}>
-            Wybierz album. Okładki zbiorników ustawisz w panelu admina, a
-            „Wydarzenia” pokazują zawsze najnowsze zdjęcie.
+            Zobacz zdjęcia z naszych zbiorników i wydarzeń
           </p>
         </header>
 
