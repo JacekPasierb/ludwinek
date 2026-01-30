@@ -7,6 +7,7 @@ const photoSchema = new mongoose.Schema({
     enum: ["zbiornik1", "zbiornik2", "zbiornik3", "wydarzenia"],
   },
   url: {type: String, required: true},
+  publicId: {type: String, default: null},
   alt: {type: String, default: ""},
   title: {type: String, default: ""},
   order: {type: Number, default: 0},

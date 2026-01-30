@@ -1,59 +1,10 @@
+/* Spójne z sekcją About i stroną główną */
 .album {
-  padding: 4rem 0;
+  padding-block: clamp(2.5rem, 4vw, 4rem);
   min-height: 60vh;
-  background: linear-gradient(
-    135deg,
-    #f8f9fa 0%,
-    #e9ecef 25%,
-    #ffffff 50%,
-    #f1f3f5 75%,
-    #ffffff 100%
-  );
-  background-size: 200% 200%;
-  animation: gradientShift 15s ease infinite;
-  color: #212529;
+  background-color: #f9fafb;
+  color: var(--foreground);
   position: relative;
-}
-
-.album::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(
-      circle at 20% 50%,
-      rgba(11, 18, 32, 0.03) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
-      rgba(11, 18, 32, 0.03) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 20%,
-      rgba(11, 18, 32, 0.02) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
-  z-index: 0;
-}
-
-.album > * {
-  position: relative;
-  z-index: 1;
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
 }
 
 .backButton {
@@ -62,26 +13,26 @@
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: #ffffff;
-  border: 1px solid rgba(44, 85, 48, 0.2);
-  border-radius: 8px;
-  color: #2c5530;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  color: #111;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .backButton:hover {
-  background: #f8f9fa;
-  border-color: rgba(44, 85, 48, 0.4);
-  color: #1e3d22;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
 }
 
 .backButton:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 201, 106, 0.3);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .header {
@@ -89,28 +40,27 @@
 }
 
 .title {
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #6b9f7a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: #2c5530;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.2;
+  color: #111;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem 0;
 }
 
 .count {
-  font-size: 1rem;
-  color: #6c757d;
+  font-size: 1.05rem;
+  color: rgba(17, 17, 17, 0.7);
   font-weight: 400;
+  margin: 0;
 }
 
 .loading,
 .empty {
   text-align: center;
   padding: 4rem 2rem;
-  color: #6c757d;
-  font-size: 1.1rem;
+  color: rgba(17, 17, 17, 0.7);
+  font-size: 1.05rem;
 }
 
 .photoGrid {
@@ -123,20 +73,22 @@
 .photoItem {
   position: relative;
   aspect-ratio: 4/3;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s ease;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
 }
 
 .photoItem:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 .photoItem:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(44, 85, 48, 0.3);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .photo {
@@ -147,7 +99,7 @@
 }
 
 .photoItem:hover .photo {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .photoTitle {
@@ -160,14 +112,14 @@
   color: white;
   font-size: 0.9rem;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .photoItem:hover .photoTitle {
   opacity: 1;
 }
 
-/* Paginacja */
+/* Paginacja – spójna z kartami About */
 .pagination {
   display: flex;
   align-items: center;
@@ -180,27 +132,26 @@
 .pageBtn {
   padding: 0.7rem 1.1rem;
   background: #ffffff;
-  border: 1px solid rgba(44, 85, 48, 0.2);
-  border-radius: 10px;
-  color: #2c5530;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  color: #111;
   cursor: pointer;
   transition: all 0.25s ease;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .pageBtn:hover:not(:disabled) {
-  color: #1e3d22;
-  border-color: rgba(44, 85, 48, 0.4);
-  background: #f8f9fa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
 }
 
 .pageBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background: #e9ecef;
-  color: #adb5bd;
+  color: #6c757d;
 }
 
 .pageBtnDisabled {
@@ -208,7 +159,7 @@
   cursor: not-allowed;
   pointer-events: none;
   background: #e9ecef;
-  color: #adb5bd;
+  color: #6c757d;
 }
 
 .pageNumbers {
@@ -220,40 +171,39 @@
 .pageNumber {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
-  border: 1px solid rgba(44, 85, 48, 0.2);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   background: #ffffff;
-  color: #2c5530;
+  color: #111;
   cursor: pointer;
   transition: all 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .pageNumber:hover {
-  border-color: rgba(44, 85, 48, 0.4);
-  color: #1e3d22;
-  background: #f8f9fa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
 }
 
 .pageActive {
-  border-color: #4a7c59;
-  background: #4a7c59;
-  color: #ffffff;
-  box-shadow: 0 4px 8px rgba(44, 85, 48, 0.2);
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.06);
+  color: #111;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 .dots {
   padding: 0 0.25rem;
-  color: #6c757d;
+  color: rgba(17, 17, 17, 0.6);
   font-weight: 500;
 }
 
-/* Modal */
+/* Modal lightbox */
 .modal {
   position: fixed;
   top: 0;
@@ -282,7 +232,7 @@
   max-width: 100%;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .closeButton {
@@ -300,19 +250,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   z-index: 2001;
 }
 
 .closeButton:hover {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #f5c96a;
-  color: #f5c96a;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .closeButton:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(245, 201, 106, 0.5);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 @media (max-width: 768px) {

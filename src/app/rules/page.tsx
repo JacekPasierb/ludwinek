@@ -3,7 +3,7 @@
 import React, {useMemo} from "react";
 import rules from "../../data/rule.json";
 import styles from "../styles/rules.module.css";
-import Link from "next/link";
+
 
 type RulesJson = {
   title: string;
@@ -94,7 +94,7 @@ const Page = () => {
     <section className={styles.wrapper}>
       <div className="container">
         <header className={styles.hero}>
-          <div className={styles.heroBadge}>Regulamin łowiska</div>
+          
           <h1 className={styles.heading}>{data.title}</h1>
           <p className={styles.intro}>{data.intro}</p>
         </header>

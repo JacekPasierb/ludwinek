@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
   await connectToDatabase();
 
   const body = await req.json();
-  const {album, url, alt, title, order} = body;
+  const {album, url, alt, title, order, publicId} = body;
 
   if (!album || !url) {
     return NextResponse.json({error: "Album i URL są wymagane"}, {status: 400});
@@ -93,6 +93,7 @@ export async function POST(req: NextRequest) {
   const photo = new Photo({
     album,
     url,
+    publicId: publicId || null,
     alt: alt || "",
     title: title || "",
     order: order || 0,

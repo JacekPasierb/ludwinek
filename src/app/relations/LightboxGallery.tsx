@@ -2,10 +2,12 @@
 
 import React, {useEffect, useMemo, useState} from "react";
 import Image from "next/image";
+import {getCloudinaryUrl} from "@/lib/cloudinary";
 import styles from "../styles/album.module.css";
 
 export type LightboxPhoto = {
   url: string;
+  publicId?: string | null;
   alt?: string;
   title?: string;
 };
@@ -49,11 +51,14 @@ export default function LightboxGallery({
   return (
     <>
       <div className={styles.photoGrid}>
-        {photos.map((photo, idx) => (
+        {photos.map((photo, idx) => {
+          const src = photo.publicId || photo.url;
+          const gridUrl = getCloudinaryUrl(src, "medium");
+          return (
           <a
             key={`${photo.url}-${idx}`}
             className={styles.photoItem}
-            href={photo.url}
+            href={getCloudinaryUrl(src, "large")}
             onClick={(e) => {
               e.preventDefault();
               setActiveIndex(idx);
@@ -61,7 +66,7 @@ export default function LightboxGallery({
             aria-label={`Otwórz zdjęcie: ${photo.title || albumName}`}
           >
             <Image
-              src={photo.url}
+              src={gridUrl}
               alt={photo.alt || photo.title || albumName}
               width={600}
               height={450}
@@ -72,7 +77,8 @@ export default function LightboxGallery({
               <div className={styles.photoTitle}>{photo.title}</div>
             )}
           </a>
-        ))}
+          );
+        })}
       </div>
 
       {active && (
@@ -126,7 +132,10 @@ export default function LightboxGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={active.url}
+              src={getCloudinaryUrl(
+                active.publicId || active.url,
+                "large"
+              )}
               alt={active.alt || active.title || albumName}
               width={1400}
               height={900}

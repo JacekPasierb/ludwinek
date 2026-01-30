@@ -1,7 +1,7 @@
 import {getServerSession} from "next-auth";
 
 import {redirect} from "next/navigation";
-import {LoginForm} from "./components/LoginForm";
+import {LoginForm} from "../components/LoginForm";
 
 import AdminDashboard from "./AdminDashboard";
 import {authOptions} from "../../lib/auth";

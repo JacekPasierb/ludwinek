@@ -2,6 +2,7 @@
 
 import React, {useState} from "react";
 import useSWR from "swr";
+import panelStyles from "../../styles/pageAdmin.module.css";
 import styles from "../styles/adminPhotos.module.css";
 import Tittle from "../components/Tittle";
 import {FaTrash, FaEdit, FaPlus} from "react-icons/fa";
@@ -93,13 +94,14 @@ export default function Page() {
       const uploadData = await uploadResponse.json();
       setUploadProgress(100);
 
-      // Zapisz w MongoDB
+      // Zapisz w MongoDB (publicId do optymalizacji URL, url jako fallback)
       await fetch("/api/photos", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           album: selectedAlbum,
           url: uploadData.url,
+          publicId: uploadData.publicId ?? undefined,
           alt: newPhoto.alt,
           title: newPhoto.title,
         }),
@@ -158,232 +160,235 @@ export default function Page() {
   };
 
   return (
-    <div className={styles.container}>
-      <Tittle title="Zarządzanie Zdjęciami" />
-
-      {/* Wybór albumu */}
-      <div className={styles.albumSelector}>
-        <label>Wybierz album:</label>
-        <select
-          value={selectedAlbum}
-          onChange={(e) => setSelectedAlbum(e.target.value as AlbumType)}
-          className={styles.select}
-        >
-          {albums.map((album) => (
-            <option key={album.id} value={album.id}>
-              {album.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Formularz dodawania */}
-      <div className={styles.section}>
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className={styles.addButton}
-        >
-          <FaPlus /> {showAddForm ? "Anuluj" : "Dodaj zdjęcie"}
-        </button>
-
-        {showAddForm && (
-          <div className={styles.form}>
-            <div className={styles.formGroup}>
-              <label>Wybierz zdjęcie z komputera *</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
-                className={styles.fileInput}
-                disabled={uploading}
-              />
-              {previewUrl && (
-                <div className={styles.previewContainer}>
-                  <img
-                    src={previewUrl}
-                    alt="Podgląd"
-                    className={styles.previewImage}
-                  />
-                  {selectedFile && (
-                    <p className={styles.fileInfo}>
-                      {selectedFile.name} (
-                      {(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Alt tekst (opcjonalnie)</label>
-              <input
-                type="text"
-                value={newPhoto.alt}
-                onChange={(e) =>
-                  setNewPhoto({...newPhoto, alt: e.target.value})
-                }
-                placeholder="Opis zdjęcia dla SEO"
-                className={styles.input}
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Tytuł (opcjonalnie)</label>
-              <input
-                type="text"
-                value={newPhoto.title}
-                onChange={(e) =>
-                  setNewPhoto({...newPhoto, title: e.target.value})
-                }
-                placeholder="Tytuł zdjęcia"
-                className={styles.input}
-              />
-            </div>
-
-            {uploading && (
-              <div className={styles.uploadProgress}>
-                <div className={styles.progressBar}>
-                  <div
-                    className={styles.progressFill}
-                    style={{width: `${uploadProgress}%`}}
-                  />
-                </div>
-                <p>Przesyłanie... {uploadProgress}%</p>
-              </div>
-            )}
-            <button
-              onClick={handleUpload}
-              className={styles.submitButton}
-              disabled={uploading || !selectedFile}
+    <div className={panelStyles.panel}>
+      {/* Blok: Zarządzanie Zdjęciami (wybór albumu + dodaj zdjęcie) */}
+      <div className={panelStyles.block}>
+        <div className={styles.blockInner}>
+          <Tittle title="Zarządzanie Zdjęciami" />
+          <div className={styles.albumSelector}>
+            <label className={styles.albumLabel}>Wybierz album</label>
+            <select
+              value={selectedAlbum}
+              onChange={(e) => setSelectedAlbum(e.target.value as AlbumType)}
+              className={styles.select}
             >
-              {uploading ? "Przesyłanie..." : "Prześlij i dodaj zdjęcie"}
-            </button>
+              {albums.map((album) => (
+                <option key={album.id} value={album.id}>
+                  {album.name}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
-      </div>
 
-      {/* Lista zdjęć */}
-      <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>
-          Zdjęcia w albumie: {albums.find((a) => a.id === selectedAlbum)?.name}{" "}
-          ({photos?.length || 0})
-        </h3>
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className={styles.addButton}
+          >
+            <FaPlus /> {showAddForm ? "Anuluj" : "Dodaj zdjęcie"}
+          </button>
 
-        {photos && photos.length > 0 ? (
-          <div className={styles.photosGrid}>
-            {photos.map((photo: any) => (
-              <div key={photo._id} className={styles.photoCard}>
-                {editingId === photo._id ? (
-                  <div className={styles.editForm}>
-                    <div className={styles.formGroup}>
-                      <label>URL</label>
-                      <input
-                        type="text"
-                        value={editPhoto.url}
-                        onChange={(e) =>
-                          setEditPhoto({...editPhoto, url: e.target.value})
-                        }
-                        className={styles.input}
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Alt</label>
-                      <input
-                        type="text"
-                        value={editPhoto.alt}
-                        onChange={(e) =>
-                          setEditPhoto({...editPhoto, alt: e.target.value})
-                        }
-                        className={styles.input}
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Tytuł</label>
-                      <input
-                        type="text"
-                        value={editPhoto.title}
-                        onChange={(e) =>
-                          setEditPhoto({...editPhoto, title: e.target.value})
-                        }
-                        className={styles.input}
-                      />
-                    </div>
-                    <div className={styles.editActions}>
-                      <button
-                        onClick={handleUpdate}
-                        className={styles.saveButton}
-                      >
-                        Zapisz
-                      </button>
-                      <button
-                        onClick={() => setEditingId(null)}
-                        className={styles.cancelButton}
-                      >
-                        Anuluj
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
+          {showAddForm && (
+            <div className={styles.form}>
+              <div className={styles.formGroup}>
+                <label>Wybierz zdjęcie z komputera *</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className={styles.fileInput}
+                  disabled={uploading}
+                />
+                {previewUrl && (
+                  <div className={styles.previewContainer}>
                     <img
-                      src={photo.url}
-                      alt={photo.alt || "Zdjęcie"}
-                      className={styles.photoPreview}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "/images/logo-ludwinek.png";
-                      }}
+                      src={previewUrl}
+                      alt="Podgląd"
+                      className={styles.previewImage}
                     />
-                    {selectedAlbum !== "wydarzenia" && photo.isCover && (
-                      <div className={styles.coverBadge}>OKŁADKA</div>
+                    {selectedFile && (
+                      <p className={styles.fileInfo}>
+                        {selectedFile.name} (
+                        {(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
+                      </p>
                     )}
-                    <div className={styles.photoInfo}>
-                      {photo.title && (
-                        <p className={styles.photoTitle}>{photo.title}</p>
-                      )}
-                      {photo.alt && (
-                        <p className={styles.photoAlt}>{photo.alt}</p>
-                      )}
-                    </div>
-                    <div className={styles.photoActions}>
-                      {selectedAlbum !== "wydarzenia" && (
-                        <button
-                          onClick={() => handleSetCover(photo._id)}
-                          className={styles.coverButton}
-                          aria-label="Ustaw jako okładkę"
-                          disabled={!!photo.isCover}
-                          title={
-                            photo.isCover
-                              ? "To zdjęcie jest już okładką"
-                              : "Ustaw jako okładkę albumu"
-                          }
-                        >
-                          Okładka
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleEdit(photo)}
-                        className={styles.editButton}
-                        aria-label="Edytuj"
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(photo._id)}
-                        className={styles.deleteButton}
-                        aria-label="Usuń"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </>
+                  </div>
                 )}
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className={styles.empty}>Brak zdjęć w tym albumie</p>
-        )}
+
+              <div className={styles.formGroup}>
+                <label>Alt tekst (opcjonalnie)</label>
+                <input
+                  type="text"
+                  value={newPhoto.alt}
+                  onChange={(e) =>
+                    setNewPhoto({...newPhoto, alt: e.target.value})
+                  }
+                  placeholder="Opis zdjęcia dla SEO"
+                  className={styles.input}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Tytuł (opcjonalnie)</label>
+                <input
+                  type="text"
+                  value={newPhoto.title}
+                  onChange={(e) =>
+                    setNewPhoto({...newPhoto, title: e.target.value})
+                  }
+                  placeholder="Tytuł zdjęcia"
+                  className={styles.input}
+                />
+              </div>
+
+              {uploading && (
+                <div className={styles.uploadProgress}>
+                  <div className={styles.progressBar}>
+                    <div
+                      className={styles.progressFill}
+                      style={{width: `${uploadProgress}%`}}
+                    />
+                  </div>
+                  <p>Przesyłanie... {uploadProgress}%</p>
+                </div>
+              )}
+              <button
+                onClick={handleUpload}
+                className={styles.submitButton}
+                disabled={uploading || !selectedFile}
+              >
+                {uploading ? "Przesyłanie..." : "Prześlij i dodaj zdjęcie"}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Blok: lista zdjęć */}
+      <div className={panelStyles.block}>
+        <div className={styles.blockInner}>
+          <h3 className={styles.sectionTitle}>
+            Zdjęcia w albumie:{" "}
+            {albums.find((a) => a.id === selectedAlbum)?.name} (
+            {photos?.length || 0})
+          </h3>
+
+          {photos && photos.length > 0 ? (
+            <div className={styles.photosGrid}>
+              {photos.map((photo: any) => (
+                <div key={photo._id} className={styles.photoCard}>
+                  {editingId === photo._id ? (
+                    <div className={styles.editForm}>
+                      <div className={styles.formGroup}>
+                        <label>URL</label>
+                        <input
+                          type="text"
+                          value={editPhoto.url}
+                          onChange={(e) =>
+                            setEditPhoto({...editPhoto, url: e.target.value})
+                          }
+                          className={styles.input}
+                        />
+                      </div>
+                      <div className={styles.formGroup}>
+                        <label>Alt</label>
+                        <input
+                          type="text"
+                          value={editPhoto.alt}
+                          onChange={(e) =>
+                            setEditPhoto({...editPhoto, alt: e.target.value})
+                          }
+                          className={styles.input}
+                        />
+                      </div>
+                      <div className={styles.formGroup}>
+                        <label>Tytuł</label>
+                        <input
+                          type="text"
+                          value={editPhoto.title}
+                          onChange={(e) =>
+                            setEditPhoto({...editPhoto, title: e.target.value})
+                          }
+                          className={styles.input}
+                        />
+                      </div>
+                      <div className={styles.editActions}>
+                        <button
+                          onClick={handleUpdate}
+                          className={styles.saveButton}
+                        >
+                          Zapisz
+                        </button>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className={styles.cancelButton}
+                        >
+                          Anuluj
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <img
+                        src={photo.url}
+                        alt={photo.alt || "Zdjęcie"}
+                        className={styles.photoPreview}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            "/images/logo-ludwinek.png";
+                        }}
+                      />
+                      {selectedAlbum !== "wydarzenia" && photo.isCover && (
+                        <div className={styles.coverBadge}>OKŁADKA</div>
+                      )}
+                      <div className={styles.photoInfo}>
+                        {photo.title && (
+                          <p className={styles.photoTitle}>{photo.title}</p>
+                        )}
+                        {photo.alt && (
+                          <p className={styles.photoAlt}>{photo.alt}</p>
+                        )}
+                      </div>
+                      <div className={styles.photoActions}>
+                        {selectedAlbum !== "wydarzenia" && (
+                          <button
+                            onClick={() => handleSetCover(photo._id)}
+                            className={styles.coverButton}
+                            aria-label="Ustaw jako okładkę"
+                            disabled={!!photo.isCover}
+                            title={
+                              photo.isCover
+                                ? "To zdjęcie jest już okładką"
+                                : "Ustaw jako okładkę albumu"
+                            }
+                          >
+                            Okładka
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleEdit(photo)}
+                          className={styles.editButton}
+                          aria-label="Edytuj"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(photo._id)}
+                          className={styles.deleteButton}
+                          aria-label="Usuń"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className={styles.empty}>Brak zdjęć w tym albumie</p>
+          )}
+        </div>
       </div>
     </div>
   );

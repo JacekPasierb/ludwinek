@@ -92,6 +92,7 @@ export default async function RelationsAlbumPage(props: {
     .lean();
   const lightboxPhotos: LightboxPhoto[] = photos.map((p: any) => ({
     url: p.url,
+    publicId: p.publicId ?? null,
     alt: p.alt || "",
     title: p.title || "",
   }));
