@@ -2,8 +2,6 @@ import React from "react";
 import styles from "../styles/features.module.css";
 import Image from "next/image";
 
-import NoLitteringIcon from "./NoLitteringIcon";
-
 const Features = () => {
   return (
     <section
@@ -24,7 +22,7 @@ const Features = () => {
 
         <li className={styles.itemFeature}>
           <Image
-            src="/iconD.png"
+            src="/no-kill.png"
             alt="Zasada no-kill"
             className={styles.iconImage}
             width={180}
@@ -34,7 +32,13 @@ const Features = () => {
         </li>
 
         <li className={styles.itemFeature}>
-          <NoLitteringIcon size={180} className={styles.iconSvg} />
+          <Image
+            src="/smieci.png"
+            alt="Zakaz wyrzucania śmieci"
+            className={styles.iconImage}
+            width={180}
+            height={180}
+          />
           <p>Zakaz pozostawiania śmieci</p>
         </li>
       </ul>

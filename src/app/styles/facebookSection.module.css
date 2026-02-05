@@ -1,0 +1,100 @@
+/* Oddzielona od About: białe tło + linia */
+.section {
+  padding-block: clamp(2.5rem, 4vw, 4rem);
+  background-color: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 0;
+}
+
+.heading {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.25;
+  color: #111;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height: 1.6;
+  color: rgba(17, 17, 17, 0.82);
+  margin: 0 auto 1.5rem;
+  text-align: center;
+  max-width: 520px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
+}
+
+.link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #1877f2;
+  color: #fff;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.label {
+  color: rgba(17, 17, 17, 0.9);
+}
+
+.link:hover .label {
+  color: #111;
+}
+
+@media (max-width: 480px) {
+  .links {
+    flex-direction: column;
+  }
+
+  .link {
+    justify-content: center;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+}

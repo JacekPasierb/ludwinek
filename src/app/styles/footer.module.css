@@ -2,12 +2,11 @@
    Footer – base
    ========================= */
 
-
 .footer {
   background: #0d0d0d;
   color: #f1f1f1;
   padding: 3rem 1rem 1rem;
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 2vw, 0.9rem);
 }
 
 .container {
@@ -20,8 +19,8 @@
 }
 
 .column {
-  flex: 1 1 200px;
-  min-width: 200px;
+  flex: 1 1 180px;
+  min-width: min(180px, 100%);
 }
 
 /* =========================
@@ -29,13 +28,14 @@
    ========================= */
 
 .column h4 {
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+  margin-top: 0;
   margin-bottom: 1rem;
   color: #fff;
 }
 
 .column p {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
   color: #ccc;
   line-height: 1.5;
 }
@@ -52,14 +52,18 @@
 .logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  width: fit-content;
+  margin-inline: auto;
 }
 
 .logoImg {
   max-width: 100%;
   height: auto;
-  padding: 0.75rem;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
 }
 
 /* =========================
@@ -73,9 +77,8 @@
   position: relative;
   text-decoration: none;
   color: #ccc;
-
   font-weight: 500;
-  font-size: 0.95rem;
+  font-size: clamp(0.88rem, 2vw, 0.95rem);
   letter-spacing: 0.06em;
 
   padding: 0.4rem 0.1rem;
@@ -133,13 +136,26 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* map link specifics */
-.mapLink {
+/* contact row – ikona + tekst */
+.contactRow {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.5rem;
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  font-size: 1em;
+  color: var(--accent);
+}
+
+/* map link specifics */
+.mapLink {
+  display: inline;
   font-size: 0.85rem;
-  margin-left: 6px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0 !important;
   text-transform: none;
   letter-spacing: normal;
 }
@@ -149,7 +165,9 @@
    ========================= */
 
 .linksColumn a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.6rem;
 }
 
@@ -160,7 +178,7 @@
 .bottomBar {
   margin-top: 2rem;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: clamp(0.75rem, 1.8vw, 0.8rem);
   color: #aaa;
 }
 
@@ -173,7 +191,7 @@
   .container {
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .column {
@@ -200,19 +218,19 @@
     margin-bottom: 0.6rem;
   }
 
-  /* BUT: "Łowisko" links always one under another */
+  /* "Łowisko" – ikona + tekst w wierszu, wyśrodkowane */
   .linksColumn a {
-    display: block;
+    display: flex;
     margin: 0 auto 0.6rem;
     width: max-content;
   }
 
   .mapLink {
-    margin-left: 8px;
+    margin: 0;
   }
 
   .column p {
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.45rem;
   }
 
   .bottomBar {
@@ -238,6 +256,21 @@
 
   .logo {
     justify-content: flex-start;
+  }
+
+  .linksColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .linksColumn a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contactColumn {
+    text-align: left;
   }
 }
 

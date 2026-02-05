@@ -1,7 +1,4 @@
 .bar {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
   width: 100%;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
@@ -19,7 +16,7 @@
 }
 
 .label {
-  font-size: 0.7rem;
+  font-size: clamp(0.65rem, 1.8vw, 0.7rem);
   letter-spacing: 0.18em;
   font-weight: 700;
   color: #475569;
@@ -63,7 +60,7 @@
 .text {
   display: inline-block;
   white-space: nowrap;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
   letter-spacing: 0.02em;
   color: #1f2937;
 }

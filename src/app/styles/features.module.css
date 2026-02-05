@@ -8,6 +8,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 2rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .iconSvg {
@@ -38,7 +41,7 @@
   min-width: 220px;
 }
 .itemFeature p {
-    font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
   font-weight: 600;
   font-family: 'Segoe UI', sans-serif;
   text-transform: uppercase;
@@ -48,8 +51,8 @@
 }
 
 .iconImage {
-  width: 180px;
-  height: 180px;
+  width: clamp(140px, 35vw, 180px);
+  height: clamp(140px, 35vw, 180px);
   object-fit: contain;
   margin-bottom: 0.5rem;
 }

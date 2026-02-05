@@ -3,18 +3,8 @@
 import React from "react";
 import styles from "../styles/about.module.css";
 import Image from "next/image";
-import Link from "next/link";
-import useSWR from "swr";
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const About = () => {
-  const {data} = useSWR("/api/siteinfo", fetcher);
-
-  const record = data?.recordFish ?? null;
-  const hasRecord =
-    record?.species?.trim() &&
-    Number(record?.weight) > 0 &&
-    record?.year?.trim();
-
   return (
     <section
       className={styles.sectionAbout}
@@ -76,28 +66,6 @@ const About = () => {
               sandacz, karaś srebrzysty, karaś złocisty, jesiotr, tołpyga, płoć,
               lin, sumik karłowaty, sum hodowlany, wzdręga.
             </p>
-            <div className={styles.recordCard} aria-label="Rekord łowiska">
-              <div className={styles.recordTop}>
-                <span className={styles.recordBadge}>Rekord łowiska</span>
-                <span className={styles.recordHint}>
-                  złowione i wypuszczone
-                </span>
-              </div>
-
-              {hasRecord ? (
-                <div className={styles.recordValue}>
-                  <span className={styles.recordSpecies}>{record.species}</span>
-                  <span className={styles.recordWeight}>
-                    {Number(record.weight).toFixed(1)} kg
-                  </span>
-                  <span className={styles.recordYear}>{record.year}</span>
-                </div>
-              ) : (
-                <div className={styles.recordEmpty}>
-                  Brak danych o rekordzie (uzupełnij w panelu admina).
-                </div>
-              )}
-            </div>
           </div>
           <div className={styles.rightSide}>
             <h2 id="about-heading" className={styles.heading}>

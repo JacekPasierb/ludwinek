@@ -13,8 +13,8 @@
 }
 
 .title {
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  line-height: 1.2;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.25;
   color: #111;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -22,8 +22,8 @@
 }
 
 .subtitle {
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  line-height: 1.65;
   color: rgba(17, 17, 17, 0.82);
   margin: 0;
   font-weight: 400;
@@ -139,6 +139,24 @@
   }
 
   .albumName {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
     font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .albumName {
+    font-size: 1rem;
+  }
+
+  .albumContent {
+    padding: 0.9rem;
   }
 }

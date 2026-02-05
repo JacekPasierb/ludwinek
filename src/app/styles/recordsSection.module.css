@@ -1,0 +1,191 @@
+.section {
+  padding-block: clamp(2rem, 4vw, 3rem);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.02) 0%,
+    rgba(249, 250, 251, 1) 100%
+  );
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: clamp(0.7rem, 1.8vw, 0.75rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0f172a;
+}
+
+.hint {
+  font-size: clamp(0.8rem, 2vw, 0.85rem);
+  color: #475569;
+}
+
+.marqueeWrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee {
+  overflow: hidden;
+  padding-block: 0.5rem;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  will-change: transform;
+  animation: scrollRecords 40s linear infinite;
+}
+
+.section:hover .track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollRecords {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+.recordCard {
+  flex-shrink: 0;
+  width: 200px;
+  padding: 1.25rem 1rem;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recordCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.recordCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+}
+
+.recordValue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.recordValueTop {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recordSpecies {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0f172a;
+  text-transform: capitalize;
+}
+
+.recordWeight {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.recordDate {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.02em;
+}
+
+.recordEmpty {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #94a3b8;
+  font-weight: 300;
+}
+
+@media (max-width: 600px) {
+  .recordCard {
+    width: 160px;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+  }
+
+  .recordSpecies {
+    font-size: 0.95rem;
+  }
+
+  .recordWeight {
+    font-size: 1.1rem;
+  }
+
+  .recordDate {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .recordCard {
+    width: 150px;
+    padding: 1rem 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

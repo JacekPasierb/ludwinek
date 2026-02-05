@@ -181,6 +181,32 @@
   padding-bottom: 0;
 }
 
+.recordsList {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.recordBlock {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.recordBlock:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.recordBlockTitle {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 0.5rem;
+}
+
 /* Responsywność */
 @media (max-width: 860px) {
   .fieldsRow {
