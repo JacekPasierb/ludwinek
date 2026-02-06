@@ -14,7 +14,7 @@
     "bcryptjs": "^3.0.2",
     "formik": "^2.4.6",
     "mongoose": "^8.13.2",
-    "next": "15.2.5",
+    "next": "15.5.12",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-datepicker": "^9.1.0",
