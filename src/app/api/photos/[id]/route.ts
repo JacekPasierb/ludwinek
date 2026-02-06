@@ -4,11 +4,12 @@ import Photo from "@/models/Photo";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/lib/auth";
 
+type RouteContext = {
+  params: Promise<{id: string}>;
+};
+
 // DELETE - usuń zdjęcie (tylko dla zalogowanych)
-export async function DELETE(
-  req: NextRequest,
-  {params}: {params: {id: string}}
-) {
+export async function DELETE(req: NextRequest, {params}: RouteContext) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -17,7 +18,7 @@ export async function DELETE(
 
   await connectToDatabase();
 
-  const {id} = params;
+  const {id} = await params;
 
   const photo = await Photo.findByIdAndDelete(id);
 
@@ -28,11 +29,8 @@ export async function DELETE(
   return NextResponse.json({message: "Zdjęcie usunięte"});
 }
 
-type Context = {
-  params: {id: string};
-};
 // PUT - zaktualizuj zdjęcie (tylko dla zalogowanych)
-export async function PUT(req: NextRequest, {params}: Context) {
+export async function PUT(req: NextRequest, {params}: RouteContext) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -41,7 +39,7 @@ export async function PUT(req: NextRequest, {params}: Context) {
 
   await connectToDatabase();
 
-  const {id} = params;
+  const {id} = await params;
   const body = await req.json();
 
   const photo = await Photo.findByIdAndUpdate(id, body, {new: true});
