@@ -1,3 +1,4 @@
+/* ========== Section layout ========== */
 .section {
   padding-block: clamp(2rem, 4vw, 3rem);
   background: linear-gradient(
@@ -12,10 +13,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.25rem;
   text-align: center;
-  flex-wrap: wrap;
 }
 
 .badge {
@@ -26,11 +27,7 @@
   color: #0f172a;
 }
 
-.hint {
-  font-size: clamp(0.8rem, 2vw, 0.85rem);
-  color: #475569;
-}
-
+/* ========== Marquee ========== */
 .marqueeWrapper {
   overflow: hidden;
   width: 100%;
@@ -67,15 +64,7 @@
   animation-play-state: paused;
 }
 
-@keyframes scrollRecords {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-25%);
-  }
-}
-
+/* ========== Record card ========== */
 .recordCard {
   flex-shrink: 0;
   width: 200px;
@@ -83,7 +72,8 @@
   border-radius: 20px;
   background: #fff;
   border: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -101,7 +91,8 @@
 
 .recordCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.9) inset;
 }
 
 .recordValue {
@@ -116,21 +107,22 @@
 .recordValueTop {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  flex-wrap: wrap;
   justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
 .recordSpecies {
-  font-weight: 700;
   font-size: 1rem;
+  font-weight: 700;
   color: #0f172a;
   text-transform: capitalize;
 }
 
 .recordWeight {
-  font-weight: 800;
   font-size: 1.2rem;
+  font-weight: 800;
   color: var(--accent);
   letter-spacing: -0.02em;
 }
@@ -143,11 +135,81 @@
 }
 
 .recordEmpty {
-  text-align: center;
   padding: 1rem;
   font-size: 1.5rem;
-  color: #94a3b8;
   font-weight: 300;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* ========== Skeleton (loading) ========== */
+.recordCardSkeleton {
+  pointer-events: none;
+}
+
+.skeletonContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.skeletonLine,
+.skeletonLineShort {
+  height: 1rem;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.06) 25%,
+    rgba(0, 0, 0, 0.12) 50%,
+    rgba(0, 0, 0, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeletonLine {
+  width: 80%;
+}
+
+.skeletonLineShort {
+  width: 50%;
+  height: 0.75rem;
+}
+
+/* ========== Animations ========== */
+@keyframes scrollRecords {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========== Media queries ========== */
+@media (max-width: 650px) {
+  .recordSpecies {
+    font-size: 0.9rem;
+  }
+
+  .recordWeight {
+    font-size: 1rem;
+  }
+
+  .recordDate {
+    font-size: 0.72rem;
+  }
 }
 
 @media (max-width: 600px) {
@@ -155,25 +217,25 @@
     width: 160px;
   }
 
+  .recordValueTop {
+    gap: 0.25rem;
+  }
+
   .badge {
     font-size: 0.7rem;
     letter-spacing: 0.1em;
   }
 
-  .hint {
-    font-size: 0.8rem;
-  }
-
   .recordSpecies {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .recordWeight {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .recordDate {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -182,10 +244,28 @@
     width: 150px;
     padding: 1rem 0.75rem;
   }
+
+  .recordSpecies {
+    font-size: 0.8rem;
+  }
+
+  .recordWeight {
+    font-size: 0.9rem;
+  }
+
+  .recordDate {
+    font-size: 0.68rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .track {
     animation: none;
+  }
+
+  .skeletonLine,
+  .skeletonLineShort {
+    animation: none;
+    background: rgba(0, 0, 0, 0.08);
   }
 }

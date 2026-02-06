@@ -1,7 +1,6 @@
 .subtitle {
-    margin-block: 1rem;
-
-    text-transform: uppercase;
-    color: rgb(100, 100, 100);
-    
+  margin-block: 1rem;
+  font-weight: inherit;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.62);
 }

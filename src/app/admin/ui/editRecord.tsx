@@ -7,11 +7,10 @@ import DatePicker, {registerLocale} from "react-datepicker";
 import {pl} from "date-fns/locale/pl";
 import "react-datepicker/dist/react-datepicker.css";
 import Tittle from "../components/Tittle";
+import {fetcher} from "@/lib/fetcher";
 
 registerLocale("pl", pl);
 import styles from "../styles/editTitle.module.css";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const EMPTY = {species: "", weight: "", catchDate: ""};
 

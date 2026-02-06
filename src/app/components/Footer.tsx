@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import styles from "../styles/footer.module.css";
+import Image from "next/image";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 import {
   FaMapMarkerAlt,
   FaPhone,
@@ -9,26 +11,71 @@ import {
   FaImages,
   FaFileAlt,
 } from "react-icons/fa";
-import Image from "next/image";
-import Link from "next/link";
-import {usePathname} from "next/navigation";
+import styles from "../styles/footer.module.css";
 
-export const Footer = () => {
+type NavLink = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+};
+
+type OpeningHour = {
+  label: string;
+  value: string;
+};
+
+const LOGO_ALT = "Łowisko EKO-TORF Ludwinek";
+const LOGO_LINK_LABEL = "Strona główna Łowiska Ludwinek";
+
+const ADDRESS = "Ludwin 1C";
+const MAP_QUERY = "Ludwin+1C";
+const MAP_HREF = `https://www.google.com/maps/search/?api=1&query=${MAP_QUERY}`;
+
+const CONTACT_CARETAKER = {
+  phone: "+48691911777",
+  display: "691 911 777",
+  ariaLabel: "Zadzwoń do opiekuna łowiska: 691 911 777",
+};
+
+const CONTACT_OFFICE = {
+  phone: "+48609193579",
+  display: "609 193 579",
+  ariaLabel: "Zadzwoń do biura: 609 193 579",
+};
+
+const OPENING_HOURS: readonly OpeningHour[] = [
+  {label: "Poniedziałek – Piątek", value: "8:00 – 16:00"},
+  {label: "Sobota", value: "8:00 – 14:00"},
+  {label: "Niedziela", value: "Biuro nieczynne"},
+] as const;
+
+const NAV_LINKS: readonly NavLink[] = [
+  {href: "/#about", label: "O łowisku", icon: <FaInfoCircle />},
+  {href: "/relations", label: "Fotorelacje", icon: <FaImages />},
+  {href: "/rules", label: "Regulamin", icon: <FaFileAlt />},
+] as const;
+
+const Footer = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
+
   if (isAdmin) return null;
+
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.column}>
           <div className={styles.logo}>
-            <Link href="/" aria-label="Strona główna Łowiska Ludwinek">
+            <Link href="/" aria-label={LOGO_LINK_LABEL}>
               <Image
                 src="/images/logo-ludwinek.svg"
-                alt="Łowisko EKO-TORF Ludwinek"
+                alt={LOGO_ALT}
                 className={styles.logoImg}
                 width={230}
                 height={180}
+                sizes="(max-width: 420px) 120px, (max-width: 768px) 160px, (max-width: 1200px) 180px, 230px"
                 priority
               />
             </Link>
@@ -37,77 +84,84 @@ export const Footer = () => {
 
         <div className={`${styles.column} ${styles.contactColumn}`}>
           <h4>Dane kontaktowe:</h4>
+          <address className={styles.address}>
+            <p>
+              <strong>Adres:</strong>
+              <br />
+              <span className={styles.contactRow}>
+                <FaMapMarkerAlt className={styles.contactIcon} aria-hidden />
+                {ADDRESS}{" "}
+                <a
+                  href={MAP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mapLink}
+                >
+                  ( Pokaż na mapie )
+                </a>
+              </span>
+            </p>
 
-          <p>
-            <strong>Adres:</strong>
-            <br />
-            <span className={styles.contactRow}>
-              <FaMapMarkerAlt className={styles.contactIcon} />
-              Ludwin 1C{" "}
+            <p>
+              <strong>Opiekun łowiska:</strong>
+              <br />
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Ludwin+1C"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.mapLink}
+                href={`tel:${CONTACT_CARETAKER.phone}`}
+                aria-label={CONTACT_CARETAKER.ariaLabel}
+                className={styles.contactRow}
               >
-                ( Pokaż na mapie )
+                <FaPhone className={styles.contactIcon} aria-hidden />
+                {CONTACT_CARETAKER.display.replace(/ /g, "\u00A0")}
               </a>
-            </span>
-          </p>
+            </p>
 
-          <p>
-            <strong>Opiekun łowiska:</strong>
-            <br />
-            <a
-              href="tel:+48691911777"
-              aria-label="Zadzwoń do opiekuna łowiska: 691 911 777"
-              className={styles.contactRow}
-            >
-              <FaPhone className={styles.contactIcon} />
-              691&nbsp;911&nbsp;777
-            </a>
-          </p>
-
-          <p>
-            <strong>Biuro:</strong>
-            <br />
-            <a
-              href="tel:+48609193579"
-              aria-label="Zadzwoń do biura: 609 193 579"
-              className={styles.contactRow}
-            >
-              <FaPhone className={styles.contactIcon} />
-              609&nbsp;193&nbsp;579
-            </a>
-          </p>
+            <p>
+              <strong>Biuro:</strong>
+              <br />
+              <a
+                href={`tel:${CONTACT_OFFICE.phone}`}
+                aria-label={CONTACT_OFFICE.ariaLabel}
+                className={styles.contactRow}
+              >
+                <FaPhone className={styles.contactIcon} aria-hidden />
+                {CONTACT_OFFICE.display.replace(/ /g, "\u00A0")}
+              </a>
+            </p>
+          </address>
         </div>
 
         <div className={styles.column}>
           <h4>Godziny otwarcia biura:</h4>
-          <p>Poniedziałek – Piątek: 8:00 – 16:00</p>
-          <p>Sobota: 8:00 – 14:00</p>
-          <p>Niedziela: Biuro nieczynne</p>
+          {OPENING_HOURS.map(({label, value}) => (
+            <p key={label}>
+              {label}: {value}
+            </p>
+          ))}
         </div>
 
-        <div className={`${styles.column} ${styles.linksColumn}`}>
+        <nav
+          className={`${styles.column} ${styles.linksColumn}`}
+          aria-label="Łowisko"
+        >
           <h4>Łowisko:</h4>
-
-          <Link href="/#about">
-            <FaInfoCircle /> O łowisku
-          </Link>
-          <Link href="/relations">
-            <FaImages /> Fotorelacje
-          </Link>
-          <Link href="/rules">
-            <FaFileAlt /> Regulamin
-          </Link>
-        </div>
+          <ul className={styles.navList} role="list">
+            {NAV_LINKS.map(({href, label, icon}) => (
+              <li key={href}>
+                <Link href={href}>
+                  {icon}
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
       <div className={styles.bottomBar}>
-        © {new Date().getFullYear()} Łowisko EKO-TORF Ludwinek. Wszelkie prawa
-        zastrzeżone.
+        © {currentYear} Łowisko EKO-TORF Ludwinek. Wszelkie prawa zastrzeżone.
       </div>
     </footer>
   );
 };
+
+export {Footer};

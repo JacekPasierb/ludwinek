@@ -1,4 +1,4 @@
-/* Spójne z sekcją About i stroną główną */
+/* ========== Section ========== */
 .album {
   padding-block: clamp(2.5rem, 4vw, 4rem);
   min-height: 60vh;
@@ -7,21 +7,23 @@
   position: relative;
 }
 
+/* ========== Back button ========== */
 .backButton {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  margin-bottom: 2rem;
   padding: 0.75rem 1.5rem;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 14px;
-  color: #111;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
   font-size: clamp(0.9rem, 2.2vw, 1rem);
   font-weight: 600;
+  color: #111;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .backButton:hover {
@@ -35,34 +37,37 @@
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+/* ========== Header ========== */
 .header {
   margin-bottom: 2.5rem;
 }
 
 .title {
+  margin: 0 0 0.5rem;
   font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 800;
   line-height: 1.25;
   color: #111;
-  font-weight: 800;
   letter-spacing: -0.02em;
-  margin: 0 0 0.5rem 0;
 }
 
 .count {
-  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
-  color: rgba(17, 17, 17, 0.7);
-  font-weight: 400;
   margin: 0;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  font-weight: 400;
+  color: rgba(17, 17, 17, 0.7);
 }
 
+/* ========== Empty / loading ========== */
 .loading,
 .empty {
-  text-align: center;
   padding: 4rem 2rem;
-  color: rgba(17, 17, 17, 0.7);
   font-size: 1.05rem;
+  color: rgba(17, 17, 17, 0.7);
+  text-align: center;
 }
 
+/* ========== Photo grid ========== */
 .photoGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -70,16 +75,17 @@
   margin-top: 2rem;
 }
 
+
 .photoItem {
   position: relative;
-  aspect-ratio: 4/3;
+  aspect-ratio: 4 / 3;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.25s ease;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
 }
 
 .photoItem:hover {
@@ -109,8 +115,8 @@
   right: 0;
   padding: 1rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  color: white;
   font-size: 0.9rem;
+  color: white;
   opacity: 0;
   transition: opacity 0.25s ease;
 }
@@ -119,26 +125,27 @@
   opacity: 1;
 }
 
-/* Paginacja – spójna z kartami About */
+/* ========== Pagination ========== */
 .pagination {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin-top: 2.25rem;
-  flex-wrap: wrap;
 }
 
 .pageBtn {
   padding: 0.7rem 1.1rem;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
   color: #111;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.25s ease;
-  font-weight: 600;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .pageBtn:hover:not(:disabled) {
@@ -148,18 +155,18 @@
 }
 
 .pageBtn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
   background: #e9ecef;
   color: #6c757d;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .pageBtnDisabled {
+  background: #e9ecef;
+  color: #6c757d;
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
-  background: #e9ecef;
-  color: #6c757d;
 }
 
 .pageNumbers {
@@ -169,19 +176,20 @@
 }
 
 .pageNumber {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: #ffffff;
-  color: #111;
-  cursor: pointer;
-  transition: all 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  background: #fff;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
 .pageNumber:hover {
@@ -199,24 +207,21 @@
 
 .dots {
   padding: 0 0.25rem;
-  color: rgba(17, 17, 17, 0.6);
   font-weight: 500;
+  color: rgba(17, 17, 17, 0.6);
 }
 
-/* Modal lightbox */
+/* ========== Lightbox modal ========== */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 2000;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  background: rgba(0, 0, 0, 0.95);
   cursor: pointer;
+  z-index: 2000;
 }
 
 .modalContent {
@@ -239,17 +244,17 @@
   position: fixed;
   top: 2rem;
   right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  color: white;
   font-size: 1.5rem;
+  color: white;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.25s ease;
   z-index: 2001;
 }
@@ -265,6 +270,7 @@
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+/* ========== Media queries ========== */
 @media (max-width: 768px) {
   .photoGrid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

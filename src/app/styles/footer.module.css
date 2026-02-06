@@ -1,11 +1,8 @@
-/* =========================
-   Footer – base
-   ========================= */
-
+/* ========== Layout ========== */
 .footer {
+  padding: 3rem 1rem 1rem;
   background: #0d0d0d;
   color: #f1f1f1;
-  padding: 3rem 1rem 1rem;
   font-size: clamp(0.85rem, 2vw, 0.9rem);
 }
 
@@ -23,14 +20,11 @@
   min-width: min(180px, 100%);
 }
 
-/* =========================
-   Typography
-   ========================= */
-
+/* ========== Typography ========== */
 .column h4 {
+  margin: 0 0 1rem;
   font-size: clamp(1.05rem, 2.5vw, 1.2rem);
-  margin-top: 0;
-  margin-bottom: 1rem;
+  font-weight: inherit;
   color: #fff;
 }
 
@@ -41,71 +35,60 @@
 }
 
 .column p strong {
-  color: #fff;
   font-weight: 600;
+  color: #fff;
 }
 
-/* =========================
-   Logo
-   ========================= */
-
+/* ========== Logo ========== */
 .logo {
   display: flex;
+  align-items: center;
   justify-content: center;
   margin-bottom: 0.5rem;
-  padding: 2rem;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2rem);
   background: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
   width: fit-content;
-  margin-inline: auto;
 }
 
 .logoImg {
-  max-width: 100%;
+  width: 100%;
+  max-width: clamp(120px, 18vw, 230px);
   height: auto;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
 }
 
-/* =========================
-   Links (navbar-like underline)
-   - applies to all <a> inside columns
-   - mapLink uses same logic but stays inline
-   ========================= */
-
+/* ========== Links ========== */
 .column a,
 .mapLink {
   position: relative;
-  text-decoration: none;
-  color: #ccc;
-  font-weight: 500;
-  font-size: clamp(0.88rem, 2vw, 0.95rem);
-  letter-spacing: 0.06em;
-
+  margin-bottom: 0;
   padding: 0.4rem 0.1rem;
+  font-size: clamp(0.88rem, 2vw, 0.95rem);
+  font-weight: 500;
+  color: #ccc;
+  text-decoration: none;
+  letter-spacing: 0.06em;
   border-radius: 6px;
-
   transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* underline gradient like navbar */
 .column a::after,
 .mapLink::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
-
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
-
+  opacity: 0.9;
   transform: scaleX(0);
   transform-origin: center;
   transition: transform 0.25s ease;
-  opacity: 0.9;
 }
 
-/* hover */
 .column a:hover,
 .mapLink:hover {
   color: var(--accent);
@@ -116,7 +99,6 @@
   transform: scaleX(1);
 }
 
-/* premium focus */
 .column a:focus-visible,
 .mapLink:focus-visible {
   outline: none;
@@ -130,13 +112,20 @@
   transform: scaleX(1);
 }
 
-/* subtle press */
 .column a:active,
 .mapLink:active {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* contact row – ikona + tekst */
+.mapLink {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  letter-spacing: normal;
+}
+
+/* ========== Contact ========== */
 .contactRow {
   display: inline-flex;
   align-items: center;
@@ -149,44 +138,36 @@
   color: var(--accent);
 }
 
-/* map link specifics */
-.mapLink {
-  display: inline;
-  font-size: 0.85rem;
-  padding: 0;
-  margin: 0;
-  margin-bottom: 0 !important;
-  text-transform: none;
-  letter-spacing: normal;
+.address {
+  font-style: normal;
 }
 
-/* =========================
-   Footer links column layout
-   ========================= */
+/* ========== Nav list ========== */
+.navList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navList li {
+  margin-bottom: 0.6rem;
+}
 
 .linksColumn a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.6rem;
 }
 
-/* =========================
-   Bottom bar
-   ========================= */
-
+/* ========== Bottom bar ========== */
 .bottomBar {
   margin-top: 2rem;
-  text-align: center;
   font-size: clamp(0.75rem, 1.8vw, 0.8rem);
   color: #aaa;
+  text-align: center;
 }
 
-/* =========================
-   Responsive
-   ========================= */
-
-/* Mobile / Tablet */
+/* ========== Media queries ========== */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -202,31 +183,25 @@
 
   .logo {
     margin-bottom: 0;
+    padding: clamp(1rem, 4vw, 1.5rem);
   }
 
   .logoImg {
-    max-width: 180px;
-    padding: 0.6rem;
+    max-width: min(160px, 40vw);
   }
 
-  /* general links centered */
   .column a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0;
   }
 
-  /* "Łowisko" – ikona + tekst w wierszu, wyśrodkowane */
   .linksColumn a {
     display: flex;
-    margin: 0 auto 0.6rem;
+    margin-inline: auto;
     width: max-content;
-  }
-
-  .mapLink {
-    margin: 0;
   }
 
   .column p {
@@ -240,7 +215,6 @@
   }
 }
 
-/* Tablet / Small desktop 2x2 */
 @media (min-width: 768px) and (max-width: 1199px) {
   .container {
     justify-content: center;
@@ -254,8 +228,16 @@
     text-align: center;
   }
 
+  .contactColumn {
+    text-align: left;
+  }
+
   .logo {
-    justify-content: flex-start;
+    justify-content: center;
+  }
+
+  .logoImg {
+    max-width: 180px;
   }
 
   .linksColumn {
@@ -265,16 +247,10 @@
   }
 
   .linksColumn a {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .contactColumn {
-    text-align: left;
+    margin-inline: auto;
   }
 }
 
-/* Large desktop 4 in row */
 @media (min-width: 1200px) {
   .container {
     flex-wrap: nowrap;
@@ -291,7 +267,6 @@
   }
 }
 
-/* Very small phones */
 @media (max-width: 420px) {
   .footer {
     padding: 2.5rem 1rem 1rem;
@@ -301,9 +276,12 @@
     font-size: 1.1rem;
   }
 
+  .logo {
+    padding: 0.9rem;
+  }
+
   .logoImg {
-    max-width: 150px;
-    padding: 0.6rem;
+    max-width: min(120px, 35vw);
   }
 
   .mapLink {

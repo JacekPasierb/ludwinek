@@ -1,46 +1,64 @@
 import React from "react";
-import styles from "../styles/features.module.css";
 import Image from "next/image";
+import styles from "../styles/features.module.css";
+
+type FeatureItem = {
+  id: string;
+  src: string;
+  alt: string;
+  label: string;
+};
+
+const FEATURES: readonly FeatureItem[] = [
+  {
+    id: "zbiorniki",
+    src: "/images/icons-zbiorniki.svg",
+    alt: "Trzy zbiorniki wodne",
+    label: "3 zbiorniki",
+  },
+  {
+    id: "no-kill",
+    src: "/no-kill.png",
+    alt: "Zasada no-kill",
+    label: "Zasada NO KILL",
+  },
+  {
+    id: "smieci",
+    src: "/smieci.png",
+    alt: "Zakaz wyrzucania śmieci",
+    label: "Zakaz pozostawiania śmieci",
+  },
+] as const;
+
+const ICON_SIZE = 180;
 
 const Features = () => {
   return (
     <section
       className={`${styles.sectionFeatures} container`}
-      aria-label="Cechy łowiska"
+      aria-labelledby="features-heading"
     >
-      <ul className={styles.listFeatures}>
-        <li className={styles.itemFeature}>
-          <Image
-            src="/images/icons-zbiorniki.svg"
-            alt="Trzy zbiorniki wodne"
-            width={180}
-            height={180}
-            className={`${styles.iconImage} ${styles.iconZbiorniki}`}
-          />
-          <p>3 zbiorniki</p>
-        </li>
+      <h2 id="features-heading" className="sr-only">
+        Cechy łowiska
+      </h2>
 
-        <li className={styles.itemFeature}>
-          <Image
-            src="/no-kill.png"
-            alt="Zasada no-kill"
-            className={styles.iconImage}
-            width={180}
-            height={180}
-          />
-          <p>Zasada NO KILL</p>
-        </li>
-
-        <li className={styles.itemFeature}>
-          <Image
-            src="/smieci.png"
-            alt="Zakaz wyrzucania śmieci"
-            className={styles.iconImage}
-            width={180}
-            height={180}
-          />
-          <p>Zakaz pozostawiania śmieci</p>
-        </li>
+      <ul className={styles.listFeatures} role="list">
+        {FEATURES.map(({id, src, alt, label}, index) => (
+          <li key={id} className={styles.itemFeature}>
+            <Image
+              src={src}
+              alt={alt}
+              width={ICON_SIZE}
+              height={ICON_SIZE}
+              className={`${styles.iconImage} ${
+                id === "zbiorniki" ? styles.iconZbiorniki : ""
+              }`}
+              loading={index === 0 ? "eager" : "lazy"}
+              sizes="(max-width: 480px) 140px, (max-width: 768px) 160px, 180px"
+            />
+            <p>{label}</p>
+          </li>
+        ))}
       </ul>
     </section>
   );

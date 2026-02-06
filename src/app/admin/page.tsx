@@ -5,7 +5,6 @@ import EditSubtitle from "./ui/editSubtitle";
 import EditRecord from "./ui/editRecord";
 import EditInfo from "./ui/editInfo";
 
-
 const Page = () => {
   return (
     <div className={styles.panel}>

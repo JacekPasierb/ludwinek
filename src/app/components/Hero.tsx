@@ -5,14 +5,12 @@ import styles from "../styles/hero.module.css";
 import Navbar from "./Navbar";
 
 import useSWR from "swr";
-import {FaHome, FaPhoneAlt} from "react-icons/fa";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { FaHome, FaPhoneAlt } from "react-icons/fa";
+import { fetcher } from "@/lib/fetcher";
 
 export const Hero = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   if (isAdmin) return null;
 
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);

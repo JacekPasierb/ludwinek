@@ -1,10 +1,11 @@
-/* Spójne z pageAdmin.module.css i editTitle.module.css */
+/* ---- Variables ---- */
 :root {
   --admin-border: rgba(15, 23, 42, 0.12);
   --admin-accent: var(--accent, #f5c96a);
   --admin-ring: rgba(245, 201, 106, 0.35);
 }
 
+/* ---- Layout ---- */
 .blockInner {
   display: grid;
   gap: 12px;
@@ -19,19 +20,145 @@
 
 .albumLabel {
   font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(15, 23, 42, 0.62);
-  font-weight: 700;
 }
 
+/* ---- Form ---- */
+.form {
+  display: grid;
+  gap: 12px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--admin-border);
+}
+
+/* ---- Add form (card layout) ---- */
+.addForm {
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.02) 0%,
+    rgba(245, 201, 106, 0.04) 100%
+  );
+}
+
+.addFormInner {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.addFormLeft {
+  min-height: 200px;
+}
+
+.addFormRight {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.addFormRight .submitButton {
+  width: 100%;
+}
+
+.fileZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 200px;
+  padding: 2rem;
+  border: 2px dashed var(--admin-border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.fileZone:hover {
+  border-color: rgba(245, 201, 106, 0.6);
+  background: rgba(245, 201, 106, 0.08);
+}
+
+.fileZoneWithPreview {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.fileInputHidden {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.fileZoneIcon {
+  font-size: 2.5rem;
+  opacity: 0.7;
+}
+
+.fileZoneText {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(15, 23, 42, 0.9);
+}
+
+.fileZoneHint {
+  font-size: 0.8rem;
+  color: rgba(15, 23, 42, 0.5);
+}
+
+.previewWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.previewWrapper .fileZoneHint {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.formGroup {
+  display: grid;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(15, 23, 42, 0.62);
+}
+
+/* ---- Select ---- */
 .select {
   padding: 10px 12px;
   border: 1px solid var(--admin-border);
   border-radius: 12px;
-  font-size: 1rem;
   background: #fff;
   color: rgba(15, 23, 42, 0.9);
+  font-size: 1rem;
   cursor: pointer;
   transition: box-shadow 0.18s ease, border-color 0.18s ease;
 }
@@ -42,32 +169,12 @@
   box-shadow: 0 0 0 4px var(--admin-ring);
 }
 
-.form {
-  margin-top: 1rem;
-  padding: 1rem 0 0;
-  border-top: 1px solid var(--admin-border);
-  display: grid;
-  gap: 12px;
-}
-
-.formGroup {
-  display: grid;
-  gap: 6px;
-}
-
-.formGroup label {
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(15, 23, 42, 0.62);
-  font-weight: 700;
-}
-
+/* ---- Input ---- */
 .input {
   width: 100%;
+  padding: 10px 12px;
   border: 1px solid var(--admin-border);
   border-radius: 12px;
-  padding: 10px 12px;
   background: #fff;
   color: rgba(15, 23, 42, 0.9);
   font-size: 1rem;
@@ -80,14 +187,15 @@
   box-shadow: 0 0 0 4px var(--admin-ring);
 }
 
+/* ---- File input ---- */
 .fileInput {
   width: 100%;
   padding: 0.75rem;
   border: 2px dashed var(--admin-border);
   border-radius: 12px;
+  background: rgba(15, 23, 42, 0.02);
   font-size: 0.95rem;
   cursor: pointer;
-  background: rgba(15, 23, 42, 0.02);
   transition: border-color 0.18s ease, background 0.18s ease;
 }
 
@@ -97,10 +205,11 @@
 }
 
 .fileInput:disabled {
-  cursor: not-allowed;
   opacity: 0.6;
+  cursor: not-allowed;
 }
 
+/* ---- Preview ---- */
 .previewContainer {
   margin-top: 0.5rem;
   padding: 1rem;
@@ -110,21 +219,22 @@
 }
 
 .previewImage {
+  display: block;
   max-width: 100%;
   max-height: 280px;
+  margin: 0 auto;
   border-radius: 12px;
   object-fit: contain;
-  display: block;
-  margin: 0 auto;
 }
 
 .fileInfo {
   margin-top: 0.5rem;
   font-size: 0.85rem;
-  color: rgba(15, 23, 42, 0.6);
   text-align: center;
+  color: rgba(15, 23, 42, 0.6);
 }
 
+/* ---- Upload progress ---- */
 .uploadProgress {
   margin: 0.5rem 0;
   padding: 1rem;
@@ -133,13 +243,20 @@
   background: rgba(15, 23, 42, 0.03);
 }
 
+.uploadProgress p {
+  margin: 0;
+  font-size: 0.9rem;
+  text-align: center;
+  color: rgba(15, 23, 42, 0.7);
+}
+
 .progressBar {
   width: 100%;
   height: 8px;
-  background: rgba(15, 23, 42, 0.1);
-  border-radius: 6px;
-  overflow: hidden;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.1);
 }
 
 .progressFill {
@@ -148,29 +265,22 @@
   transition: width 0.3s ease;
 }
 
-.uploadProgress p {
-  text-align: center;
-  font-size: 0.9rem;
-  color: rgba(15, 23, 42, 0.7);
-  margin: 0;
-}
-
-/* Przyciski – spójne z editTitle */
+/* ---- Buttons ---- */
 .addButton,
 .submitButton {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 12px;
+  width: 200px;
   padding: 10px 14px;
+  border: 1px solid rgba(245, 201, 106, 0.45);
+  border-radius: 12px;
+  background: rgba(245, 201, 106, 0.95);
+  color: #0b1220;
   font-weight: 700;
   letter-spacing: 0.04em;
   cursor: pointer;
-  border: 1px solid rgba(245, 201, 106, 0.45);
-  background: rgba(245, 201, 106, 0.95);
-  color: #0b1220;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
-  width: 200px;
 }
 
 .addButton:hover,
@@ -181,32 +291,35 @@
 
 .submitButton:disabled {
   opacity: 0.6;
-  cursor: not-allowed;
   transform: none;
+  cursor: not-allowed;
 }
 
+/* ---- Section title ---- */
 .sectionTitle {
+  margin: 0 0 1rem 0;
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.02em;
   color: rgba(15, 23, 42, 0.9);
-  margin: 0 0 1rem 0;
 }
 
+/* ---- Photos grid ---- */
 .photosGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
 }
 
+/* ---- Photo card ---- */
 .photoCard {
-  background: #fff;
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 16px;
-  overflow: hidden;
+  background: #fff;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
   transition: box-shadow 0.18s ease, border-color 0.18s ease;
-  position: relative;
 }
 
 .photoCard:hover {
@@ -217,8 +330,8 @@
 .photoPreview {
   width: 100%;
   height: 200px;
-  object-fit: cover;
   background: rgba(15, 23, 42, 0.04);
+  object-fit: cover;
 }
 
 .photoInfo {
@@ -226,49 +339,51 @@
 }
 
 .photoTitle {
-  font-weight: 700;
-  font-size: 0.95rem;
   margin: 0 0 0.25rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: rgba(15, 23, 42, 0.9);
 }
 
 .photoAlt {
+  margin: 0;
   font-size: 0.85rem;
   color: rgba(15, 23, 42, 0.65);
-  margin: 0;
 }
 
+/* ---- Cover badge ---- */
 .coverBadge {
   position: absolute;
   top: 10px;
   left: 10px;
   padding: 0.35rem 0.65rem;
+  border-radius: 999px;
   background: var(--admin-accent);
   color: #0b1220;
-  font-weight: 700;
   font-size: 0.72rem;
-  border-radius: 999px;
+  font-weight: 700;
   letter-spacing: 0.06em;
 }
 
+/* ---- Photo actions ---- */
 .photoActions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
   background: rgba(15, 23, 42, 0.02);
-  flex-wrap: wrap;
 }
 
 .coverButton {
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(245, 201, 106, 0.45);
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 700;
   background: rgba(245, 201, 106, 0.2);
   color: #0b1220;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
 }
 
@@ -286,10 +401,10 @@
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(15, 23, 42, 0.14);
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
   background: #fff;
   color: rgba(15, 23, 42, 0.9);
+  font-size: 0.9rem;
+  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
 }
 
@@ -302,10 +417,10 @@
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(220, 38, 38, 0.3);
   border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
   background: rgba(220, 38, 38, 0.08);
   color: #b91c1c;
+  font-size: 0.9rem;
+  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
 }
 
@@ -314,26 +429,59 @@
   box-shadow: 0 6px 16px rgba(220, 38, 38, 0.12);
 }
 
+/* ---- Edit form ---- */
 .editForm {
-  padding: 1rem;
+  padding: 1.25rem;
   border-top: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.02) 0%,
+    rgba(245, 201, 106, 0.06) 100%
+  );
+}
+
+.editFormInner {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.editFormPreview {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.editFormImage {
+  width: 100%;
+  height: 120px;
+  display: block;
+  object-fit: cover;
+}
+
+.editFormFields {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
 }
 
 .editActions {
   display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
   flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .saveButton {
   padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor: pointer;
   border: 1px solid rgba(245, 201, 106, 0.45);
+  border-radius: 10px;
   background: rgba(245, 201, 106, 0.95);
   color: #0b1220;
+  font-weight: 700;
+  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
 }
 
@@ -344,12 +492,12 @@
 
 .cancelButton {
   padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor: pointer;
   border: 1px solid rgba(15, 23, 42, 0.14);
+  border-radius: 10px;
   background: #fff;
   color: rgba(15, 23, 42, 0.8);
+  font-weight: 700;
+  cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.18s ease;
 }
 
@@ -358,20 +506,38 @@
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
 }
 
+/* ---- Empty state ---- */
 .empty {
-  text-align: center;
-  padding: 2rem;
-  color: rgba(15, 23, 42, 0.55);
-  font-size: 1rem;
   margin: 0;
+  padding: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  color: rgba(15, 23, 42, 0.55);
 }
 
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
-  .photosGrid {
+  .albumSelector {
+    max-width: 100%;
+  }
+
+  .addFormInner {
     grid-template-columns: 1fr;
   }
 
-  .albumSelector {
-    max-width: 100%;
+  .addFormLeft {
+    min-height: 180px;
+  }
+
+  .editFormInner {
+    grid-template-columns: 1fr;
+  }
+
+  .editFormPreview {
+    max-width: 200px;
+  }
+
+  .photosGrid {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,3 +1,7 @@
+/* =========================
+   Features – cechy łowiska (3 zbiorniki, NO KILL, śmieci)
+   ========================= */
+
 .sectionFeatures {
   padding-block: 2rem;
 }
@@ -13,26 +17,6 @@
   list-style: none;
 }
 
-.iconSvg {
-  color: #1a1a1a;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
-  transition: transform 0.25s ease;
-}
-
-.itemFeature:hover .iconSvg {
-  transform: scale(1.04);
-}
-
-
-@media (min-width: 481px) {
-  .listFeatures {
-    flex-direction: row;
-   
-    justify-content: space-around;
-    margin-bottom: 1.5rem;
-  }
-}
-
 .itemFeature {
   display: flex;
   flex-direction: column;
@@ -40,24 +24,46 @@
   text-align: center;
   min-width: 220px;
 }
+
 .itemFeature p {
+  margin: 0.5rem 0 0;
   font-size: clamp(0.95rem, 2.5vw, 1.1rem);
   font-weight: 600;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   text-transform: uppercase;
-  margin-top: 0.5rem;
-  color: #1a1a1a;
   line-height: 1.4;
+  color: #1a1a1a;
 }
 
 .iconImage {
   width: clamp(140px, 35vw, 180px);
   height: clamp(140px, 35vw, 180px);
-  object-fit: contain;
   margin-bottom: 0.5rem;
+  object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.itemFeature:hover .iconImage {
+  transform: scale(1.04);
 }
 
 .iconZbiorniki {
-  transform: scale(1.35);     /* zwiększa sam rysunek */
+  transform: scale(1.35);
   transform-origin: center;
+}
+
+.itemFeature:hover .iconZbiorniki {
+  transform: scale(1.404);
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (min-width: 481px) {
+  .listFeatures {
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+  }
 }

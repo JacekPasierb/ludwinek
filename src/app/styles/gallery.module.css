@@ -1,4 +1,4 @@
-/* Spójne z sekcją About i stroną główną */
+/* ========== Section ========== */
 .gallery {
   padding-block: clamp(2.5rem, 4vw, 4rem);
   min-height: 60vh;
@@ -7,78 +7,166 @@
   position: relative;
 }
 
+/* ========== Header ========== */
 .header {
-  text-align: center;
   margin-bottom: clamp(2rem, 4vw, 3rem);
+  text-align: center;
 }
 
 .title {
+  margin: 0 0 0.5rem;
   font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 800;
   line-height: 1.25;
   color: #111;
-  font-weight: 800;
   letter-spacing: -0.02em;
-  margin: 0 0 0.5rem 0;
 }
 
 .subtitle {
+  margin: 0;
   font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  font-weight: 400;
   line-height: 1.65;
   color: rgba(17, 17, 17, 0.82);
-  margin: 0;
-  font-weight: 400;
 }
 
-.albumsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: clamp(1.5rem, 3vw, 2rem);
-  max-width: 1000px;
+/* ========== Albums list (alternating left/right) ========== */
+.albumsList {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5rem);
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
+.albumRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.albumRowLeft {
+  flex-direction: row;
+}
+
+.albumRowRight {
+  flex-direction: row-reverse;
+}
+
+.albumDescription {
+  flex: 1;
+  min-width: 0;
+}
+
+.albumDescription p {
+  margin: 0;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.65;
+  color: rgba(17, 17, 17, 0.82);
+}
+
+.albumDescLeft {
+  text-align: left;
+}
+
+.albumDescRight {
+  text-align: right;
+}
+
+/* Fly-in animations – trigger when row enters viewport */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.albumCardFromLeft {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+
+.albumCardFromRight {
+  opacity: 0;
+  transform: translateX(80px);
+}
+
+.albumRowVisible .albumCardFromLeft {
+  animation: slideInFromLeft 0.6s ease-out both;
+}
+
+.albumRowVisible .albumCardFromRight {
+  animation: slideInFromRight 0.6s ease-out both;
+}
+
+/* ========== Album card ========== */
 .albumCard {
-  background-color: #ffffff;
+  display: block;
+  position: relative;
+  flex-shrink: 0;
+  width: min(420px, 52%);
+  min-height: 300px;
+  padding: 0;
+  background-color: #fff;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 18px;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-align: center;
-  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 24px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 12px 24px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
   overflow: hidden;
-  min-height: 220px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .albumCard::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.05) 0%,
-    transparent 45%,
-    rgba(0, 0, 0, 0.5) 100%
+    rgba(0, 0, 0, 0.02) 0%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.6) 100%
   );
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease;
+}
+
+.albumCard:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.06),
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
 }
 
 .albumCard:hover::before {
   opacity: 1;
-}
-
-.albumCard:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 0, 0, 0.12);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.18);
 }
 
 .albumCard:focus-visible {
@@ -87,59 +175,68 @@
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-/* Przyciemnienie żeby tekst był czytelny */
 .albumOverlay {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0.1) 45%,
-    rgba(0, 0, 0, 0.55) 100%
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.05) 40%,
+    rgba(0, 0, 0, 0.65) 100%
   );
-  z-index: 0;
 }
 
 .albumContent {
   position: relative;
   z-index: 1;
-  height: 100%;
-  min-height: 220px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  padding: 1.25rem;
+  height: 100%;
+  min-height: 300px;
+  padding: 1.75rem 1.5rem;
   text-align: left;
 }
 
 .albumName {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: white;
-  margin: 0;
   position: relative;
   z-index: 1;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 800;
+  color: white;
   letter-spacing: 0.02em;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* ========== Media queries ========== */
 @media (max-width: 768px) {
-  .albumsGrid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+  .albumRow {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .albumDescLeft,
+  .albumDescRight {
+    text-align: center;
   }
 
   .albumCard {
-    min-height: 190px;
+    width: 100%;
+    max-width: 480px;
+    min-height: 260px;
   }
 
   .albumContent {
-    min-height: 190px;
-    padding: 1rem;
+    min-height: 260px;
+    padding: 1.25rem 1rem;
   }
 
   .albumName {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -152,11 +249,27 @@
     font-size: 0.9rem;
   }
 
-  .albumName {
-    font-size: 1rem;
+  .albumCard {
+    max-width: 100%;
+    min-height: 220px;
+    border-radius: 20px;
   }
 
   .albumContent {
-    padding: 0.9rem;
+    min-height: 220px;
+    padding: 1rem;
+  }
+
+  .albumName {
+    font-size: 1.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .albumCardFromLeft,
+  .albumCardFromRight {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }

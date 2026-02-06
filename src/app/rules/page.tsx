@@ -1,139 +1,115 @@
-"use client";
-
-import React, {useMemo} from "react";
-import rules from "../../data/rule.json";
+import React from "react";
+import rulesData from "../../data/rule.json";
 import styles from "../styles/rules.module.css";
 
+type RulesSection = {
+  title: string;
+  rules: string[];
+};
+
+type RulesContact = {
+  info: string;
+  phones: string[];
+  facebook: string;
+  website: string;
+};
 
 type RulesJson = {
   title: string;
   intro: string;
-  sections: {title: string; rules: string[]}[];
+  sections: RulesSection[];
   entryNotice: string;
   paymentAddress: string;
   closingNote: string;
-  contact: {
-    info: string;
-    phones: string[];
-    facebook: string;
-    website: string;
-  };
+  contact: RulesContact;
 };
 
-const data = rules as unknown as RulesJson;
+const POLISH_TO_ASCII: Record<string, string> = {
+  ą: "a",
+  ć: "c",
+  ę: "e",
+  ł: "l",
+  ń: "n",
+  ó: "o",
+  ś: "s",
+  ź: "z",
+  ż: "z",
+};
 
-const slugify = (text: string) =>
-  text
+const SECTION_REGULAMIN = "regulamin";
+const SECTION_WAZNE = "wazne";
+const SECTION_KONTAKT = "kontakt";
+const TOC_REGULAMIN = "Regulamin";
+const TOC_WAZNE = "Ważne informacje";
+const TOC_KONTAKT = "Kontakt";
+const TOC_TITLE = "Na tej stronie";
+const SECTION_HINT_WAZNE = "Wejście i rozliczenia.";
+const SECTION_HINT_KONTAKT = "W sprawach rezerwacji i organizacji łowiska.";
+const PAYMENT_LABEL = "Adres do płatności";
+const PAYMENT_HEADING = "ADRES DOKONYWANIA OPŁAT ZA ZEZWOLENIE:";
+const CALLOUT_TITLE = "Informacja";
+const CONTACT_OPIEKUN = "Opiekun łowiska (Jaro)";
+const CONTACT_BIURO = "Biuro";
+
+function slugify(text: string): string {
+  return text
     .toLowerCase()
     .trim()
-    .replace(/[ąćęłńóśźż]/g, (m) => {
-      const map: Record<string, string> = {
-        ą: "a",
-        ć: "c",
-        ę: "e",
-        ł: "l",
-        ń: "n",
-        ó: "o",
-        ś: "s",
-        ź: "z",
-        ż: "z",
-      };
-      return map[m] ?? m;
-    })
+    .replace(/[ąćęłńóśźż]/g, (char) => POLISH_TO_ASCII[char] ?? char)
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
+}
 
-const Page = () => {
-  const sectionsWithIds = useMemo(() => {
-    return data.sections.map((s, idx) => {
-      // Na wypadek powtórzeń tytułów dodaję suffix z indexem
-      const base = slugify(s.title);
-      const id = `${base}-${idx + 1}`;
-      return {...s, id};
-    });
-  }, []);
+function getSectionWithId(section: RulesSection, index: number) {
+  const base = slugify(section.title);
+  return {...section, id: `${base}-${index + 1}`};
+}
 
-  // Wyciągamy sekcję z limitami/rybami (u Ciebie to tytuł "5. Zasady NO KILL i limity zabieranych ryb")
-  // Jeśli kiedyś zmienisz nazwę, nadal zadziała, bo szukamy po fragmencie.
-  const fishSection = useMemo(() => {
-    return sectionsWithIds.find((s) =>
-      s.title.toLowerCase().includes("no kill")
-    );
-  }, [sectionsWithIds]);
+const data = rulesData as RulesJson;
 
-  // Z fishSection wyciągamy elementy, które wyglądają jak lista limitów (w mojej wersji były jako osobne stringi po wprowadzeniu)
-  // Pozostałe teksty (NO KILL / zakazy) zostaną pokazane w calloutach.
-  const fishList = useMemo(() => {
-    if (!fishSection) return [];
-    return fishSection.rules.filter(
-      (r) => /–|-\s*max\.|NO KILL|\b0 szt\./i.test(r) && /–/i.test(r)
-    );
-  }, [fishSection]);
-
-  const fishNotices = useMemo(() => {
-    if (!fishSection) return {bans: [], notes: []};
-
-    const bans = fishSection.rules.filter(
-      (r) =>
-        r.toLowerCase().includes("bezwzględny") ||
-        r.toLowerCase().includes("zakaz") ||
-        r.toLowerCase().includes("no kill") ||
-        r.toLowerCase().includes("złów i wypuść")
-    );
-
-    // notki informacyjne, które nie są „pigułkami” z listą
-    const notes = fishSection.rules.filter(
-      (r) => !fishList.includes(r) && !bans.includes(r)
-    );
-
-    return {bans, notes};
-  }, [fishSection, fishList]);
+const RulesPage = () => {
+  const sectionsWithIds = data.sections.map(getSectionWithId);
 
   return (
     <section className={styles.wrapper}>
       <div className="container">
         <header className={styles.hero}>
-          
           <h1 className={styles.heading}>{data.title}</h1>
           <p className={styles.intro}>{data.intro}</p>
         </header>
 
         <div className={styles.layout}>
-          {/* Sticky spis treści (desktop) */}
           <aside className={styles.toc}>
             <div className={styles.tocCard}>
-              <div className={styles.tocTitle}>Na tej stronie</div>
-
-              <nav className={styles.tocNav}>
-                <a className={styles.tocLink} href="#regulamin">
-                  Regulamin
+              <div className={styles.tocTitle}>{TOC_TITLE}</div>
+              <nav
+                className={styles.tocNav}
+                aria-label="Spis treści regulaminu"
+              >
+                <a className={styles.tocLink} href={`#${SECTION_REGULAMIN}`}>
+                  {TOC_REGULAMIN}
                 </a>
-
-                {/* Sekcje regulaminu */}
                 {sectionsWithIds.map((s) => (
                   <a key={s.id} className={styles.tocLink} href={`#${s.id}`}>
                     {s.title}
                   </a>
                 ))}
-
-                <a className={styles.tocLink} href="#wazne">
-                  Ważne informacje
+                <a className={styles.tocLink} href={`#${SECTION_WAZNE}`}>
+                  {TOC_WAZNE}
                 </a>
-                <a className={styles.tocLink} href="#kontakt">
-                  Kontakt
+                <a className={styles.tocLink} href={`#${SECTION_KONTAKT}`}>
+                  {TOC_KONTAKT}
                 </a>
               </nav>
             </div>
           </aside>
 
-          {/* Główna treść */}
           <main className={styles.content}>
             <div className={styles.surface}>
-              {/* Regulamin – sekcje */}
-              <section id="regulamin" className={styles.section}>
+              <section id={SECTION_REGULAMIN} className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h2 className={styles.sectionTitle}>Regulamin</h2>
+                  <h2 className={styles.sectionTitle}>{TOC_REGULAMIN}</h2>
                 </div>
 
                 {sectionsWithIds.map((section) => (
@@ -145,8 +121,7 @@ const Page = () => {
                     <div className={styles.sectionHeader}>
                       <h3 className={styles.sectionTitle}>{section.title}</h3>
                     </div>
-
-                    <ol className={styles.rules}>
+                    <ol className={styles.rules} role="list">
                       {section.rules.map((rule, i) => (
                         <li key={i} className={styles.ruleRow}>
                           <span className={styles.ruleIndex}>{i + 1}</span>
@@ -160,26 +135,26 @@ const Page = () => {
 
               <div className={styles.divider} />
 
-              {/* Ważne info + płatność */}
-              <section id="wazne" className={styles.section}>
+              <section id={SECTION_WAZNE} className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h2 className={styles.sectionTitle}>Ważne informacje</h2>
-                  <p className={styles.sectionHint}>Wejście i rozliczenia.</p>
+                  <h2 className={styles.sectionTitle}>{TOC_WAZNE}</h2>
+                  <p className={styles.sectionHint}>{SECTION_HINT_WAZNE}</p>
                 </div>
 
                 <div className={styles.twoCol}>
-                  <div className={`${styles.callout} ${styles.calloutInfo}`}>
-                    <div className={styles.calloutTitle}>Informacja</div>
+                  <div
+                    className={`${styles.callout} ${styles.calloutInfo}`}
+                    role="note"
+                  >
+                    <div className={styles.calloutTitle}>{CALLOUT_TITLE}</div>
                     <div className={styles.calloutText}>{data.entryNotice}</div>
                   </div>
 
                   <div className={styles.paymentCard}>
-                    <div className={styles.paymentLabel}>
-                      Adres do płatności
-                    </div>
+                    <div className={styles.paymentLabel}>{PAYMENT_LABEL}</div>
                     <div className={styles.paymentValue}>
-                      <p>ADRES DOKONYWANIA OPŁAT ZA ZEZWOLENIE:</p>
-                      <p> {data.paymentAddress}</p>
+                      <p>{PAYMENT_HEADING}</p>
+                      <p>{data.paymentAddress}</p>
                     </div>
                   </div>
                 </div>
@@ -187,13 +162,10 @@ const Page = () => {
 
               <div className={styles.divider} />
 
-              {/* Kontakt */}
-              <section id="kontakt" className={styles.section}>
+              <section id={SECTION_KONTAKT} className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h2 className={styles.sectionTitle}>Kontakt</h2>
-                  <p className={styles.sectionHint}>
-                    W sprawach rezerwacji i organizacji łowiska.
-                  </p>
+                  <h2 className={styles.sectionTitle}>{TOC_KONTAKT}</h2>
+                  <p className={styles.sectionHint}>{SECTION_HINT_KONTAKT}</p>
                 </div>
 
                 <div className={styles.contactCard}>
@@ -201,22 +173,36 @@ const Page = () => {
                     <div className={styles.contactTitle}>
                       {data.contact.info}
                     </div>
-
                     <div className={styles.contactPhones}>
                       <div className={styles.contactRow}>
                         <span className={styles.contactLabel}>
-                          Opiekun łowiska (Jaro):{" "}
+                          {CONTACT_OPIEKUN}:{" "}
                         </span>
-                        <span className={styles.contactValue}>
+                        <a
+                          href={`tel:+48${data.contact.phones[0].replace(
+                            /\s/g,
+                            ""
+                          )}`}
+                          className={styles.contactValue}
+                          aria-label={`Zadzwoń: ${data.contact.phones[0]}`}
+                        >
                           {data.contact.phones[0]}
-                        </span>
+                        </a>
                       </div>
-
                       <div className={styles.contactRow}>
-                        <span className={styles.contactLabel}>Biuro: </span>
-                        <span className={styles.contactValue}>
-                          {data.contact.phones[1]}
+                        <span className={styles.contactLabel}>
+                          {CONTACT_BIURO}:{" "}
                         </span>
+                        <a
+                          href={`tel:+48${data.contact.phones[1].replace(
+                            /\s/g,
+                            ""
+                          )}`}
+                          className={styles.contactValue}
+                          aria-label={`Zadzwoń: ${data.contact.phones[1]}`}
+                        >
+                          {data.contact.phones[1]}
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -232,4 +218,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default RulesPage;

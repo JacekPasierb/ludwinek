@@ -55,28 +55,28 @@ export default function LightboxGallery({
           const src = photo.publicId || photo.url;
           const gridUrl = getCloudinaryUrl(src, "medium");
           return (
-          <a
-            key={`${photo.url}-${idx}`}
-            className={styles.photoItem}
-            href={getCloudinaryUrl(src, "large")}
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveIndex(idx);
-            }}
-            aria-label={`Otwórz zdjęcie: ${photo.title || albumName}`}
-          >
-            <Image
-              src={gridUrl}
-              alt={photo.alt || photo.title || albumName}
-              width={600}
-              height={450}
-              className={styles.photo}
-              loading="lazy"
-            />
-            {photo.title && (
-              <div className={styles.photoTitle}>{photo.title}</div>
-            )}
-          </a>
+            <a
+              key={`${photo.url}-${idx}`}
+              className={styles.photoItem}
+              href={getCloudinaryUrl(src, "large")}
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveIndex(idx);
+              }}
+              aria-label={`Otwórz zdjęcie: ${photo.title || albumName}`}
+            >
+              <Image
+                src={gridUrl}
+                alt={photo.alt || photo.title || albumName}
+                width={600}
+                height={450}
+                className={styles.photo}
+                loading="lazy"
+              />
+              {photo.title && (
+                <div className={styles.photoTitle}>{photo.title}</div>
+              )}
+            </a>
           );
         })}
       </div>
@@ -132,10 +132,7 @@ export default function LightboxGallery({
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={getCloudinaryUrl(
-                active.publicId || active.url,
-                "large"
-              )}
+              src={getCloudinaryUrl(active.publicId || active.url, "large")}
               alt={active.alt || active.title || albumName}
               width={1400}
               height={900}

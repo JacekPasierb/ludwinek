@@ -1,3 +1,7 @@
+/* =========================
+   InfoBar – pasek z przewijającą się wiadomością
+   ========================= */
+
 .bar {
   width: 100%;
   background: #f9fafb;
@@ -17,14 +21,13 @@
 
 .label {
   font-size: clamp(0.65rem, 1.8vw, 0.7rem);
-  letter-spacing: 0.18em;
   font-weight: 700;
-  color: #475569;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: #475569;
 }
 
-
-
+/* Marquee – przewijający się tekst */
 .marquee {
   position: relative;
   overflow: hidden;
@@ -50,11 +53,12 @@
   display: inline-block;
   width: max-content;
   will-change: transform;
-
-  /* start poza prawą krawędzią viewportu */
   transform: translateX(100vw);
-
   animation: ticker 16s linear infinite;
+}
+
+.bar:hover .track {
+  animation-play-state: paused;
 }
 
 .text {
@@ -63,10 +67,6 @@
   font-size: clamp(0.85rem, 2.2vw, 0.95rem);
   letter-spacing: 0.02em;
   color: #1f2937;
-}
-
-.bar:hover .track {
-  animation-play-state: paused;
 }
 
 @keyframes ticker {
@@ -78,33 +78,20 @@
   }
 }
 
-/* Typy jako delikatny akcent z lewej */
-.info {
-  box-shadow: inset 4px 0 0 #3b82f6;
-}
-.success {
-  box-shadow: inset 4px 0 0 #16a34a;
-}
-.warning {
-  box-shadow: inset 4px 0 0 #f59e0b;
-}
-.danger {
-  box-shadow: inset 4px 0 0 #dc2626;
-}
+/* =========================
+   Responsive
+   ========================= */
 
 @media (max-width: 600px) {
   .text {
     font-size: 0.9rem;
   }
+
   .track {
     animation-duration: 24s;
   }
-  .label {
-    font-size: 0.65rem;
-  }
 }
 
-/* Szacunek dla preferencji użytkownika */
 @media (prefers-reduced-motion: reduce) {
   .track {
     animation: none;

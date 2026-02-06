@@ -6,7 +6,7 @@ import useSWR from "swr";
 import styles from "../styles/editTitle.module.css";
 import Tittle from "../components/Tittle";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetcher } from "@/lib/fetcher";
 
 interface Values {
   subtitle: string;

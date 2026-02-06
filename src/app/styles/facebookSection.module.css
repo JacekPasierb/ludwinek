@@ -31,6 +31,9 @@
   gap: 1rem;
   justify-content: center;
   align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .link {
@@ -84,6 +87,7 @@
 @media (max-width: 480px) {
   .links {
     flex-direction: column;
+    align-items: center;
   }
 
   .link {

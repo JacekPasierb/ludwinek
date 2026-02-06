@@ -1,9 +1,9 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import styles from "../styles/editModal.module.css";
 
-type Props = {
+type EditModalProps = {
   open: boolean;
   title: string;
   description?: string;
@@ -12,58 +12,86 @@ type Props = {
   footer?: React.ReactNode;
 };
 
-export default function EditModal({
+const KEY_ESCAPE = "Escape";
+const ARIA_LABEL_CLOSE = "Zamknij modal";
+
+const EditModal = ({
   open,
   title,
   description,
   onClose,
   children,
   footer,
-}: Props) {
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
+}: EditModalProps) => {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === KEY_ESCAPE) onClose();
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, handleKeyDown]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
     };
   }, [open]);
+
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (e.target === e.currentTarget) onClose();
+    },
+    [onClose]
+  );
 
   if (!open) return null;
 
   return (
-    <div className={styles.backdrop} role="dialog" aria-modal="true">
+    <div
+      className={styles.backdrop}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-modal-title"
+      aria-describedby={description ? "edit-modal-desc" : undefined}
+    >
       <button
+        type="button"
         className={styles.backdropClick}
         onClick={onClose}
-        aria-label="Zamknij modal"
+        aria-label={ARIA_LABEL_CLOSE}
       />
-
       <div className={styles.modal} role="document">
-        <button className={styles.close} onClick={onClose} aria-label="Zamknij">
+        <button
+          type="button"
+          className={styles.close}
+          onClick={onClose}
+          aria-label={ARIA_LABEL_CLOSE}
+        >
           ✕
         </button>
-
-        <div className={styles.header}>
-          <h3 className={styles.title}>{title}</h3>
-          {description ? <p className={styles.desc}>{description}</p> : null}
-        </div>
-
+        <header className={styles.header}>
+          <h3 id="edit-modal-title" className={styles.title}>
+            {title}
+          </h3>
+          {description && (
+            <p id="edit-modal-desc" className={styles.desc}>
+              {description}
+            </p>
+          )}
+        </header>
         <div className={styles.body}>{children}</div>
-
-        {footer ? <div className={styles.footer}>{footer}</div> : null}
+        {footer && <footer className={styles.footer}>{footer}</footer>}
       </div>
     </div>
   );
-}
+};
+
+export default EditModal;

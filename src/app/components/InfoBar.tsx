@@ -1,15 +1,16 @@
 "use client";
+
 import React from "react";
-import styles from "../styles/infobar.module.css";
 import useSWR from "swr";
+import styles from "../styles/infobar.module.css";
+import {fetcher} from "@/lib/fetcher";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const InfoBar = () => {
-
-  const {data, mutate} = useSWR("/api/siteinfo", fetcher);
+  const {data} = useSWR("/api/siteinfo", fetcher);
   const message = data?.infoMessage ?? "Zapraszamy na Łowisko Ludwinek";
+
   return (
-    <div className={`${styles.bar} `} role="status" aria-live="polite">
+    <section className={styles.bar} role="status" aria-live="polite">
       <div className={styles.inner}>
         <div className={styles.header}>
           <span className={styles.label}>WAŻNE INFORMACJE</span>
@@ -21,7 +22,7 @@ const InfoBar = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

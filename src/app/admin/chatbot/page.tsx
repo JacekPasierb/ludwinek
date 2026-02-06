@@ -1,12 +1,11 @@
 "use client";
 
-import React, {useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import useSWR from "swr";
-import styles from "../styles/adminChatBot.module.css";
-import Subtitle from "../ui/subtitle";
+import {fetcher} from "@/lib/fetcher";
 import EditModal from "../ui/EditModal";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import Subtitle from "../ui/subtitle";
+import styles from "../styles/adminChatBot.module.css";
 
 type ChatbotEntry = {
   _id: string;
@@ -14,161 +13,232 @@ type ChatbotEntry = {
   answer: string;
 };
 
-export default function Page() {
-  const {data, mutate, isLoading} = useSWR("/api/chatbot", fetcher);
+type ApiResponse = {
+  success: boolean;
+  data?: ChatbotEntry[];
+};
 
+const PAGE_SIZE = 5;
+const API_PATH = "/api/chatbot";
+
+const SECTION_CREATE_TITLE = "I Tworzenie Zapytań";
+const SECTION_EDIT_TITLE = "II Edycja Zapytań";
+const LABEL_QUESTIONS = "Pytania (oddziel przecinkami)";
+const LABEL_ANSWER = "Odpowiedź";
+const LABEL_SEARCH = "🔍 Szukaj pytania";
+const PLACEHOLDER_QUESTIONS = "np. ile kosztuje, cennik, opłata";
+const PLACEHOLDER_QUESTIONS_EDIT = "np. cennik, opłata, ile kosztuje";
+const PLACEHOLDER_ANSWER = 'np. "Wędkowanie kosztuje 30 zł..."';
+const PLACEHOLDER_ANSWER_EDIT = 'np. "Wędkowanie kosztuje..."';
+const PLACEHOLDER_SEARCH = "np. cennik, jak zapłacić...";
+const HINT_QUESTIONS =
+  "Dodaj kilka wariantów pytań, bot lepiej dopasuje odpowiedź.";
+const BTN_ADD = "➕ Dodaj interakcję";
+const BTN_EDIT = "✏️ Edytuj";
+const BTN_DELETE = "🗑️ Usuń";
+const BTN_CANCEL = "Anuluj";
+const BTN_SAVE = "Zapisz";
+const BTN_DELETE_MODAL = "Usuń";
+const MODAL_TITLE = "Edytuj interakcję";
+const MODAL_DESC =
+  "Zmieniaj pytania (oddzielone przecinkami) oraz odpowiedź. Zapis aktualizuje bota od razu.";
+const CONFIRM_DELETE = "Czy na pewno chcesz usunąć ten wpis?";
+const CONFIRM_DELETE_MODAL = "Na pewno usunąć ten wpis?";
+const EMPTY_STATE = "Brak wyników.";
+
+function parseQuestionsText(text: string): string[] {
+  return text
+    .split(",")
+    .map((q) => q.trim())
+    .filter(Boolean);
+}
+
+async function apiRequest(
+  url: string,
+  options?: RequestInit
+): Promise<Response> {
+  return fetch(url, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options?.headers,
+    },
+  });
+}
+
+const ChatbotPage = () => {
+  const {data, mutate, isLoading} = useSWR<ApiResponse>(API_PATH, fetcher);
   const [questionsText, setQuestionsText] = useState("");
   const [answer, setAnswer] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ChatbotEntry | null>(null);
-
-  // ✅ brakowało tego u Ciebie
   const [editQuestionsText, setEditQuestionsText] = useState("");
   const [editAnswer, setEditAnswer] = useState("");
 
-  const pageSize = 5;
-
-  const filtered: ChatbotEntry[] = useMemo(() => {
-    const list: ChatbotEntry[] = data?.data || [];
-    const q = search.trim().toLowerCase();
-    if (!q) return list;
-
-    return list.filter((item) =>
-      item.questions.some((qq) => qq.toLowerCase().includes(q))
-    );
-  }, [data, search]);
-
-  const total = filtered.length;
-  const pageCount = Math.max(1, Math.ceil(total / pageSize));
-  const safeCurrentPage = Math.min(currentPage, pageCount);
-  const startIndex = (safeCurrentPage - 1) * pageSize;
-
-  const paginatedData = useMemo(
-    () => filtered.slice(startIndex, startIndex + pageSize),
-    [filtered, startIndex, pageSize]
+  const entries: ChatbotEntry[] = useMemo(
+    () => (data?.success && data?.data ? data.data : []),
+    [data]
   );
 
-  const handleEdit = (item: ChatbotEntry) => {
+  const filteredEntries = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return entries;
+    return entries.filter((item) =>
+      item.questions.some((qq) => qq.toLowerCase().includes(q))
+    );
+  }, [entries, search]);
+
+  const pageCount = Math.max(1, Math.ceil(filteredEntries.length / PAGE_SIZE));
+  const safeCurrentPage = Math.min(currentPage, pageCount);
+  const startIndex = (safeCurrentPage - 1) * PAGE_SIZE;
+  const paginatedData = useMemo(
+    () => filteredEntries.slice(startIndex, startIndex + PAGE_SIZE),
+    [filteredEntries, startIndex]
+  );
+
+  const openEditModal = useCallback((item: ChatbotEntry) => {
     setEditingItem(item);
     setEditQuestionsText(item.questions.join(", "));
     setEditAnswer(item.answer);
     setModalOpen(true);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalOpen(false);
     setEditingItem(null);
-  };
+  }, []);
 
-  const handleUpdateEntry = async () => {
+  const handleUpdateEntry = useCallback(async () => {
     if (!editingItem?._id) return;
 
-    const questionsArray = editQuestionsText
-      .split(",")
-      .map((q) => q.trim())
-      .filter(Boolean);
+    const questions = parseQuestionsText(editQuestionsText);
+    const trimmedAnswer = editAnswer.trim();
 
-    await fetch(`/api/chatbot/${editingItem._id}`, {
+    await apiRequest(`${API_PATH}/${editingItem._id}`, {
       method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        questions: questionsArray,
-        answer: editAnswer.trim(),
-      }),
+      body: JSON.stringify({questions, answer: trimmedAnswer}),
     });
 
     closeModal();
     mutate();
-  };
+  }, [editingItem?._id, editQuestionsText, editAnswer, closeModal, mutate]);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Czy na pewno chcesz usunąć ten wpis?")) return;
-    await fetch(`/api/chatbot/${id}`, {method: "DELETE"});
+  const handleDeleteFromList = useCallback(
+    async (id: string) => {
+      if (!confirm(CONFIRM_DELETE)) return;
+      await apiRequest(`${API_PATH}/${id}`, {method: "DELETE"});
+      mutate();
+    },
+    [mutate]
+  );
+
+  const handleDeleteFromModal = useCallback(async () => {
+    if (!editingItem?._id || !confirm(CONFIRM_DELETE_MODAL)) return;
+    await apiRequest(`${API_PATH}/${editingItem._id}`, {method: "DELETE"});
+    closeModal();
     mutate();
-  };
+  }, [editingItem?._id, closeModal, mutate]);
 
-  const handleCreateEntry = async () => {
-    const questionsArray = questionsText
-      .split(",")
-      .map((q) => q.trim())
-      .filter(Boolean);
+  const handleCreateEntry = useCallback(async () => {
+    const questions = parseQuestionsText(questionsText);
+    const trimmedAnswer = answer.trim();
 
-    if (!questionsArray.length || !answer.trim()) return;
+    if (!questions.length || !trimmedAnswer) return;
 
-    await fetch("/api/chatbot", {
+    await apiRequest(API_PATH, {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({questions: questionsArray, answer: answer.trim()}),
+      body: JSON.stringify({questions, answer: trimmedAnswer}),
     });
 
     setQuestionsText("");
     setAnswer("");
     mutate();
-  };
+  }, [questionsText, answer, mutate]);
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  }, []);
+
+  const modalFooter = (
+    <>
+      <div className={styles.modalActionsLeft}>
+        {editingItem?._id && (
+          <button
+            type="button"
+            className={styles.btnDanger}
+            onClick={handleDeleteFromModal}
+          >
+            {BTN_DELETE_MODAL}
+          </button>
+        )}
+      </div>
+      <button type="button" className={styles.btnGhost} onClick={closeModal}>
+        {BTN_CANCEL}
+      </button>
+      <button
+        type="button"
+        className={styles.btnPrimary}
+        onClick={handleUpdateEntry}
+      >
+        {BTN_SAVE}
+      </button>
+    </>
+  );
 
   return (
     <section className={styles.section}>
       <div className={styles.card}>
-        <Subtitle title="I Tworzenie Zapytań" />
-
+        <Subtitle title={SECTION_CREATE_TITLE} />
         <div className={styles.filters}>
           <div className={styles.filter}>
-            <label htmlFor="questions">Pytania (oddziel przecinkami)</label>
+            <label htmlFor="questions">{LABEL_QUESTIONS}</label>
             <input
               id="questions"
               type="text"
               value={questionsText}
               onChange={(e) => setQuestionsText(e.target.value)}
-              placeholder="np. ile kosztuje, cennik, opłata"
+              placeholder={PLACEHOLDER_QUESTIONS}
             />
-            <p className={styles.hint}>
-              Dodaj kilka wariantów pytań, bot lepiej dopasuje odpowiedź.
-            </p>
+            <p className={styles.hint}>{HINT_QUESTIONS}</p>
           </div>
-
           <div className={styles.filter}>
-            <label htmlFor="answer">Odpowiedź</label>
+            <label htmlFor="answer">{LABEL_ANSWER}</label>
             <textarea
               id="answer"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              placeholder='np. "Wędkowanie kosztuje 30 zł..."'
+              placeholder={PLACEHOLDER_ANSWER}
               rows={3}
               className={styles.textarea}
             />
           </div>
-
           <div className={styles.filterAction}>
             <button
+              type="button"
               onClick={handleCreateEntry}
               className={styles.addBtn}
               disabled={isLoading}
             >
-              ➕ Dodaj interakcję
+              {BTN_ADD}
             </button>
           </div>
         </div>
       </div>
 
       <div className={`${styles.card} ${styles.list}`}>
-        <Subtitle title="II Edycja Zapytań" />
-
+        <Subtitle title={SECTION_EDIT_TITLE} />
         <div className={styles.searchRow}>
           <div className={styles.filter}>
-            <label htmlFor="search">🔍 Szukaj pytania</label>
+            <label htmlFor="search">{LABEL_SEARCH}</label>
             <input
               id="search"
               type="text"
               value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="np. cennik, jak zapłacić..."
+              onChange={(e) => handleSearchChange(e.target.value)}
+              placeholder={PLACEHOLDER_SEARCH}
             />
           </div>
         </div>
@@ -177,10 +247,10 @@ export default function Page() {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Zapytania</th>
-                <th>Odpowiedź</th>
-                <th>Akcja</th>
+                <th scope="col">#</th>
+                <th scope="col">Zapytania</th>
+                <th scope="col">Odpowiedź</th>
+                <th scope="col">Akcja</th>
               </tr>
             </thead>
             <tbody>
@@ -188,34 +258,35 @@ export default function Page() {
                 <tr key={item._id}>
                   <td>{startIndex + i + 1}</td>
                   <td>
-                    <ul className={styles.questionList}>
+                    <ul className={styles.questionList} role="list">
                       {item.questions.map((q, idx) => (
-                        <li key={idx}>{q}</li>
+                        <li key={`${item._id}-${idx}`}>{q}</li>
                       ))}
                     </ul>
                   </td>
                   <td>{item.answer}</td>
                   <td className={styles.actions}>
                     <button
-                      onClick={() => handleEdit(item)}
+                      type="button"
+                      onClick={() => openEditModal(item)}
                       className={`${styles.actionBtn} ${styles.editBtn}`}
                     >
-                      ✏️ Edytuj
+                      {BTN_EDIT}
                     </button>
                     <button
-                      onClick={() => handleDelete(item._id)}
+                      type="button"
+                      onClick={() => handleDeleteFromList(item._id)}
                       className={`${styles.actionBtn} ${styles.deleteBtn}`}
                     >
-                      🗑️ Usuń
+                      {BTN_DELETE}
                     </button>
                   </td>
                 </tr>
               ))}
-
               {!paginatedData.length && (
                 <tr>
                   <td colSpan={4} style={{padding: "16px"}}>
-                    Brak wyników.
+                    {EMPTY_STATE}
                   </td>
                 </tr>
               )}
@@ -227,6 +298,7 @@ export default function Page() {
           {Array.from({length: pageCount}, (_, i) => (
             <button
               key={i}
+              type="button"
               className={safeCurrentPage === i + 1 ? styles.activePage : ""}
               onClick={() => setCurrentPage(i + 1)}
             >
@@ -238,60 +310,36 @@ export default function Page() {
 
       <EditModal
         open={modalOpen}
-        title="Edytuj interakcję"
-        description="Zmieniaj pytania (oddzielone przecinkami) oraz odpowiedź. Zapis aktualizuje bota od razu."
+        title={MODAL_TITLE}
+        description={MODAL_DESC}
         onClose={closeModal}
-        footer={
-          <>
-            <div className={styles.modalActionsLeft}>
-              {editingItem?._id ? (
-                <button
-                  className={styles.btnDanger}
-                  onClick={async () => {
-                    if (!confirm("Na pewno usunąć ten wpis?")) return;
-                    await fetch(`/api/chatbot/${editingItem._id}`, {
-                      method: "DELETE",
-                    });
-                    closeModal();
-                    mutate();
-                  }}
-                >
-                  Usuń
-                </button>
-              ) : null}
-            </div>
-
-            <button className={styles.btnGhost} onClick={closeModal}>
-              Anuluj
-            </button>
-
-            <button className={styles.btnPrimary} onClick={handleUpdateEntry}>
-              Zapisz
-            </button>
-          </>
-        }
+        footer={modalFooter}
       >
         <div className={styles.modalField}>
-          <label>Pytania (oddziel przecinkami)</label>
+          <label htmlFor="edit-questions">{LABEL_QUESTIONS}</label>
           <input
+            id="edit-questions"
+            type="text"
             className={styles.modalInput}
             value={editQuestionsText}
             onChange={(e) => setEditQuestionsText(e.target.value)}
-            placeholder="np. cennik, opłata, ile kosztuje"
+            placeholder={PLACEHOLDER_QUESTIONS_EDIT}
           />
         </div>
-
         <div className={styles.modalField}>
-          <label>Odpowiedź</label>
+          <label htmlFor="edit-answer">{LABEL_ANSWER}</label>
           <textarea
+            id="edit-answer"
             className={styles.modalTextarea}
             value={editAnswer}
             onChange={(e) => setEditAnswer(e.target.value)}
-            placeholder='np. "Wędkowanie kosztuje..."'
+            placeholder={PLACEHOLDER_ANSWER_EDIT}
             rows={5}
           />
         </div>
       </EditModal>
     </section>
   );
-}
+};
+
+export default ChatbotPage;
