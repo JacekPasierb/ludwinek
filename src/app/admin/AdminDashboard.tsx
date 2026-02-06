@@ -20,7 +20,6 @@ const PAGE_TITLES: Readonly<Record<string, string>> = {
   "/admin": "Panel administratora",
   "/admin/chatbot": "Zarządzanie chatbotem",
   "/admin/relations": "Zarządzanie relacjami",
-  "/admin/reservations": "Lista rezerwacji",
 };
 
 const AdminDashboard = ({children}: AdminDashboardProps) => {
