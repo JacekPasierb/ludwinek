@@ -9,6 +9,10 @@
   --accent-soft: rgba(245, 201, 106, 0.22);
   --accent-ring: rgba(245, 201, 106, 0.55);
 
+  --admin-border: rgba(15, 23, 42, 0.12);
+  --admin-accent: var(--accent, #f5c96a);
+  --admin-ring: rgba(245, 201, 106, 0.35);
+
   --container-width: 1200px;
   --container-pad: 15px;
 }
