@@ -28,8 +28,11 @@ export async function DELETE(
   return NextResponse.json({message: "Zdjęcie usunięte"});
 }
 
+type Context = {
+  params: {id: string};
+};
 // PUT - zaktualizuj zdjęcie (tylko dla zalogowanych)
-export async function PUT(req: NextRequest, {params}: {params: {id: string}}) {
+export async function PUT(req: NextRequest, {params}: Context) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
