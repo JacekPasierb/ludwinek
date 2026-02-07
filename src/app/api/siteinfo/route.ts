@@ -34,7 +34,7 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  const {title, subtitle, recordFishes, infoMessage} = body;
+  const {recordFishes} = body;
 
   await connectToDatabase();
 
@@ -42,9 +42,9 @@ export async function PUT(req: NextRequest) {
     updatedAt: new Date(),
   };
 
-  if (title) updateData.heroTitle = title;
-  if (subtitle) updateData.heroSubtitle = subtitle;
-  if (infoMessage !== undefined) updateData.infoMessage = infoMessage;
+  if ("infoMessage" in body)
+    updateData.infoMessage =
+      typeof body.infoMessage === "string" ? body.infoMessage.trim() : "";
 
   let recordFishesToSave:
     | {species: string; weight: number; catchDate: string}[]
@@ -62,8 +62,6 @@ export async function PUT(req: NextRequest) {
   let doc = await SiteInfo.findOne();
   if (!doc) {
     doc = new SiteInfo({
-      heroTitle: updateData.heroTitle || "Tytuł",
-      heroSubtitle: updateData.heroSubtitle || "Podtytuł",
       infoMessage: updateData.infoMessage ?? "",
       recordFishes:
         recordFishesToSave ??
@@ -73,9 +71,7 @@ export async function PUT(req: NextRequest) {
       updatedAt: updateData.updatedAt,
     });
   } else {
-    if (updateData.heroTitle) doc.heroTitle = updateData.heroTitle;
-    if (updateData.heroSubtitle) doc.heroSubtitle = updateData.heroSubtitle;
-    if (updateData.infoMessage !== undefined)
+    if ("infoMessage" in updateData)
       doc.infoMessage = updateData.infoMessage;
     if (recordFishesToSave !== null) {
       doc.recordFishes = recordFishesToSave as any;

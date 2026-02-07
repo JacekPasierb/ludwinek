@@ -7,7 +7,9 @@ import {fetcher} from "@/lib/fetcher";
 
 const InfoBar = () => {
   const {data} = useSWR("/api/siteinfo", fetcher);
-  const message = data?.infoMessage ?? "Zapraszamy na Łowisko Ludwinek";
+  const message =
+    data?.infoMessage?.trim() ||
+    "Serdecznie zapraszamy do Łowiska Ludwinek";
 
   return (
     <section className={styles.bar} role="status" aria-live="polite">

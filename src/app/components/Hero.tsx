@@ -1,21 +1,18 @@
 "use client";
 
 import {usePathname} from "next/navigation";
-import styles from "../styles/hero.module.css";
+import {FaHome, FaPhoneAlt} from "react-icons/fa";
 import Navbar from "./Navbar";
+import styles from "../styles/hero.module.css";
 
-import useSWR from "swr";
-import { FaHome, FaPhoneAlt } from "react-icons/fa";
-import { fetcher } from "@/lib/fetcher";
+const HERO_TITLE = "Łowisko EKO-TORF Ludwinek";
+const HERO_SUBTITLE = "Profesjonalne łowisko w sercu Lubelszczyzny.";
+const HERO_HOURS = "Czynne 24 godziny na dobę, 7 dni w tygodniu.";
 
 export const Hero = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
   if (isAdmin) return null;
-
-  const {data, mutate} = useSWR("/api/siteinfo", fetcher);
-  const title = data?.heroTitle ?? "";
-  const subtitle = data?.heroSubtitle ?? "";
 
   return (
     <section className={styles.hero}>
@@ -23,8 +20,9 @@ export const Hero = () => {
         <Navbar />
 
         <div className="container">
-          <h1 className={styles.title}>{title}</h1>
-          <p className={styles.subtitle}>{subtitle}</p>
+          <h1 className={styles.title}>{HERO_TITLE}</h1>
+          <p className={styles.subtitle}>{HERO_SUBTITLE}</p>
+          <p className={styles.subtitleHours}>{HERO_HOURS}</p>
         </div>
         <div className={styles.contactBox}>
           <div className={styles.label}>

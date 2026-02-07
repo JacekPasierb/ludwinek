@@ -1,17 +1,19 @@
 /* =========================
    InfoBar – pasek z przewijającą się wiadomością
+   Spójny z Features, About – jasne tło, ciemny tekst
    ========================= */
 
 .bar {
   width: 100%;
   background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
 }
 
 .inner {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 0.45rem 1rem 0.55rem;
+  padding: 0.5rem 1.25rem 0.6rem;
 }
 
 .header {
@@ -20,11 +22,11 @@
 }
 
 .label {
-  font-size: clamp(0.65rem, 1.8vw, 0.7rem);
+  font-size: clamp(0.62rem, 1.6vw, 0.68rem);
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #475569;
+  color: rgba(15, 23, 42, 0.55);
 }
 
 /* Marquee – przewijający się tekst */
@@ -35,14 +37,14 @@
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 8%,
-    black 92%,
+    black 6%,
+    black 94%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 8%,
+    black 6%,
     black 92%,
     transparent 100%
   );
@@ -54,7 +56,7 @@
   width: max-content;
   will-change: transform;
   transform: translateX(100vw);
-  animation: ticker 16s linear infinite;
+  animation: ticker 18s linear infinite;
 }
 
 .bar:hover .track {
@@ -65,8 +67,9 @@
   display: inline-block;
   white-space: nowrap;
   font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  font-weight: 500;
   letter-spacing: 0.02em;
-  color: #1f2937;
+  color: rgba(15, 23, 42, 0.88);
 }
 
 @keyframes ticker {
@@ -83,8 +86,12 @@
    ========================= */
 
 @media (max-width: 600px) {
+  .inner {
+    padding: 0.45rem 1rem 0.55rem;
+  }
+
   .text {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .track {

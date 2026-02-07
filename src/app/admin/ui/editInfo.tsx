@@ -14,12 +14,32 @@ interface Values {
 
 const MAX = 240;
 
+const BTN_EDIT = "Edytuj";
+const BTN_CLEAR = "Wyczyść komunikat";
+
 const EditInfo = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const [isClearing, setIsClearing] = useState(false);
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);
   const infoMessage = data?.infoMessage ?? "";
+  const hasMessage = Boolean(infoMessage?.trim());
 
   const initialValues: Values = {infoMessage};
+
+  const handleClear = async () => {
+    if (!confirm("Czy na pewno chcesz usunąć komunikat?")) return;
+    setIsClearing(true);
+    try {
+      await fetch("/api/siteinfo", {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({infoMessage: ""}),
+      });
+      await mutate();
+    } finally {
+      setIsClearing(false);
+    }
+  };
 
   return (
     <div className={styles.card}>
@@ -40,13 +60,25 @@ const EditInfo = () => {
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setIsEdit(true)}
-            className={`${styles.btn} ${styles.btnSecondary} ${styles.editBtn}`}
-          >
-            Edytuj
-          </button>
+          <div className={styles.actions}>
+            <button
+              type="button"
+              onClick={() => setIsEdit(true)}
+              className={`${styles.btn} ${styles.btnSecondary} ${styles.editBtn}`}
+            >
+              {BTN_EDIT}
+            </button>
+            {hasMessage && (
+              <button
+                type="button"
+                onClick={handleClear}
+                disabled={isClearing}
+                className={`${styles.btn} ${styles.btnSecondary}`}
+              >
+                {isClearing ? "..." : BTN_CLEAR}
+              </button>
+            )}
+          </div>
         </>
       ) : (
         <Formik
@@ -63,7 +95,9 @@ const EditInfo = () => {
             await fetch("/api/siteinfo", {
               method: "PUT",
               headers: {"Content-Type": "application/json"},
-              body: JSON.stringify({infoMessage: values.infoMessage}),
+              body: JSON.stringify({
+                infoMessage: String(values.infoMessage ?? "").trim(),
+              }),
             });
             await mutate();
             setIsEdit(false);
