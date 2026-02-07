@@ -132,6 +132,13 @@
   gap: 0.5rem;
 }
 
+.contactRowEmail {
+  flex-wrap: wrap;
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 .contactIcon {
   flex-shrink: 0;
   font-size: 1em;

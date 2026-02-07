@@ -5,11 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {
+  FaEnvelope,
+  FaFileAlt,
+  FaImages,
+  FaInfoCircle,
   FaMapMarkerAlt,
   FaPhone,
-  FaInfoCircle,
-  FaImages,
-  FaFileAlt,
 } from "react-icons/fa";
 import styles from "../styles/footer.module.css";
 
@@ -41,6 +42,11 @@ const CONTACT_OFFICE = {
   phone: "+48609193579",
   display: "609 193 579",
   ariaLabel: "Zadzwoń do biura: 609 193 579",
+};
+
+const CONTACT_EMAIL = {
+  address: "kontakt@wędkowanie-ludwin.pl",
+  ariaLabel: "Napisz e-mail na adres: kontakt@wędkowanie-ludwin.pl",
 };
 
 const OPENING_HOURS: readonly OpeningHour[] = [
@@ -125,6 +131,19 @@ const Footer = () => {
               >
                 <FaPhone className={styles.contactIcon} aria-hidden />
                 {CONTACT_OFFICE.display.replace(/ /g, "\u00A0")}
+              </a>
+            </p>
+
+            <p>
+              <strong>E-mail:</strong>
+              <br />
+              <a
+                href={`mailto:${CONTACT_EMAIL.address}`}
+                aria-label={CONTACT_EMAIL.ariaLabel}
+                className={`${styles.contactRow} ${styles.contactRowEmail}`}
+              >
+                <FaEnvelope className={styles.contactIcon} aria-hidden />
+                {CONTACT_EMAIL.address}
               </a>
             </p>
           </address>
