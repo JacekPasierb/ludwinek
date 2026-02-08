@@ -31,11 +31,11 @@ export const Hero = () => {
               {" "}
               <FaPhoneAlt className={styles.icon} />
               <a
-                href="tel:+48609193571"
+                href="tel:+48609193579"
                 style={{color: "inherit", textDecoration: "none"}}
-                aria-label="Zadzwoń do biura: 609 193 571"
+                aria-label="Zadzwoń do biura: 609 193 579"
               >
-                609 193 571
+                609 193 579
               </a>
             </span>
           </div>

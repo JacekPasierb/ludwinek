@@ -3,6 +3,69 @@
 import {usePathname} from "next/navigation";
 import {useEffect} from "react";
 
+const ALBUM_NAMES: Record<string, string> = {
+  "zbiornik-1": "Zbiornik 1",
+  "zbiornik-2": "Zbiornik 2",
+  "zbiornik-3": "Zbiornik 3",
+  wydarzenia: "Wydarzenia",
+};
+
+function getBreadcrumbItems(
+  pathname: string,
+  baseUrl: string
+): Array<{"@type": string; position: number; name: string; item: string}> {
+  const parts = pathname.split("/").filter(Boolean);
+
+  if (parts.length === 0) return [];
+
+  if (pathname === "/rules")
+    return [
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Regulamin",
+        item: `${baseUrl}/rules`,
+      },
+    ];
+
+  if (pathname === "/relations")
+    return [
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Fotorelacje",
+        item: `${baseUrl}/relations`,
+      },
+    ];
+
+  if (parts[0] === "relations" && parts[1]) {
+    const albumName = ALBUM_NAMES[parts[1]] || parts[1];
+    return [
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Fotorelacje",
+        item: `${baseUrl}/relations`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: albumName,
+        item: `${baseUrl}${pathname}`,
+      },
+    ];
+  }
+
+  return [
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Strona",
+      item: `${baseUrl}${pathname}`,
+    },
+  ];
+}
+
 export const StructuredData = () => {
   const pathname = usePathname();
 
@@ -99,21 +162,7 @@ export const StructuredData = () => {
           name: "Strona główna",
           item: baseUrl,
         },
-        ...(pathname !== "/"
-          ? [
-              {
-                "@type": "ListItem",
-                position: 2,
-                name:
-                  pathname === "/rules"
-                    ? "Regulamin"
-                    : pathname === "/relations"
-                    ? "Fotorelacje"
-                    : "Strona",
-                item: `${baseUrl}${pathname}`,
-              },
-            ]
-          : []),
+        ...(pathname !== "/" ? getBreadcrumbItems(pathname, baseUrl) : []),
       ],
     };
 

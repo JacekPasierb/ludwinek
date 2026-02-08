@@ -36,11 +36,12 @@ export const metadata: Metadata = {
     template: "%s | Łowisko Ludwinek",
   },
   description:
-    "Łowisko Ludwinek EKO-TORF to wyjątkowe miejsce na terenie dawnej kopalni torfu. Trzy starannie zarybione zbiorniki, zasada NO KILL, strefy piknikowe. Idealne miejsce na wędkowanie i wypoczynek z rodziną w Ludwinie.",
+    "Łowisko EKO-TORF Ludwinek – trzy zarybione zbiorniki, zasada NO KILL, strefy piknikowe. Wędkowanie i wypoczynek w Ludwinie na Lubelszczyźnie.",
   keywords: [
     "łowisko",
     "wędkowanie",
     "Ludwin",
+    "Lubelszczyzna",
     "EKO-TORF",
     "NO KILL",
     "łowisko ryb",
@@ -110,6 +111,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+      </head>
       <body className={`${inter.variable} ${dmSans.variable}`}>
         <StructuredData />
         <header>

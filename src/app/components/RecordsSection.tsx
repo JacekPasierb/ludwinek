@@ -72,7 +72,7 @@ const RecordsSection = () => {
         aria-busy="true"
       >
         <div className={styles.header}>
-          <span className={styles.badge}>Rekordy łowiska</span>
+          <h2 className={styles.badge}>Rekordy łowiska</h2>
         </div>
         <div className={styles.marqueeWrapper}>
           <div className={styles.marquee}>
@@ -105,7 +105,7 @@ const RecordsSection = () => {
       id="records"
     >
       <div className={styles.header}>
-        <span className={styles.badge}>Rekordy łowiska</span>
+        <h2 className={styles.badge}>Rekordy łowiska</h2>
       </div>
 
       <div className={styles.marqueeWrapper}>
