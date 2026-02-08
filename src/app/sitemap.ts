@@ -2,7 +2,7 @@ import {MetadataRoute} from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://lowiskoludwinek.pl";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://wędkowanie-ludwin.pl";
 
   return [
     {
@@ -22,12 +22,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/turnee`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
     },
   ];
 }

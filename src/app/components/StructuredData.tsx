@@ -8,7 +8,7 @@ export const StructuredData = () => {
 
   useEffect(() => {
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || "https://lowiskoludwinek.pl";
+      process.env.NEXT_PUBLIC_SITE_URL || "https://wędkowanie-ludwin.pl";
 
     const localBusinessSchema = {
       "@context": "https://schema.org",
@@ -109,8 +109,6 @@ export const StructuredData = () => {
                     ? "Regulamin"
                     : pathname === "/relations"
                     ? "Fotorelacje"
-                    : pathname === "/turnee"
-                    ? "Turnieje"
                     : "Strona",
                 item: `${baseUrl}${pathname}`,
               },
