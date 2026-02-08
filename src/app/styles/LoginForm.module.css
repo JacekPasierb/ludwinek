@@ -39,6 +39,41 @@
   outline: none;
 }
 
+.passwordWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordWrap .input {
+  padding-right: 48px;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 6px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgb(4, 4, 4);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.passwordToggle:hover {
+  background: rgba(121, 168, 121, 0.4);
+  border-color: rgba(121, 168, 121, 0.6);
+  color: #fff;
+  transform: scale(1.05);
+}
+
 .button {
   background-color: #79a879;
   color: white;
