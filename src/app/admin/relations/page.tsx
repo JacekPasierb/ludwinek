@@ -22,6 +22,14 @@ type Photo = {
   createdAt?: string;
 };
 
+type PhotosPaginatedResponse = {
+  items: Photo[];
+  total: number;
+  page: number;
+  pageSize: number;
+  pageCount: number;
+};
+
 type PhotoFormData = {
   url: string;
   alt: string;
@@ -35,6 +43,7 @@ const ALBUMS: readonly {id: AlbumType; name: string}[] = [
   {id: "wydarzenia", name: "Wydarzenia"},
 ];
 
+const PAGE_SIZE = 12;
 const MAX_FILE_SIZE_MB = 10;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 const IMAGE_MIME_PREFIX = "image/";
@@ -70,8 +79,8 @@ const EMPTY_PHOTO_FORM: PhotoFormData = {
   title: "",
 };
 
-function getPhotosUrl(album: AlbumType): string {
-  return `${API_PHOTOS}?album=${album}`;
+function getPhotosUrl(album: AlbumType, page: number): string {
+  return `${API_PHOTOS}?album=${album}&page=${page}&pageSize=${PAGE_SIZE}`;
 }
 
 function formatFileSize(bytes: number): string {
@@ -107,6 +116,7 @@ async function apiRequest(
 
 const AdminRelationsPage = () => {
   const [selectedAlbum, setSelectedAlbum] = useState<AlbumType>("zbiornik1");
+  const [currentPage, setCurrentPage] = useState(1);
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -116,14 +126,21 @@ const AdminRelationsPage = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPhoto, setEditPhoto] = useState<PhotoFormData>(EMPTY_PHOTO_FORM);
 
-  const {data: photos, mutate} = useSWR<Photo[]>(
-    getPhotosUrl(selectedAlbum),
+  const handleAlbumChange = useCallback((album: AlbumType) => {
+    setSelectedAlbum(album);
+    setCurrentPage(1);
+  }, []);
+
+  const {data: paginated, mutate} = useSWR<PhotosPaginatedResponse>(
+    getPhotosUrl(selectedAlbum, currentPage),
     fetcher
   );
 
+  const photos = paginated?.items ?? [];
   const albumName =
     ALBUMS.find((a) => a.id === selectedAlbum)?.name ?? selectedAlbum;
-  const photoCount = photos?.length ?? 0;
+  const photoCount = paginated?.total ?? 0;
+  const pageCount = paginated?.pageCount ?? 1;
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -271,7 +288,7 @@ const AdminRelationsPage = () => {
             <select
               id="album-select"
               value={selectedAlbum}
-              onChange={(e) => setSelectedAlbum(e.target.value as AlbumType)}
+              onChange={(e) => handleAlbumChange(e.target.value as AlbumType)}
               className={styles.select}
               aria-label={LABEL_ALBUM}
             >
@@ -518,6 +535,52 @@ const AdminRelationsPage = () => {
             </div>
           ) : (
             <p className={styles.empty}>{EMPTY_PHOTOS}</p>
+          )}
+
+          {pageCount > 1 && (
+            <nav
+              className={styles.pagination}
+              aria-label="Paginacja zdjęć w albumie"
+            >
+              <button
+                type="button"
+                className={styles.pageBtn}
+                disabled={currentPage <= 1}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                aria-label="Poprzednia strona"
+              >
+                Poprzednia
+              </button>
+              <div className={styles.pageNumbers}>
+                {Array.from({length: pageCount}, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    className={
+                      currentPage === p
+                        ? `${styles.pageNumber} ${styles.pageActive}`
+                        : styles.pageNumber
+                    }
+                    onClick={() => setCurrentPage(p)}
+                    aria-current={currentPage === p ? "page" : undefined}
+                    aria-label={`Strona ${p}`}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className={styles.pageBtn}
+                disabled={currentPage >= pageCount}
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(pageCount, p + 1))
+                }
+                aria-label="Następna strona"
+              >
+                Następna
+              </button>
+            </nav>
           )}
         </div>
       </div>

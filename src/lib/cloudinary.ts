@@ -20,10 +20,7 @@ const CLOUDINARY_UPLOAD_REGEX =
  * @param size - thumb (siatka/miniaturki), medium (siatka), large (lightbox)
  * @returns URL z transformacjami lub input bez zmian, jeśli to nie Cloudinary
  */
-export function getCloudinaryUrl(
-  input: string,
-  size: CloudinarySize
-): string {
+export function getCloudinaryUrl(input: string, size: CloudinarySize): string {
   if (!input || typeof input !== "string") return input;
 
   const transform = TRANSFORMS[size];
@@ -41,6 +38,13 @@ export function getCloudinaryUrl(
     process.env?.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   if (cloudName && !input.startsWith("http")) {
     return `https://res.cloudinary.com/${cloudName}/image/upload/${transform}/${input}`;
+  }
+
+  // public_id bez cloud name – next/image wymaga pełnego URL
+  if (!input.startsWith("http") && !input.startsWith("/")) {
+    throw new Error(
+      "NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME musi być ustawione w .env.local, aby wyświetlać zdjęcia z Cloudinary. Zobacz README_CLOUDINARY.md."
+    );
   }
 
   // Nie Cloudinary (np. placeholder /images/logo.png)
