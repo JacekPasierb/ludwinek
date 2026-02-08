@@ -6,6 +6,7 @@ import {FaEdit, FaPlus, FaTrash} from "react-icons/fa";
 import {fetcher} from "@/lib/fetcher";
 import panelStyles from "../../styles/pageAdmin.module.css";
 import Tittle from "../components/Tittle";
+import EditModal from "../ui/EditModal";
 import styles from "../styles/adminPhotos.module.css";
 
 type AlbumType = "zbiornik1" | "zbiornik2" | "zbiornik3" | "wydarzenia";
@@ -71,7 +72,10 @@ const MSG_FILE_TOO_BIG = "Plik jest za duży (max 10MB)";
 const MSG_SELECT_FILE = "Wybierz plik do przesłania";
 const MSG_UPLOAD_ERROR = "Błąd podczas uploadu";
 const MSG_SAVE_ERROR = "Błąd podczas przesyłania zdjęcia";
-const CONFIRM_DELETE = "Czy na pewno chcesz usunąć to zdjęcie?";
+const MODAL_DELETE_TITLE = "Usuń zdjęcie";
+const MODAL_DELETE_DESC =
+  "Czy na pewno chcesz usunąć to zdjęcie? Ta operacja jest nieodwracalna.";
+const BTN_DELETE_CONFIRM = "Usuń zdjęcie";
 
 const EMPTY_PHOTO_FORM: PhotoFormData = {
   url: "",
@@ -125,6 +129,7 @@ const AdminRelationsPage = () => {
   const [newPhoto, setNewPhoto] = useState<PhotoFormData>(EMPTY_PHOTO_FORM);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPhoto, setEditPhoto] = useState<PhotoFormData>(EMPTY_PHOTO_FORM);
+  const [deletePhotoId, setDeletePhotoId] = useState<string | null>(null);
 
   const handleAlbumChange = useCallback((album: AlbumType) => {
     setSelectedAlbum(album);
@@ -211,14 +216,20 @@ const AdminRelationsPage = () => {
     }
   }, [selectedAlbum, selectedFile, newPhoto, mutate]);
 
-  const handleDelete = useCallback(
-    async (id: string) => {
-      if (!confirm(CONFIRM_DELETE)) return;
-      await fetch(`${API_PHOTOS}/${id}`, {method: "DELETE"});
-      mutate();
-    },
-    [mutate]
-  );
+  const handleDeleteClick = useCallback((id: string) => {
+    setDeletePhotoId(id);
+  }, []);
+
+  const handleCloseDeleteModal = useCallback(() => {
+    setDeletePhotoId(null);
+  }, []);
+
+  const handleConfirmDelete = useCallback(async () => {
+    if (!deletePhotoId) return;
+    await fetch(`${API_PHOTOS}/${deletePhotoId}`, {method: "DELETE"});
+    setDeletePhotoId(null);
+    mutate();
+  }, [deletePhotoId, mutate]);
 
   const handleSetCover = useCallback(
     async (photoId: string) => {
@@ -521,7 +532,7 @@ const AdminRelationsPage = () => {
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDelete(photo._id)}
+                          onClick={() => handleDeleteClick(photo._id)}
                           className={styles.deleteButton}
                           aria-label="Usuń"
                         >
@@ -584,6 +595,42 @@ const AdminRelationsPage = () => {
           )}
         </div>
       </div>
+
+      <EditModal
+        open={!!deletePhotoId}
+        title={MODAL_DELETE_TITLE}
+        description={MODAL_DELETE_DESC}
+        onClose={handleCloseDeleteModal}
+        footer={
+          <>
+            <button
+              type="button"
+              className={styles.modalCancelBtn}
+              onClick={handleCloseDeleteModal}
+            >
+              {BTN_CANCEL}
+            </button>
+            <button
+              type="button"
+              className={styles.modalDeleteBtn}
+              onClick={handleConfirmDelete}
+              aria-label={BTN_DELETE_CONFIRM}
+            >
+              {BTN_DELETE_CONFIRM}
+            </button>
+          </>
+        }
+      >
+        <div className={styles.deleteModalContent}>
+          <span className={styles.deleteModalIcon} aria-hidden>
+            🗑️
+          </span>
+          <p className={styles.deleteModalText}>
+            Zdjęcie zostanie trwale usunięte z albumu i nie będzie można go
+            przywrócić.
+          </p>
+        </div>
+      </EditModal>
     </div>
   );
 };
