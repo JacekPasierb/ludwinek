@@ -1,6 +1,8 @@
 import {NextResponse} from "next/server";
-import {connectToDatabase} from "../../../lib/mongo";
-import ChatBot from "../../../models/ChatBot";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/lib/auth";
+import {connectToDatabase} from "@/lib/mongo";
+import ChatBot from "@/models/ChatBot";
 
 export async function GET() {
   try {
@@ -13,6 +15,15 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      {error: "Musisz być zalogowany, aby dodawać wpisy chatbota."},
+      {status: 401}
+    );
+  }
+
   try {
     await connectToDatabase();
     const body = await req.json();

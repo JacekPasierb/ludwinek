@@ -1,4 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/lib/auth";
 import {connectToDatabase} from "@/lib/mongo";
 import SiteInfo from "@/models/SiteInfo";
 
@@ -33,6 +35,15 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json(
+      {error: "Musisz być zalogowany, aby edytować ustawienia strony."},
+      {status: 401}
+    );
+  }
+
   const body = await req.json();
   const {recordFishes} = body;
 
@@ -71,8 +82,7 @@ export async function PUT(req: NextRequest) {
       updatedAt: updateData.updatedAt,
     });
   } else {
-    if ("infoMessage" in updateData)
-      doc.infoMessage = updateData.infoMessage;
+    if ("infoMessage" in updateData) doc.infoMessage = updateData.infoMessage;
     if (recordFishesToSave !== null) {
       doc.recordFishes = recordFishesToSave as any;
       doc.markModified("recordFishes");

@@ -3,10 +3,10 @@
 import React, {useState} from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import useSWR from "swr";
-import styles from "../styles/editTitle.module.css";
+import EditModal from "./EditModal";
 import Tittle from "../components/Tittle";
-
-import { fetcher } from "@/lib/fetcher";
+import {fetcher} from "@/lib/fetcher";
+import styles from "../styles/editTitle.module.css";
 
 interface Values {
   infoMessage: string;
@@ -16,9 +16,14 @@ const MAX = 240;
 
 const BTN_EDIT = "Edytuj";
 const BTN_CLEAR = "Wyczyść komunikat";
+const BTN_CANCEL = "Anuluj";
+const MODAL_CLEAR_TITLE = "Wyczyść komunikat";
+const MODAL_CLEAR_DESC =
+  "Czy na pewno chcesz usunąć komunikat z paska informacyjnego?";
 
 const EditInfo = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const [showClearModal, setShowClearModal] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const {data, mutate} = useSWR("/api/siteinfo", fetcher);
   const infoMessage = data?.infoMessage ?? "";
@@ -26,8 +31,10 @@ const EditInfo = () => {
 
   const initialValues: Values = {infoMessage};
 
-  const handleClear = async () => {
-    if (!confirm("Czy na pewno chcesz usunąć komunikat?")) return;
+  const handleClearClick = () => setShowClearModal(true);
+  const handleCloseClearModal = () => setShowClearModal(false);
+
+  const handleConfirmClear = async () => {
     setIsClearing(true);
     try {
       await fetch("/api/siteinfo", {
@@ -36,6 +43,7 @@ const EditInfo = () => {
         body: JSON.stringify({infoMessage: ""}),
       });
       await mutate();
+      setShowClearModal(false);
     } finally {
       setIsClearing(false);
     }
@@ -43,7 +51,7 @@ const EditInfo = () => {
 
   return (
     <div className={styles.card}>
-      <Tittle title="Komunikat (pasek)" />
+      <Tittle title="Komunikat" />
 
       {!isEdit ? (
         <>
@@ -53,9 +61,7 @@ const EditInfo = () => {
               {infoMessage?.trim() ? (
                 infoMessage
               ) : (
-                <span className={styles.muted}>
-                  Brak komunikatu (pasek niewidoczny)
-                </span>
+                <span className={styles.muted}>Brak komunikatu</span>
               )}
             </div>
           </div>
@@ -71,7 +77,7 @@ const EditInfo = () => {
             {hasMessage && (
               <button
                 type="button"
-                onClick={handleClear}
+                onClick={handleClearClick}
                 disabled={isClearing}
                 className={`${styles.btn} ${styles.btnSecondary}`}
               >
@@ -151,6 +157,34 @@ const EditInfo = () => {
           )}
         </Formik>
       )}
+
+      <EditModal
+        open={showClearModal}
+        title={MODAL_CLEAR_TITLE}
+        description={MODAL_CLEAR_DESC}
+        onClose={handleCloseClearModal}
+        footer={
+          <>
+            <button
+              type="button"
+              className={`${styles.btn} ${styles.btnSecondary}`}
+              onClick={handleCloseClearModal}
+            >
+              {BTN_CANCEL}
+            </button>
+            <button
+              type="button"
+              className={`${styles.btn} ${styles.btnPrimary}`}
+              onClick={handleConfirmClear}
+              disabled={isClearing}
+            >
+              {isClearing ? "..." : BTN_CLEAR}
+            </button>
+          </>
+        }
+      >
+        {null}
+      </EditModal>
     </div>
   );
 };
