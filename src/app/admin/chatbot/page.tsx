@@ -42,8 +42,10 @@ const BTN_DELETE_MODAL = "Usuń";
 const MODAL_TITLE = "Edytuj interakcję";
 const MODAL_DESC =
   "Zmieniaj pytania (oddzielone przecinkami) oraz odpowiedź. Zapis aktualizuje bota od razu.";
-const CONFIRM_DELETE = "Czy na pewno chcesz usunąć ten wpis?";
-const CONFIRM_DELETE_MODAL = "Na pewno usunąć ten wpis?";
+const MODAL_DELETE_TITLE = "Usuń wpis";
+const MODAL_DELETE_DESC =
+  "Czy na pewno chcesz usunąć ten wpis? Ta operacja jest nieodwracalna.";
+const BTN_DELETE_CONFIRM = "Usuń wpis";
 const EMPTY_STATE = "Brak wyników.";
 
 function parseQuestionsText(text: string): string[] {
@@ -73,6 +75,7 @@ const ChatbotPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteEntryId, setDeleteEntryId] = useState<string | null>(null);
   const [editingItem, setEditingItem] = useState<ChatbotEntry | null>(null);
   const [editQuestionsText, setEditQuestionsText] = useState("");
   const [editAnswer, setEditAnswer] = useState("");
@@ -125,21 +128,27 @@ const ChatbotPage = () => {
     mutate();
   }, [editingItem?._id, editQuestionsText, editAnswer, closeModal, mutate]);
 
-  const handleDeleteFromList = useCallback(
-    async (id: string) => {
-      if (!confirm(CONFIRM_DELETE)) return;
-      await apiRequest(`${API_PATH}/${id}`, {method: "DELETE"});
-      mutate();
-    },
-    [mutate]
-  );
+  const handleDeleteClick = useCallback((id: string) => {
+    setDeleteEntryId(id);
+  }, []);
 
-  const handleDeleteFromModal = useCallback(async () => {
-    if (!editingItem?._id || !confirm(CONFIRM_DELETE_MODAL)) return;
-    await apiRequest(`${API_PATH}/${editingItem._id}`, {method: "DELETE"});
-    closeModal();
+  const handleDeleteFromModal = useCallback(() => {
+    if (editingItem?._id) {
+      setDeleteEntryId(editingItem._id);
+      closeModal();
+    }
+  }, [editingItem?._id, closeModal]);
+
+  const handleCloseDeleteModal = useCallback(() => {
+    setDeleteEntryId(null);
+  }, []);
+
+  const handleConfirmDelete = useCallback(async () => {
+    if (!deleteEntryId) return;
+    await apiRequest(`${API_PATH}/${deleteEntryId}`, {method: "DELETE"});
+    setDeleteEntryId(null);
     mutate();
-  }, [editingItem?._id, closeModal, mutate]);
+  }, [deleteEntryId, mutate]);
 
   const handleCreateEntry = useCallback(async () => {
     const questions = parseQuestionsText(questionsText);
@@ -184,6 +193,26 @@ const ChatbotPage = () => {
         onClick={handleUpdateEntry}
       >
         {BTN_SAVE}
+      </button>
+    </>
+  );
+
+  const deleteModalFooter = (
+    <>
+      <button
+        type="button"
+        className={styles.btnGhost}
+        onClick={handleCloseDeleteModal}
+      >
+        {BTN_CANCEL}
+      </button>
+      <button
+        type="button"
+        className={styles.btnDanger}
+        onClick={handleConfirmDelete}
+        aria-label={BTN_DELETE_CONFIRM}
+      >
+        {BTN_DELETE_CONFIRM}
       </button>
     </>
   );
@@ -275,7 +304,7 @@ const ChatbotPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleDeleteFromList(item._id)}
+                      onClick={() => handleDeleteClick(item._id)}
                       className={`${styles.actionBtn} ${styles.deleteBtn}`}
                     >
                       {BTN_DELETE}
@@ -336,6 +365,24 @@ const ChatbotPage = () => {
             placeholder={PLACEHOLDER_ANSWER_EDIT}
             rows={5}
           />
+        </div>
+      </EditModal>
+
+      <EditModal
+        open={!!deleteEntryId}
+        title={MODAL_DELETE_TITLE}
+        description={MODAL_DELETE_DESC}
+        onClose={handleCloseDeleteModal}
+        footer={deleteModalFooter}
+      >
+        <div className={styles.deleteModalContent}>
+          <span className={styles.deleteModalIcon} aria-hidden>
+            🗑️
+          </span>
+          <p className={styles.deleteModalText}>
+            Wpis zostanie trwale usunięty z bazy pytań i nie będzie można go
+            przywrócić.
+          </p>
         </div>
       </EditModal>
     </section>
