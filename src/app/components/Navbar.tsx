@@ -101,6 +101,9 @@ const Navbar = () => {
                   Regulamin
                 </Link>
               </li>
+              <li>
+                <Link href={`${pathname}#kontakt`}>Kontakt</Link>
+              </li>
             </ul>
           </nav>
         )}

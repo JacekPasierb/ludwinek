@@ -174,6 +174,28 @@
   text-align: center;
 }
 
+.bottomBar .copyright {
+  margin: 0;
+}
+
+.bottomBar .credit {
+  margin: 0.4rem 0 0;
+  font-size: 0.7em;
+  opacity: 0.85;
+}
+
+.bottomBar .creditLink {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.bottomBar .creditLink:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 /* ========== Media queries ========== */
 @media (max-width: 768px) {
   .container {

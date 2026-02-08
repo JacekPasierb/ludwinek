@@ -47,6 +47,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({isOpen, onClose}) => {
     {href: "/", label: "Ludwinek"},
     {href: "/relations", label: "Fotorelacje"},
     {href: "/rules", label: "Regulamin"},
+    {href: "/#kontakt", label: "Kontakt"},
   ];
 
   return (
@@ -66,6 +67,8 @@ const MenuMobile: React.FC<MenuMobileProps> = ({isOpen, onClose}) => {
       >
         <ul className={styles.menuList}>
           {menuItems.map((item) => {
+            const href =
+              item.label === "Kontakt" ? `${pathname}#kontakt` : item.href;
             const isActive =
               item.href === "/"
                 ? pathname === "/"
@@ -74,7 +77,7 @@ const MenuMobile: React.FC<MenuMobileProps> = ({isOpen, onClose}) => {
             return (
               <li key={item.href} className={styles.menuItem}>
                 <Link
-                  href={item.href}
+                  href={href}
                   className={`${styles.menuLink} ${
                     isActive ? styles.menuLinkActive : ""
                   }`}

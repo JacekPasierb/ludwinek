@@ -55,6 +55,8 @@ const OPENING_HOURS: readonly OpeningHour[] = [
   {label: "Niedziela", value: "Biuro nieczynne"},
 ] as const;
 
+const CREDIT_LINK = "https://www.linkedin.com/in/jacek-pasierb";
+
 const NAV_LINKS: readonly NavLink[] = [
   {href: "/#about", label: "O łowisku", icon: <FaInfoCircle />},
   {href: "/relations", label: "Fotorelacje", icon: <FaImages />},
@@ -70,7 +72,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer}>
+    <footer id="kontakt" className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.column}>
           <div className={styles.logo}>
@@ -177,7 +179,21 @@ const Footer = () => {
       </div>
 
       <div className={styles.bottomBar}>
-        © {currentYear} Łowisko EKO-TORF Ludwinek. Wszelkie prawa zastrzeżone.
+        <p className={styles.copyright}>
+          © {currentYear} Łowisko EKO-TORF Ludwinek. Wszelkie prawa zastrzeżone.
+        </p>
+        <p className={styles.credit}>
+          Projekt i realizacja{" "}
+          <a
+            href={CREDIT_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.creditLink}
+            aria-label="Jacek Pasierb – profil LinkedIn"
+          >
+            Jacek Pasierb
+          </a>
+        </p>
       </div>
     </footer>
   );
