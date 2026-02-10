@@ -40,9 +40,10 @@ const Navbar = () => {
             <Image
               src="/images/logo-ludwinek.svg"
               alt="Łowisko EKO-TORF Ludwinek"
-              width={36}
-              height={36}
+              width={64}
+              height={64}
               className={styles.logoImg}
+              sizes="(max-width: 767px) 32px, (max-width: 1199px) 48px, 64px"
               priority
             />
           </Link>
