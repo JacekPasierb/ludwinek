@@ -45,7 +45,7 @@ const CONTACT_OFFICE = {
 };
 
 const CONTACT_EMAIL = {
-  address: "kontakt@wedkowanie-ludwin.pl",
+  address: "kontakt@wędkowanie-ludwin.pl",
   ariaLabel: "Napisz e-mail na adres: kontakt@wędkowanie-ludwin.pl",
 };
 
