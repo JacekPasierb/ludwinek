@@ -65,7 +65,7 @@ const About = () => {
               {FEATURES_CHECKLIST.map(({id, iconAlt, content}) => (
                 <li key={id} className={styles.listCheck__item}>
                   <Image
-                    src="/fish_iconA.png"
+                    src="/fish_iconA.webp"
                     alt={iconAlt}
                     width={CHECKLIST_ICON_SIZE}
                     height={CHECKLIST_ICON_SIZE}
