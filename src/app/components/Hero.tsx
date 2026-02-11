@@ -1,6 +1,7 @@
 "use client";
 
 import {usePathname} from "next/navigation";
+import Image from "next/image";
 import {FaHome, FaPhoneAlt} from "react-icons/fa";
 import Navbar from "./Navbar";
 import styles from "../styles/hero.module.css";
@@ -16,6 +17,16 @@ export const Hero = () => {
 
   return (
     <section className={styles.hero}>
+      <div className={styles.heroImage} aria-hidden>
+        <Image
+          src="/images/header-ludwinek-1600.webp"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1600px"
+          className={styles.heroImg}
+        />
+      </div>
       <div className={styles.overlay}>
         <Navbar />
 

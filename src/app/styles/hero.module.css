@@ -8,12 +8,10 @@
   }
 
   .address {
-    flex: 0 0 100%; 
-    text-align: center; 
+    flex: 0 0 100%;
+    text-align: center;
     justify-content: center;
   }
-
-
 }
 
 .hero {
@@ -21,14 +19,23 @@
   height: 600px;
   max-width: 1600px;
   margin: 0 auto;
-  background-image: url("/images/header-ludwinek-1600.webp");
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
+}
 
+.heroImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.heroImg {
+  object-fit: cover;
+  object-position: center;
 }
 
 .overlay {
+  position: relative;
+  z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   color: white;
@@ -150,11 +157,11 @@
     justify-content: center;
   }
   .title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 0.8rem;
-  line-height: 1.2;
-}
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
 
   .subtitle {
     font-size: 1.5rem;
@@ -175,8 +182,6 @@
   }
 
   .icon {
- 
-  font-size: 1rem;
-  
-}
+    font-size: 1rem;
+  }
 }
