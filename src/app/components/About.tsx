@@ -17,7 +17,7 @@ const FEATURES_CHECKLIST: readonly ChecklistItem[] = [
     content: (
       <>
         Do dyspozycji wędkarzy są{" "}
-        <strong>trzy starannie zarybione stawy (zbiorniki)</strong>.
+        <strong>trzy starannie zarybione stawy</strong>.
       </>
     ),
   },
