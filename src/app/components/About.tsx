@@ -13,11 +13,11 @@ const CHECKLIST_ICON_SIZE = 48;
 const FEATURES_CHECKLIST: readonly ChecklistItem[] = [
   {
     id: "zbiorniki",
-    iconAlt: "Ikona ryby - trzy zarybione zbiorniki w łowisku Ludwinek",
+    iconAlt: "Ikona ryby - trzy zarybione stawy w łowisku Ludwin",
     content: (
       <>
         Do dyspozycji wędkarzy są{" "}
-        <strong>trzy starannie zarybione zbiorniki</strong>.
+        <strong>trzy starannie zarybione stawy (zbiorniki)</strong>.
       </>
     ),
   },
@@ -56,7 +56,7 @@ const About = () => {
         <div className={styles.descriptionWrapper}>
           <div className={styles.leftSide}>
             <p className={styles.description}>
-              Łowisko Ludwinek EKO-TORF to wyjątkowe miejsce na terenie dawnej
+              Łowisko Ludwin (EKO-TORF Ludwinek) to trzy stawy na terenie dawnej
               kopalni torfu, otoczone naturą i ciszą. Idealne zarówno na
               spokojne wędkowanie, jak i wypoczynek z rodziną.
             </p>
@@ -82,7 +82,7 @@ const About = () => {
 
           <div className={styles.rightSide}>
             <h2 id="about-heading" className={styles.heading}>
-              Wędkowanie i relaks w jednym miejscu
+              Stawy i łowisko – wędkowanie i relaks w Ludwinie
             </h2>
 
             <p className={styles.description}>
@@ -94,7 +94,7 @@ const About = () => {
             <figure className={styles.imageWrapper}>
               <Image
                 src="/images/image-about.webp"
-                alt="Zbiornik wodny w łowisku EKO-TORF Ludwinek z widokiem na naturę i spokojne miejsce do wędkowania"
+                alt="Stawy w Ludwinie – łowisko EKO-TORF Ludwinek, zbiornik wodny i spokojne miejsce do wędkowania"
                 width={800}
                 height={500}
                 loading="lazy"

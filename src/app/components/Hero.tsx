@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 import styles from "../styles/hero.module.css";
 
 const HERO_TITLE = "Łowisko EKO-TORF Ludwinek";
-const HERO_SUBTITLE = "Profesjonalne łowisko w sercu Lubelszczyzny.";
+const HERO_SUBTITLE = "Trzy stawy – łowisko w Ludwinie, Lubelszczyzna.";
 const HERO_HOURS = "Czynne 24 godziny na dobę, 7 dni w tygodniu.";
 
 export const Hero = () => {

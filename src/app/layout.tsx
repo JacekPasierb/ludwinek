@@ -32,13 +32,16 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://wędkowanie-ludwin.pl"
   ),
   title: {
-    default: "Łowisko EKO-TORF Ludwinek - Wędkowanie i Relaks",
+    default: "Łowisko Ludwin – Stawy EKO-TORF Ludwinek, Wędkowanie",
     template: "%s | Łowisko Ludwinek",
   },
   description:
-    "Łowisko EKO-TORF Ludwinek – trzy zarybione zbiorniki, zasada NO KILL, strefy piknikowe. Wędkowanie i wypoczynek w Ludwinie na Lubelszczyźnie.",
+    "Łowisko Ludwin – trzy stawy (zbiorniki) EKO-TORF Ludwinek. Zarybione łowisko, NO KILL, strefy piknikowe. Wędkowanie i wypoczynek w Ludwinie, Lubelszczyzna.",
   keywords: [
+    "łowisko Ludwin",
+    "stawy Ludwin",
     "łowisko",
+    "stawy",
     "wędkowanie",
     "Ludwin",
     "Lubelszczyzna",
@@ -65,9 +68,9 @@ export const metadata: Metadata = {
     locale: "pl_PL",
     url: "/",
     siteName: "Łowisko EKO-TORF Ludwinek",
-    title: "Łowisko EKO-TORF Ludwinek - Wędkowanie i Relaks",
+    title: "Łowisko Ludwin – Stawy EKO-TORF Ludwinek, Wędkowanie",
     description:
-      "Wyjątkowe miejsce na wędkowanie i wypoczynek. Trzy zarybione zbiorniki, zasada NO KILL, strefy piknikowe. Zapraszamy do Ludwina!",
+      "Łowisko Ludwin – trzy stawy, zasada NO KILL, strefy piknikowe. Wędkowanie i wypoczynek w Ludwinie na Lubelszczyźnie.",
     images: [
       {
         url: "/images/header-ludwinek-1600.webp",
@@ -79,9 +82,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Łowisko EKO-TORF Ludwinek - Wędkowanie i Relaks",
+    title: "Łowisko Ludwin – Stawy EKO-TORF Ludwinek, Wędkowanie",
     description:
-      "Wyjątkowe miejsce na wędkowanie i wypoczynek. Trzy zarybione zbiorniki, zasada NO KILL.",
+      "Łowisko Ludwin – trzy stawy, NO KILL, wędkowanie i wypoczynek w Ludwinie.",
     images: ["/images/header-ludwinek-1600.webp"],
   },
   robots: {

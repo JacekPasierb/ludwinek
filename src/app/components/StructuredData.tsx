@@ -78,9 +78,15 @@ export const StructuredData = () => {
       "@type": "SportsActivityLocation",
       "@id": `${baseUrl}#organization`,
       name: "Łowisko EKO-TORF Ludwinek",
-      alternateName: "Łowisko Ludwinek",
+      alternateName: [
+        "Łowisko Ludwinek",
+        "Łowisko Ludwin",
+        "Stawy Ludwinek",
+        "Stawy Ludwin",
+        "Stawy EKO-TORF Ludwinek",
+      ],
       description:
-        "Łowisko Ludwinek EKO-TORF to wyjątkowe miejsce na terenie dawnej kopalni torfu, otoczone naturą i ciszą. Idealne zarówno na spokojne wędkowanie, jak i wypoczynek z rodziną.",
+        "Łowisko Ludwin – trzy stawy (zbiorniki) EKO-TORF Ludwinek na terenie dawnej kopalni torfu. Zarybione łowisko, NO KILL, wędkowanie i wypoczynek w Ludwinie na Lubelszczyźnie.",
       url: baseUrl,
       logo: `${baseUrl}/images/logo-ludwinek.png`,
       image: `${baseUrl}/images/header-ludwinek-1600.webp`,
