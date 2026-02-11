@@ -94,7 +94,7 @@ export const Chatbot = () => {
       <div className={`${styles.chatbot} ${open ? styles.active : ""}`}>
         <div className={styles.chatHeader}>
           <Image
-            src="/botAvatar.png"
+            src="/botAvatar.webp"
             alt="Bot Avatar"
             className={styles.botAvatar}
             width={32}

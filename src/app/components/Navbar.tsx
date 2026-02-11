@@ -29,7 +29,7 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
-  // ✅ zapobiega hydration mismatch
+ 
   if (!mounted) return null;
 
   return (

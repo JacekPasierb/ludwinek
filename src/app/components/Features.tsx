@@ -12,19 +12,19 @@ type FeatureItem = {
 const FEATURES: readonly FeatureItem[] = [
   {
     id: "zbiorniki",
-    src: "/images/icons-zbiorniki.svg",
+    src: "/icons-zbiorniki.webp",
     alt: "Trzy zbiorniki wodne",
     label: "3 zbiorniki",
   },
   {
     id: "no-kill",
-    src: "/no-kill.png",
+    src: "/no-kill.webp",
     alt: "Zasada no-kill",
     label: "Zasada NO KILL",
   },
   {
     id: "smieci",
-    src: "/smieci.png",
+    src: "/smieci.webp",
     alt: "Zakaz wyrzucania śmieci",
     label: "Zakaz pozostawiania śmieci",
   },

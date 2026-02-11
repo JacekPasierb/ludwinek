@@ -8,8 +8,8 @@
   }
 
   .address {
-    flex: 0 0 100%; /* drugi wiersz na całą szerokość */
-    text-align: center; /* adres wyśrodkowany */
+    flex: 0 0 100%; 
+    text-align: center; 
     justify-content: center;
   }
 
@@ -26,7 +26,6 @@
   background-position: center;
   overflow: hidden;
 
-  /* padding-bottom: 96px; */
 }
 
 .overlay {
