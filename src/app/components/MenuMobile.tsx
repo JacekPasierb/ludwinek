@@ -83,14 +83,7 @@ export default function MenuMobile({isOpen, onClose}: MenuMobileProps) {
             />
           </Link>
 
-          <button
-            type="button"
-            className={styles.closeButton}
-            onClick={onClose}
-            aria-label="Zamknij menu"
-          >
-            ✕
-          </button>
+      
         </div>
 
         <nav className={styles.content} aria-label="Menu mobilne">
