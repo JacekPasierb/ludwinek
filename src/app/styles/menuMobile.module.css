@@ -1,135 +1,194 @@
 /* Overlay */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(4px);
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
-
 .overlayOpen {
   opacity: 1;
   visibility: visible;
 }
 
-/* Menu */
-.menu {
+/* Drawer */
+.drawer {
   position: fixed;
   top: 0;
   right: 0;
-  width: 280px;
-  max-width: 85vw;
-  height: 100vh;
+  height: 100dvh; /* lepiej na mobile niż 100vh */
+  width: 320px;
+  max-width: 88vw;
+
+  z-index: 1001;
+  transform: translateX(102%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
   background: linear-gradient(
     180deg,
     rgba(11, 18, 32, 0.98) 0%,
     rgba(11, 18, 32, 0.95) 100%
   );
-  backdrop-filter: blur(20px);
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
-  z-index: 1001;
-  transform: translateX(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 5rem 2rem 2rem;
-  overflow-y: auto;
+  backdrop-filter: blur(18px);
+  box-shadow: -6px 0 30px rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  flex-direction: column;
 }
 
-.menuOpen {
+.drawerOpen {
   transform: translateX(0);
 }
 
+/* HEADER (sticky) */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(11, 18, 32, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.brand {
+  display: inline-flex;
+  padding: 16px 20px;
+  border-radius: 50%;
+  background: #fff;
+}
+.brandImg {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+}
+
+.closeButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+}
+.closeButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(245, 201, 106, 0.55),
+    0 0 0 4px rgba(245, 201, 106, 0.18);
+}
+
+/* CONTENT (scroll) */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* List */
 .menuList {
   list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+
+  display: grid;
+  gap: 10px;
 }
 
-.menuItem {
-  margin: 0;
-}
-
+/* Link jako “karty” */
 .menuLink {
-  display: block;
-  padding: 1rem 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 16px;
+  border-radius: 14px;
+
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  font-weight: 500;
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border-radius: 8px;
-  transition: all 0.25s ease;
-  position: relative;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .menuLink:hover {
   color: #f5c96a;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.menuLink:focus-visible {
-  outline: none;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 2px rgba(245, 201, 106, 0.55),
-    0 0 0 4px rgba(245, 201, 106, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(245, 201, 106, 0.22);
+  transform: translateY(-1px);
 }
 
 .menuLinkActive {
   color: #f5c96a;
   background: rgba(245, 201, 106, 0.1);
+  border-color: rgba(245, 201, 106, 0.26);
 }
 
-.menuLinkActive::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  background: linear-gradient(180deg, #f5c96a, rgba(245, 201, 106, 0.6));
-  border-radius: 0 2px 2px 0;
+/* FOOTER (sticky) */
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+
+  padding: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(11, 18, 32, 0.92);
+  backdrop-filter: blur(14px);
+
+  display: grid;
+  gap: 10px;
 }
 
-/* Animacja dla każdego elementu menu */
-.menuItem {
-  opacity: 0;
-  transform: translateX(20px);
-  animation: slideIn 0.3s ease forwards;
+.phoneButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 14px;
+  border-radius: 14px;
+
+  background: rgba(245, 201, 106, 0.16);
+  border: 1px solid rgba(245, 201, 106, 0.35);
+  color: rgba(255, 255, 255, 0.96);
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.menuOpen .menuItem:nth-child(1) {
-  animation-delay: 0.05s;
+.phoneButton:hover {
+  background: rgba(245, 201, 106, 0.22);
+  border-color: rgba(245, 201, 106, 0.55);
+  transform: translateY(-1px);
 }
 
-.menuOpen .menuItem:nth-child(2) {
-  animation-delay: 0.1s;
+.address {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
 }
 
-.menuOpen .menuItem:nth-child(3) {
-  animation-delay: 0.15s;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Responsive */
+/* Fullscreen na małych */
 @media (max-width: 480px) {
-  .menu {
+  .drawer {
     width: 100%;
     max-width: 100%;
   }
