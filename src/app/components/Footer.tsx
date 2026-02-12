@@ -55,7 +55,7 @@ const OPENING_HOURS: readonly OpeningHour[] = [
   {label: "Niedziela", value: "Biuro nieczynne"},
 ] as const;
 
-const CREDIT_LINK = "https://www.linkedin.com/in/jacek-pasierb";
+const CREDIT_LINK = "https://pasierb-webstudio.pl";
 
 const NAV_LINKS: readonly NavLink[] = [
   {href: "/#about", label: "O łowisku", icon: <FaInfoCircle />},
