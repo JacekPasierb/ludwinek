@@ -34,7 +34,7 @@ const ALBUMS: readonly AlbumConfig[] = [
     slug: "zbiornik-1",
     name: "Zbiornik 1",
     description:
-      "Spokojne wody pierwszego zbiornika — idealne miejsce na karpie i amury. Zobacz zdjęcia z udanych połowów i klimat tego zakątka łowiska.",
+      "Spokojne wody pierwszego zbiornika — idealne miejsce na karpie, amury, szczupaki oraz okonie. Zobacz zdjęcia z udanych połowów i klimat tego zakątka łowiska.",
     albumCode: "zbiornik1",
     coverStrategy: "manual-or-newest",
   },
@@ -42,7 +42,7 @@ const ALBUMS: readonly AlbumConfig[] = [
     slug: "zbiornik-2",
     name: "Zbiornik 2",
     description:
-      "Drugi zbiornik słynie z drapieżników — szczupaki, sandacze i okonie. Fotorelacje z rekordowych okazów i emocji na brzegu.",
+      "Drugi zbiornik słynie z dużych karpi, rekordowych amurów oraz jesiotrów. Fotorelacje z rekordowych okazów i emocji na brzegu.",
     albumCode: "zbiornik2",
     coverStrategy: "manual-or-newest",
   },
@@ -50,7 +50,7 @@ const ALBUMS: readonly AlbumConfig[] = [
     slug: "zbiornik-3",
     name: "Zbiornik 3",
     description:
-      "Trzeci zbiornik — cisza, natura i świetne wyniki. Galeria zdjęć z wędkarskich wypraw i pięknych chwil spędzonych nad wodą.",
+      "Trzeci zbiornik — cisza, natura i świetne wyniki. Regularnie zarybiany karpiem, amurem, szczupakiem oraz karasiem. Galeria zdjęć z wędkarskich wypraw i pięknych chwil spędzonych nad wodą.",
     albumCode: "zbiornik3",
     coverStrategy: "manual-or-newest",
   },
@@ -58,7 +58,7 @@ const ALBUMS: readonly AlbumConfig[] = [
     slug: "wydarzenia",
     name: "Wydarzenia",
     description:
-      "Turnieje wędkarskie, pikniki rodzinne i spotkania przy ognisku. Zobacz, jak tętni życiem łowisko EKO-TORF podczas wydarzeń.",
+      "Zawody wędkarskie, pikniki rodzinne i spotkania przy ognisku - ważne wydarzenia na łowisku Ludwinek. Zobacz, jak tętni życiem łowisko EKO-TORF podczas wydarzeń.",
     albumCode: "wydarzenia",
     coverStrategy: "newest",
   },
