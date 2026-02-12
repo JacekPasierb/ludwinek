@@ -27,20 +27,12 @@ export default function LightboxGallery({
   }, [activeIndex, photos]);
 
   const close = () => setActiveIndex(null);
-  const prev = () =>
-    setActiveIndex((i) =>
-      i === null ? null : (i - 1 + photos.length) % photos.length
-    );
-  const next = () =>
-    setActiveIndex((i) => (i === null ? null : (i + 1) % photos.length));
 
   useEffect(() => {
     if (activeIndex === null) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -120,32 +112,6 @@ export default function LightboxGallery({
             type="button"
           >
             ×
-          </button>
-
-          <button
-            type="button"
-            className={`${styles.closeButton}`}
-            style={{right: "auto", left: "2rem"}}
-            onClick={(e) => {
-              e.stopPropagation();
-              prev();
-            }}
-            aria-label="Poprzednie zdjęcie"
-          >
-            ‹
-          </button>
-
-          <button
-            type="button"
-            className={`${styles.closeButton}`}
-            style={{right: "5.5rem"}}
-            onClick={(e) => {
-              e.stopPropagation();
-              next();
-            }}
-            aria-label="Następne zdjęcie"
-          >
-            ›
           </button>
 
           <div
