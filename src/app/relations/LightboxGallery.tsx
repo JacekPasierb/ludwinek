@@ -48,6 +48,27 @@ export default function LightboxGallery({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex, photos.length]);
 
+  useEffect(() => {
+    if (activeIndex === null) return;
+
+    const prevOverflow = document.body.style.overflow;
+    const prevPaddingRight = document.body.style.paddingRight;
+
+    // (opcjonalnie) kompensacja "skoku" layoutu gdy znika scrollbar (głównie desktop)
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.body.style.paddingRight = prevPaddingRight;
+    };
+  }, [activeIndex]);
+
   return (
     <>
       <div className={styles.photoGrid}>
