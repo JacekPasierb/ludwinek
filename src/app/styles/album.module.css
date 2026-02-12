@@ -75,10 +75,10 @@
   margin-top: 2rem;
 }
 
-
 .photoItem {
-  appearance: none;               /* 🔥 reset buttona */
+  appearance: none;
   -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 
   display: block;
   width: 100%;
@@ -97,7 +97,7 @@
   cursor: pointer;
   transition: transform 0.25s ease;
 
-  text-align: left;              
+  text-align: left;
 }
 
 .photoItem:hover {
@@ -110,6 +110,7 @@
 }
 
 .photo {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -235,8 +236,8 @@
   cursor: pointer;
   z-index: 2000;
 
-overscroll-behavior: contain;
-touch-action: none;
+  overscroll-behavior: contain;
+  touch-action: none;
 }
 
 .modalContent {
@@ -289,11 +290,8 @@ touch-action: none;
 .modalImage {
   -webkit-user-select: none;
   user-select: none;
-  -webkit-touch-callout: none; /* iOS: wyłącza menu przytrzymania */
+  -webkit-touch-callout: none;
 }
-
-
-
 
 /* ========== Media queries ========== */
 @media (max-width: 768px) {
@@ -308,5 +306,47 @@ touch-action: none;
     width: 40px;
     height: 40px;
     font-size: 1.2rem;
+  }
+
+  /* ✅ Pagination fix on mobile */
+  .pagination {
+    gap: 0.75rem;
+  }
+
+  .pageBtn,
+  .pageBtnDisabled {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    padding: 0.65rem 0.9rem;
+  }
+
+  .pageNumbers {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    padding-bottom: 0.25rem;
+    gap: 0.4rem;
+
+    scrollbar-width: none;
+  }
+
+  .pageNumbers::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pageNumber {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    flex: 0 0 auto;
+  }
+
+  .dots {
+    flex: 0 0 auto;
   }
 }
