@@ -11,6 +11,7 @@ import {
   FaInfoCircle,
   FaMapMarkerAlt,
   FaPhone,
+  FaShieldAlt,
 } from "react-icons/fa";
 import styles from "../styles/footer.module.css";
 
@@ -61,6 +62,11 @@ const NAV_LINKS: readonly NavLink[] = [
   {href: "/#about", label: "O łowisku", icon: <FaInfoCircle />},
   {href: "/relations", label: "Fotorelacje", icon: <FaImages />},
   {href: "/rules", label: "Regulamin", icon: <FaFileAlt />},
+  {
+    href: "/polityka-prywatnosci",
+    label: "Polityka prywatności",
+    icon: <FaShieldAlt />,
+  },
 ] as const;
 
 const Footer = () => {
