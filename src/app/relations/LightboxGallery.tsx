@@ -68,14 +68,11 @@ export default function LightboxGallery({
           const src = photo.publicId || photo.url;
           const gridUrl = getCloudinaryUrl(src, "medium");
           return (
-            <a
+            <button
               key={`${photo.url}-${idx}`}
+              type="button"
               className={styles.photoItem}
-              href={getCloudinaryUrl(src, "large")}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveIndex(idx);
-              }}
+              onClick={() => setActiveIndex(idx)}
               aria-label={`Otwórz zdjęcie: ${photo.title || albumName}`}
             >
               <Image
@@ -85,11 +82,13 @@ export default function LightboxGallery({
                 height={450}
                 className={styles.photo}
                 loading="lazy"
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
               />
               {photo.title && (
                 <div className={styles.photoTitle}>{photo.title}</div>
               )}
-            </a>
+            </button>
           );
         })}
       </div>
@@ -125,6 +124,8 @@ export default function LightboxGallery({
               height={900}
               className={styles.modalImage}
               priority
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
             />
           </div>
         </div>

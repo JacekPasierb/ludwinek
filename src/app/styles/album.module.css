@@ -224,6 +224,7 @@
   z-index: 2000;
 
 overscroll-behavior: contain;
+touch-action: none;
 }
 
 .modalContent {
@@ -271,6 +272,16 @@ overscroll-behavior: contain;
   outline: none;
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
+
+.photo,
+.modalImage {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* iOS: wyłącza menu przytrzymania */
+}
+
+
+
 
 /* ========== Media queries ========== */
 @media (max-width: 768px) {
