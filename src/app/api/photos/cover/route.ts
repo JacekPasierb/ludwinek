@@ -4,9 +4,8 @@ import {authOptions} from "@/lib/auth";
 import {connectToDatabase} from "@/lib/mongo";
 import Photo from "@/models/Photo";
 
-import { revalidateTag, revalidatePath } from "next/cache";
+import {revalidateTag, revalidatePath} from "next/cache";
 
-// POST - ustaw zdjęcie jako okładkę dla albumu (tylko zbiornik1/2/3)
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -49,4 +48,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({message: "Ustawiono okładkę", photo});
 }
-
