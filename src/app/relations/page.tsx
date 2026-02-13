@@ -3,6 +3,7 @@ import {getCloudinaryUrl} from "@/lib/cloudinary";
 import Photo from "@/models/Photo";
 import AlbumsList from "./AlbumsList";
 import styles from "../styles/gallery.module.css";
+import { unstable_cache } from "next/cache"; // nowe problem z okladką album
 
 type AlbumSlug = "zbiornik-1" | "zbiornik-2" | "zbiornik-3" | "wydarzenia";
 type AlbumCode = "zbiornik1" | "zbiornik2" | "zbiornik3" | "wydarzenia";
@@ -65,27 +66,30 @@ const ALBUMS: readonly AlbumConfig[] = [
 ] as const;
 
 async function fetchAlbumCover(album: AlbumConfig): Promise<CoverResult> {
-  await connectToDatabase();
+  // await connectToDatabase();
 
   if (album.coverStrategy === "manual-or-newest") {
     const cover = (await Photo.findOne({
       album: album.albumCode,
       isCover: true,
     })
+      .select("url publicId createdAt")
       .sort({createdAt: -1, _id: -1})
       .lean()) as PhotoLean;
 
-    if (cover?.url) {
-      return {url: cover.url, publicId: cover.publicId ?? null};
-    }
+   if (cover?.url || cover?.publicId) {
+     return {url: cover?.url ?? "", publicId: cover?.publicId ?? null};
+   }
+
   }
 
   const newest = (await Photo.findOne({album: album.albumCode})
+    .select("url publicId createdAt")
     .sort({createdAt: -1, _id: -1})
     .lean()) as PhotoLean;
 
-  if (newest?.url) {
-    return {url: newest.url, publicId: newest.publicId ?? null};
+  if (newest?.url || newest?.publicId) {
+    return {url: newest?.url ?? "", publicId: newest?.publicId ?? null};
   }
 
   return PLACEHOLDER_IMAGE;
@@ -93,14 +97,27 @@ async function fetchAlbumCover(album: AlbumConfig): Promise<CoverResult> {
 
 function resolveCoverUrl(cover: CoverResult): string {
   if (typeof cover === "string") return cover;
-  return getCloudinaryUrl(cover.publicId || cover.url, COVER_SIZE);
+
+  // preferuj publicId -> transformacje cloudinary
+  if (cover.publicId) return getCloudinaryUrl(cover.publicId, COVER_SIZE);
+
+  // jeśli masz pełny url -> użyj wprost
+  return cover.url;
 }
 
+
+const getCoversCached = unstable_cache(
+  async () => {
+    await connectToDatabase();
+    const covers = await Promise.all(ALBUMS.map(fetchAlbumCover));
+    return covers.map(resolveCoverUrl);
+  },
+  ["relations-covers-v1"],
+  {tags: ["relations-covers"]}
+);
+
 const RelationsPage = async () => {
-  const covers = await Promise.all(
-    ALBUMS.map((album) => fetchAlbumCover(album))
-  );
-  const coverUrls = covers.map((c) => resolveCoverUrl(c));
+const coverUrls = await getCoversCached();
 
   return (
     <section className={styles.gallery} aria-labelledby="relations-title">

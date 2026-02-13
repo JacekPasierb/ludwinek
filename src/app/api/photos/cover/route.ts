@@ -4,6 +4,8 @@ import {authOptions} from "@/lib/auth";
 import {connectToDatabase} from "@/lib/mongo";
 import Photo from "@/models/Photo";
 
+import { revalidateTag, revalidatePath } from "next/cache";
+
 // POST - ustaw zdjęcie jako okładkę dla albumu (tylko zbiornik1/2/3)
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -34,9 +36,16 @@ export async function POST(req: NextRequest) {
   }
 
   // Wyłącz poprzednią okładkę w albumie i ustaw nową
-  await Photo.updateMany({album: photo.album, isCover: true}, {isCover: false});
+  await Photo.updateMany(
+    {album: photo.album, isCover: true},
+    {$set: {isCover: false}}
+  );
   photo.isCover = true;
   await photo.save();
+
+  // ✅ Najważniejsze: odśwież cache strony /relations
+  revalidateTag("relations-covers");
+  revalidatePath("/relations");
 
   return NextResponse.json({message: "Ustawiono okładkę", photo});
 }
