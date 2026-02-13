@@ -8,7 +8,7 @@ import {fetcher} from "@/lib/fetcher";
 const InfoBar = () => {
   const {data} = useSWR("/api/siteinfo", fetcher);
   const message =
-    data?.infoMessage?.trim() || "Serdecznie zapraszamy do Łowiska Ludwinek";
+    data?.infoMessage?.trim() || "Serdecznie zapraszamy na Łowisko Ludwinek Eko-Torf. Do zobaczenia nad wodą.";
 
   return (
     <section className={styles.bar} role="status" aria-live="polite">
