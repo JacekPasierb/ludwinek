@@ -66,6 +66,21 @@ const ALBUMS: readonly AlbumConfig[] = [
 ] as const;
 
 async function fetchAlbumCover(album: AlbumConfig): Promise<CoverResult> {
+  // ALWAYS newest for events
+  if (album.albumCode === "wydarzenia") {
+    const newest = (await Photo.findOne({album: album.albumCode})
+      .select("url publicId createdAt")
+      .sort({createdAt: -1, _id: -1})
+      .lean()) as PhotoLean;
+
+    if (newest?.url || newest?.publicId) {
+      return {url: newest?.url ?? "", publicId: newest?.publicId ?? null};
+    }
+
+    return PLACEHOLDER_IMAGE;
+  }
+
+  // reszta: manual-or-newest dla zbiorników
   if (album.coverStrategy === "manual-or-newest") {
     const cover = (await Photo.findOne({
       album: album.albumCode,
